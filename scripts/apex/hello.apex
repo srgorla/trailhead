@@ -8,3 +8,9 @@
 string tempvar = 'Enter_your_name_here';
 System.debug('Hello World!');
 System.debug('My name is ' + tempvar);
+
+List<Lead> leads = [SELECT Id, Name FROM Lead where Lead_Source_Text__c = 'Other'];
+for(Lead lead : leads) {
+    lead.Leadsource = 'Other';
+}
+update leads;
