@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Opportunity_Amount_Owner_or_Admin</fullName>
+    <active>true</active>
+    <errorConditionFormula>ISCHANGED(Amount) &amp;&amp;
+NOT(
+    $Profile.Name = &quot;System Administrator&quot; ||
+    OwnerId = $User.Id
+)</errorConditionFormula>
+    <errorDisplayField>Amount</errorDisplayField>
+    <errorMessage>Amount can only be changed by Admin or Opportunity owner</errorMessage>
+</ValidationRule>
