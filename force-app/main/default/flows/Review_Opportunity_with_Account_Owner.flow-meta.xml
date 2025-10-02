@@ -5,6 +5,8 @@
     <description>When a high-value opportunity is ready for negotiation and review, create a task for the owner to follow up with the account owner (We won’t check the actual text)</description>
     <environments>Default</environments>
     <label>Review Opportunity with Account Owner</label>
+
+    <!-- Flow Builder metadata -->
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -23,7 +25,62 @@
             <stringValue>LightningFlowBuilder</stringValue>
         </value>
     </processMetadataValues>
+
     <processType>AutoLaunchedFlow</processType>
+    <status>Active</status>
+    <startElementReference>Start</startElementReference>
+
+    <!-- Record variable -->
+    <variables>
+        <name>$Record</name>
+        <dataType>SObject</dataType>
+        <objectType>Opportunity</objectType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+
+    <!-- Start element -->
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Create_Email_Task</targetReference>
+        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>StageName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Negotiation/Review</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Amount</field>
+            <operator>GreaterThan</operator>
+            <value>
+                <numberValue>100000.0</numberValue>
+            </value>
+        </filters>
+        <object>Opportunity</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+
+        <!-- Scheduled Path embedded INSIDE start -->
+        <scheduledPaths>
+            <name>X3_Days_After_Last_Modified_Date</name>
+            <label>3 Days After Last Modified Date</label>
+            <connector>
+                <targetReference>Create_Phone_Call_Task</targetReference>
+            </connector>
+            <offsetNumber>3</offsetNumber>
+            <offsetUnit>Days</offsetUnit>
+            <timeSource>SystemModstamp</timeSource>
+        </scheduledPaths>
+    </start>
+
+    <!-- Immediate Create Task -->
     <recordCreates>
         <description>Create a task for the opportunity owner to send a follow email to the account owner today (we won’t check the actual text)</description>
         <name>Create_Email_Task</name>
@@ -55,32 +112,58 @@
             </value>
         </inputAssignments>
         <object>Task</object>
-    </recordCreates>
-    <start>
-        <locationX>50</locationX>
-        <locationY>0</locationY>
         <connector>
-            <targetReference>Create_Email_Task</targetReference>
+            <targetReference>null</targetReference>
         </connector>
-        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>StageName</field>
-            <operator>EqualTo</operator>
+    </recordCreates>
+
+    <!-- Scheduled Create Task -->
+    <recordCreates>
+        <description>Create a task for the opportunity owner to check in with the customer by phone (we won’t check the actual text)</description>
+        <name>Create_Phone_Call_Task</name>
+        <label>Create Phone Call Task</label>
+        <locationX>500</locationX>
+        <locationY>323</locationY>
+        <inputAssignments>
+            <field>Subject</field>
             <value>
-                <stringValue>Negotiation/Review</stringValue>
+                <stringValue>Outreach phone call</stringValue>
             </value>
-        </filters>
-        <filters>
-            <field>Amount</field>
-            <operator>GreaterThan</operator>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Description</field>
             <value>
-                <numberValue>100000.0</numberValue>
+                <stringValue>Call to check in with the customer</stringValue>
             </value>
-        </filters>
-        <object>Opportunity</object>
-        <recordTriggerType>CreateAndUpdate</recordTriggerType>
-        <triggerType>RecordAfterSave</triggerType>
-    </start>
-    <status>Active</status>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ActivityDate</field>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>OwnerId</field>
+            <value>
+                <elementReference>$Record.OwnerId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>WhatId</field>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Task</object>
+        <connector>
+            <targetReference>null</targetReference>
+        </connector>
+    </recordCreates>
+
+    <!-- Flow element references -->
+    <elements>
+        <flowElementReference>Start</flowElementReference>
+        <flowElementReference>Create_Email_Task</flowElementReference>
+        <flowElementReference>Create_Phone_Call_Task</flowElementReference>
+    </elements>
 </Flow>
