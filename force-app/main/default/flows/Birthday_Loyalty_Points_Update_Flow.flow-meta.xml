@@ -3,11 +3,12 @@
     <actionCalls>
         <name>Send_Email</name>
         <label>Send Email</label>
-        <locationX>776</locationX>
-        <locationY>337</locationY>
+        <locationX>352</locationX>
+        <locationY>876</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Loop_Through_Contacts</targetReference>
         </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -36,14 +37,31 @@
             </value>
         </inputParameters>
         <nameSegment>emailSimple</nameSegment>
+        <offset>0</offset>
     </actionCalls>
     <apiVersion>55.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Assign_Loyalty_Points</name>
+        <label>Assign Loyalty Points</label>
+        <locationX>440</locationX>
+        <locationY>576</locationY>
+        <assignmentItems>
+            <assignToReference>Loop_Through_Contacts.Loyalty_Points__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>LoyaltyPoints</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_Through_Contacts</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>Were_Birthdays_Found</name>
         <label>Were Birthdays Found?</label>
-        <locationX>305</locationX>
-        <locationY>339</locationY>
+        <locationX>176</locationX>
+        <locationY>360</locationY>
         <defaultConnector>
             <targetReference>Loop_Through_Contacts</targetReference>
         </defaultConnector>
@@ -63,6 +81,17 @@
     </decisions>
     <environments>Default</environments>
     <formulas>
+        <name>LoyaltyPoints</name>
+        <dataType>Number</dataType>
+        <expression>Case ({!Loop_Through_Contacts.Loyalty_Status__c},
+&apos;Bronze&apos;,{!Loop_Through_Contacts.Loyalty_Points__c} +100,
+&apos;Silver&apos;, {!Loop_Through_Contacts.Loyalty_Points__c} +250,
+&apos;Gold&apos;, {!Loop_Through_Contacts.Loyalty_Points__c} +500,
+ {!Loop_Through_Contacts.Loyalty_Points__c}
+)</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
         <name>TodaysDay</name>
         <dataType>String</dataType>
         <expression>TEXT(DAY(TODAY()))</expression>
@@ -77,12 +106,15 @@
     <loops>
         <name>Loop_Through_Contacts</name>
         <label>Loop Through Contacts</label>
-        <locationX>550</locationX>
-        <locationY>337</locationY>
+        <locationX>352</locationX>
+        <locationY>468</locationY>
         <collectionReference>Customercontactforemail</collectionReference>
         <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Assign_Loyalty_Points</targetReference>
+        </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>Send_Email</targetReference>
+            <targetReference>Update_Contact</targetReference>
         </noMoreValuesConnector>
     </loops>
     <processMetadataValues>
@@ -94,7 +126,7 @@
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
-            <stringValue>FREE_FORM_CANVAS</stringValue>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -107,8 +139,8 @@
     <recordLookups>
         <name>Get_Contact_Records</name>
         <label>Get Contact Records</label>
-        <locationX>201</locationX>
-        <locationY>337</locationY>
+        <locationX>176</locationX>
+        <locationY>252</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Were_Birthdays_Found</targetReference>
@@ -140,9 +172,19 @@
         <sortField>Id</sortField>
         <sortOrder>Asc</sortOrder>
     </recordLookups>
+    <recordUpdates>
+        <name>Update_Contact</name>
+        <label>Update Contact</label>
+        <locationX>352</locationX>
+        <locationY>768</locationY>
+        <connector>
+            <targetReference>Send_Email</targetReference>
+        </connector>
+        <inputReference>Customercontactforemail</inputReference>
+    </recordUpdates>
     <start>
-        <locationX>330</locationX>
-        <locationY>48</locationY>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
         <connector>
             <targetReference>Get_Contact_Records</targetReference>
         </connector>
@@ -153,7 +195,7 @@
         </schedule>
         <triggerType>Scheduled</triggerType>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <textTemplates>
         <name>HappyBirthday</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>
