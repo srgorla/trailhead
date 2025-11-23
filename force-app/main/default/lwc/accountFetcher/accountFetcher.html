@@ -1,0 +1,48 @@
+<template>
+    <lightning-card title="Account Fetcher (Named Credential: SG_AgentForce)" icon-name="standard:account">
+        <div class="slds-p-around_medium slds-grid slds-grid_vertical slds-var-m-vertical_small">
+            <lightning-input
+                type="text"
+                label="Account Id"
+                value={accountId}
+                onchange={handleIdChange}
+                placeholder="e.g. 001XXXXXXXXXXXXXXX">
+            </lightning-input>
+
+            <lightning-input
+                type="text"
+                label="API Version"
+                value={apiVersion}
+                onchange={handleVersionChange}
+                placeholder="v65.0">
+            </lightning-input>
+
+            <div class="slds-m-top_small">
+                <lightning-button
+                    variant="brand"
+                    label="Fetch Account"
+                    title="Fetch Account"
+                    onclick={handleFetch}
+                    disabled={isLoading}>
+                </lightning-button>
+                <template if:true={isLoading}>
+                    <lightning-spinner alternative-text="Loading" size="small" class="slds-m-left_small"></lightning-spinner>
+                </template>
+            </div>
+
+            <template if:true={error}>
+                <div class="slds-m-top_medium slds-text-color_error">
+                    {error}
+                </div>
+            </template>
+
+            <template if:true={result}>
+                <div class="slds-m-top_medium">
+                    <h3 class="slds-text-title_caps slds-m-bottom_x-small">Response</h3>
+                    <div class="slds-text-body_small">Status: {result.statusCode} - {result.status}</div>
+                    <pre class="code-block">{prettyBody}</pre>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>
