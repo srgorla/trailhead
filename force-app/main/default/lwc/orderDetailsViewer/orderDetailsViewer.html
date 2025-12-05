@@ -1,0 +1,91 @@
+<template>
+    <lightning-card title="Order Details Viewer" icon-name="standard:orders">
+        <div class="slds-m-around_medium">
+            <!-- Search Section -->
+            <div class="slds-grid slds-gutters slds-wrap">
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_8-of-12">
+                    <lightning-input
+                        label="Order ID"
+                        value={orderId}
+                        onchange={handleOrderIdChange}
+                        placeholder="Enter Order ID (e.g., ORD-001)"
+                        required>
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-p-top_large">
+                    <lightning-button
+                        variant="brand"
+                        label="Search"
+                        onclick={handleSearch}
+                        disabled={isLoading}
+                        class="slds-m-right_x-small">
+                    </lightning-button>
+                    <lightning-button
+                        label="Clear"
+                        onclick={handleClear}
+                        disabled={isLoading}>
+                    </lightning-button>
+                </div>
+            </div>
+
+            <!-- Loading Spinner -->
+            <template if:true={isLoading}>
+                <div class="slds-m-top_medium">
+                    <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                </div>
+            </template>
+
+            <!-- Order Details Section -->
+            <template if:true={hasOrderData}>
+                <div class="slds-m-top_large">
+                    <!-- Order Header -->
+                    <div class="slds-box slds-theme_shade slds-m-bottom_medium">
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <dl class="slds-list_horizontal slds-wrap">
+                                    <dt class="slds-item_label slds-text-title slds-truncate">Order ID:</dt>
+                                    <dd class="slds-item_detail slds-truncate">
+                                        <strong>{orderData.order_id}</strong>
+                                    </dd>
+                                    <dt class="slds-item_label slds-text-title slds-truncate">Customer:</dt>
+                                    <dd class="slds-item_detail slds-truncate">{orderData.customer_name}</dd>
+                                    <dt class="slds-item_label slds-text-title slds-truncate">Email:</dt>
+                                    <dd class="slds-item_detail slds-truncate">{orderData.customer_email}</dd>
+                                </dl>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <dl class="slds-list_horizontal slds-wrap">
+                                    <dt class="slds-item_label slds-text-title slds-truncate">Order Date:</dt>
+                                    <dd class="slds-item_detail slds-truncate">{orderData.order_date}</dd>
+                                    <dt class="slds-item_label slds-text-title slds-truncate">Status:</dt>
+                                    <dd class="slds-item_detail slds-truncate">
+                                        <lightning-badge label={orderData.status} variant={statusVariant}></lightning-badge>
+                                    </dd>
+                                    <dt class="slds-item_label slds-text-title slds-truncate">Total Amount:</dt>
+                                    <dd class="slds-item_detail slds-truncate">
+                                        <lightning-formatted-number
+                                            value={orderData.total_amount}
+                                            format-style="currency"
+                                            currency-code="USD">
+                                        </lightning-formatted-number>
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Order Items Table -->
+                    <div class="slds-m-top_medium">
+                        <h3 class="slds-text-heading_small slds-m-bottom_small">Order Items</h3>
+                        <lightning-datatable
+                            key-field="item_id"
+                            data={orderItems}
+                            columns={columns}
+                            hide-checkbox-column>
+                        </lightning-datatable>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

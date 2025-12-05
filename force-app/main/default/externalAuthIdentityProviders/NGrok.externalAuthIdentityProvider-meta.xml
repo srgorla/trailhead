@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ExternalAuthIdentityProvider xmlns="http://soap.sforce.com/2006/04/metadata">
+    <authenticationFlow>ClientCredentials</authenticationFlow>
+    <authenticationProtocol>OAuth</authenticationProtocol>
+    <description>NGrok</description>
+    <externalAuthIdentityProviderParameters>
+        <parameterName>audience</parameterName>
+        <parameterType>TokenRequestBodyParameter</parameterType>
+        <parameterValue>https://sfapi.example.com</parameterValue>
+        <sequenceNumber>1</sequenceNumber>
+    </externalAuthIdentityProviderParameters>
+    <externalAuthIdentityProviderParameters>
+        <parameterName>ClientAuthentication</parameterName>
+        <parameterType>ClientAuthentication</parameterType>
+        <parameterValue>ClientSecretPost</parameterValue>
+    </externalAuthIdentityProviderParameters>
+    <externalAuthIdentityProviderParameters>
+        <parameterName>TokenUrl</parameterName>
+        <parameterType>TokenUrl</parameterType>
+        <parameterValue>https://archer-daemonic-hermila.ngrok-free.dev/oauth/token</parameterValue>
+    </externalAuthIdentityProviderParameters>
+    <label>NGrok</label>
+</ExternalAuthIdentityProvider>
