@@ -1,0 +1,135 @@
+<template>
+    <div class="game-container">
+        <!-- Setup Screen -->
+        <template if:true={isSetup}>
+            <div class="setup-screen">
+                <div class="setup-card">
+                    <h1 class="game-title">JEOPARDY!</h1>
+                    <div class="version-label">CLASSIC VERSION 1</div>
+                    
+                    <div class="team-input">
+                        <label class="input-label">
+                            <lightning-icon icon-name="utility:groups" size="small"></lightning-icon>
+                            Number of Teams:
+                        </label>
+                        <lightning-input 
+                            type="number" 
+                            value={numTeams} 
+                            min="1" 
+                            max="6"
+                            onchange={handleTeamChange}
+                            variant="label-hidden">
+                        </lightning-input>
+                    </div>
+                    
+                    <lightning-button 
+                        label="Start Game" 
+                        variant="brand" 
+                        class="start-button"
+                        onclick={startGame}>
+                    </lightning-button>
+                </div>
+            </div>
+        </template>
+
+        <!-- Playing Screen -->
+        <template if:true={isPlaying}>
+            <div class="playing-screen">
+                <div class="game-header">
+                    <h1 class="game-title-play">JEOPARDY!</h1>
+                    <div class="version-label-play">CLASSIC VERSION 1</div>
+                </div>
+
+                <!-- Team Scores -->
+                <div class="team-scores" style={teamGridStyle}>
+                    <template for:each={teams} for:item="team">
+                        <div key={team.id} class={team.id} data-current={team.id}>
+                            <div class="team-card" data-is-current={team.id}>
+                                <div class="team-name">
+                                    {team.name}
+                                    <template if:true={team.id}>
+                                        <div class="current-turn">(Current Turn)</div>
+                                    </template>
+                                </div>
+                                <div class="team-score">${team.score}</div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+
+                <!-- Game Board -->
+                <template if:false={selectedQuestion}>
+                    <div class="game-board">
+                        <template for:each={categories} for:item="category">
+                            <div key={category.id} class="category-column">
+                                <div class="category-header">{category.name}</div>
+                                <template for:each={category.questions} for:item="question">
+                                    <button 
+                                        key={question.id}
+                                        data-id={question.id}
+                                        class="question-cell"
+                                        onclick={handleQuestionClick}
+                                        disabled={question.answered}>
+                                        <template if:false={question.answered}>
+                                            ${question.value}
+                                        </template>
+                                    </button>
+                                </template>
+                            </div>
+                        </template>
+                    </div>
+                </template>
+
+                <!-- Question Display -->
+                <template if:true={selectedQuestion}>
+                    <div class="question-display">
+                        <div class="question-header">
+                            {currentQuestionData.category} - ${currentQuestionData.value}
+                        </div>
+                        <div class="question-text">
+                            {currentQuestionData.question}
+                        </div>
+                        
+                        <template if:false={showAnswer}>
+                            <lightning-button 
+                                label="Show Answer" 
+                                variant="brand"
+                                class="show-answer-btn"
+                                onclick={handleShowAnswer}>
+                            </lightning-button>
+                        </template>
+
+                        <template if:true={showAnswer}>
+                            <div class="answer-text">
+                                Answer: {currentQuestionData.answer}
+                            </div>
+                            <div class="answer-buttons">
+                                <lightning-button 
+                                    label="✓ Correct" 
+                                    variant="success"
+                                    onclick={handleCorrect}>
+                                </lightning-button>
+                                <lightning-button 
+                                    label="✗ Wrong" 
+                                    variant="destructive"
+                                    onclick={handleWrong}>
+                                </lightning-button>
+                            </div>
+                        </template>
+
+                        <div class="esc-hint">Press ESC to go back</div>
+                    </div>
+                </template>
+
+                <!-- Reset Button -->
+                <div class="reset-container">
+                    <lightning-button 
+                        label="New Game" 
+                        variant="brand"
+                        onclick={resetGame}>
+                    </lightning-button>
+                </div>
+            </div>
+        </template>
+    </div>
+</template>

@@ -1,0 +1,232 @@
+.game-container {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #1e3a8a 100%);
+    padding: 1rem;
+}
+
+.setup-screen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 80vh;
+}
+
+.setup-card {
+    background: #2563eb;
+    border-radius: 0.5rem;
+    padding: 3rem;
+    border: 4px solid #fbbf24;
+    max-width: 28rem;
+    width: 100%;
+}
+
+.game-title {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #fbbf24;
+    text-align: center;
+    margin-bottom: 2rem;
+    text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+}
+
+.version-label {
+    text-align: center;
+    color: #fef3c7;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+}
+
+.team-input {
+    margin-bottom: 2rem;
+}
+
+.input-label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.start-button {
+    width: 100%;
+}
+
+.playing-screen {
+    max-width: 96rem;
+    margin: 0 auto;
+}
+
+.game-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.game-title-play {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #fbbf24;
+    text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+}
+
+.version-label-play {
+    color: #fef3c7;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-top: 0.5rem;
+}
+
+.team-scores {
+    display: grid;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.team-card {
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border: 4px solid #3b82f6;
+    background: #1e40af;
+    box-shadow: 0 10px 15px rgba(0,0,0,0.3);
+}
+
+.team-card[data-is-current="true"] {
+    background: #fbbf24;
+    border-color: #f59e0b;
+    transform: scale(1.05);
+}
+
+.team-name {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.125rem;
+    color: white;
+}
+
+.team-card[data-is-current="true"] .team-name {
+    color: #1e3a8a;
+}
+
+.current-turn {
+    font-size: 0.875rem;
+}
+
+.team-score {
+    text-align: center;
+    font-size: 1.875rem;
+    font-weight: bold;
+    color: #fbbf24;
+}
+
+.team-card[data-is-current="true"] .team-score {
+    color: #1e3a8a;
+}
+
+.game-board {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.category-column {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.category-header {
+    background: #2563eb;
+    color: white;
+    padding: 0.75rem;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 0.25rem;
+    border: 2px solid #3b82f6;
+    text-transform: uppercase;
+}
+
+.question-cell {
+    padding: 1.5rem;
+    font-size: 1.875rem;
+    font-weight: bold;
+    border-radius: 0.25rem;
+    border: 2px solid #3b82f6;
+    background: #2563eb;
+    color: #fbbf24;
+    cursor: pointer;
+    min-height: 80px;
+    transition: all 0.2s;
+}
+
+.question-cell:hover:not(:disabled) {
+    background: #1e40af;
+    transform: scale(1.05);
+}
+
+.question-cell:disabled {
+    background: #1e3a8a;
+    color: #1e3a8a;
+    border-color: #1e40af;
+    cursor: not-allowed;
+}
+
+.question-display {
+    background: #2563eb;
+    border-radius: 0.5rem;
+    padding: 3rem;
+    border: 4px solid #fbbf24;
+    margin-bottom: 2rem;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+}
+
+.question-header {
+    color: #fbbf24;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+}
+
+.question-text {
+    color: white;
+    font-size: 2.25rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.show-answer-btn {
+    display: block;
+    margin: 0 auto;
+}
+
+.answer-text {
+    color: #fef3c7;
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-style: italic;
+}
+
+.answer-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.esc-hint {
+    color: white;
+    font-size: 0.875rem;
+    text-align: center;
+    margin-top: 1.5rem;
+    opacity: 0.75;
+}
+
+.reset-container {
+    text-align: center;
+}
