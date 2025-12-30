@@ -145,13 +145,23 @@ export default class JeopardyGame extends LightningElement {
         if (isCorrect) {
             this.teams[this.currentTeam].score += questionValue;
         }
+
+        // Mark this question as answered on the question model itself (what the template binds to)
+        const q = this.categories[categoryIndex].questions[questionIndex];
+        this.categories[categoryIndex].questions[questionIndex] = { ...q, answered: true };
+        // Reassign categories to trigger reactivity on nested mutation
+        this.categories = [...this.categories];
         
-        this.answeredQuestions.add(key);
+        // Keep answeredQuestions Set in sync (optional, for any logic using it)
+        const updatedAnswered = new Set(this.answeredQuestions);
+        updatedAnswered.add(key);
+        this.answeredQuestions = updatedAnswered;
+
         this.selectedQuestion = null;
         this.showAnswer = false;
         this.currentTeam = (this.currentTeam + 1) % this.teams.length;
         
-        // Force re-render
+        // Force re-render of teams array consumers
         this.teams = [...this.teams];
     }
 
@@ -178,5 +188,10 @@ export default class JeopardyGame extends LightningElement {
             question: this.categories[categoryIndex].questions[questionIndex].question,
             answer: this.categories[categoryIndex].questions[questionIndex].answer
         };
+    }
+
+    // Use this in HTML to center the "Show Answer" button container via SLDS
+    get showAnswerContainerClass() {
+        return 'slds-align_absolute-center';
     }
 }

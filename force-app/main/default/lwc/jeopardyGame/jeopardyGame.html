@@ -91,12 +91,14 @@
                         </div>
                         
                         <template if:false={showAnswer}>
-                            <lightning-button 
-                                label="Show Answer" 
-                                variant="brand"
-                                class="show-answer-btn"
-                                onclick={handleShowAnswer}>
-                            </lightning-button>
+                            <div class={showAnswerContainerClass}>
+                                <lightning-button 
+                                    label="Show Answer" 
+                                    variant="brand"
+                                    class="show-answer-btn"
+                                    onclick={handleShowAnswer}>
+                                </lightning-button>
+                            </div>
                         </template>
 
                         <template if:true={showAnswer}>
