@@ -1,0 +1,26 @@
+<template>
+    <lightning-card title="External Sales (Athena - Apex Callout)">
+        <div class="slds-p-around_small slds-grid slds-grid_align-spread slds-grid_vertical-align-center">
+            <div>
+                <div class="slds-text-color_weak">{status}</div>
+                <template if:true={caseExternalId}>
+                    <div class="slds-text-body_small">
+                        Case External Id: <strong>{caseExternalId}</strong>
+                    </div>
+                </template>
+            </div>
+            <lightning-button label="Refresh" variant="brand" onclick={refresh}></lightning-button>
+        </div>
+
+        <template if:true={error}>
+            <div class="slds-p-around_small slds-text-color_error">{error}</div>
+        </template>
+
+        <lightning-datatable
+            key-field="id"
+            data={rows}
+            columns={columns}
+            hide-checkbox-column>
+        </lightning-datatable>
+    </lightning-card>
+</template>

@@ -1,0 +1,24 @@
+<template>
+    <lightning-card title="External Sales (Athena)">
+        <template if:true={error}>
+            <div class="slds-p-around_small slds-text-color_error">
+                {error}
+            </div>
+        </template>
+
+        <template if:true={rows}>
+            <lightning-datatable
+                key-field="Id"
+                data={rows}
+                columns={columns}
+                hide-checkbox-column>
+            </lightning-datatable>
+        </template>
+
+        <template if:true={empty}>
+            <div class="slds-p-around_small">
+                No external sales found for this Case.
+            </div>
+        </template>
+    </lightning-card>
+</template>
