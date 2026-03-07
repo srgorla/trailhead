@@ -1,0 +1,56 @@
+.user-card,
+.guest-card {
+    border: 1px solid #d8dde6;
+    border-radius: 0.75rem;
+    padding: 1rem;
+    background: #ffffff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    max-width: 420px;
+}
+
+.user-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #0176d3;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+}
+
+.welcome {
+    font-size: 0.8rem;
+    color: #5c5c5c;
+}
+
+.name {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.user-details p {
+    margin: 0.35rem 0;
+}
+
+.actions {
+    margin-top: 1rem;
+}
+
+.logout-link {
+    color: #ba0517;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.logout-link:hover {
+    text-decoration: underline;
+}

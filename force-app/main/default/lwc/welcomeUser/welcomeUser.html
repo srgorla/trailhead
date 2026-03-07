@@ -1,0 +1,36 @@
+<template>
+    <template if:true={hasUserData}>
+        <div class="slds-box slds-m-around_medium" style="background-color: #f3f3f3;">
+            <h1 class="slds-text-heading_large slds-text-align_center slds-m-bottom_medium">
+                {welcomeMessage}
+            </h1>
+            
+            <div class="slds-form" style="max-width: 500px; margin: 0 auto;">
+                <template for:each={displayFields} for:item="field">
+                    <div key={field.label} class="slds-form-element slds-m-bottom_small">
+                        <label class="slds-form-element__label" style="font-weight: 600; color: #3e3e3c;">
+                            {field.label}:
+                        </label>
+                        <div class="slds-form-element__control">
+                            <div class="slds-text-body_regular" style="color: #706e6b;">
+                                {field.value}
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+            
+            <div class="slds-text-align_center slds-m-top_medium">
+                <a href="/secur/logout.jsp" class="slds-button slds-button_neutral">
+                    Logout
+                </a>
+            </div>
+        </div>
+    </template>
+    
+    <template if:false={hasUserData}>
+        <div class="slds-text-align_center slds-p-around_medium">
+            <h1 class="slds-text-heading_large">Welcome!</h1>
+        </div>
+    </template>
+</template>

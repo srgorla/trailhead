@@ -1,0 +1,32 @@
+<template>
+    <template if:true={showCard}>
+        <div class="user-card">
+            <div class="user-header">
+                <div class="avatar">
+                    {initials}
+                </div>
+                <div>
+                    <div class="welcome">Welcome</div>
+                    <div class="name">{displayName}</div>
+                </div>
+            </div>
+
+            <div class="user-details">
+                <p><strong>Name:</strong> {displayName}</p>
+                <p><strong>Email:</strong> {email}</p>
+                <p><strong>Username:</strong> {username}</p>
+                <p><strong>Profile:</strong> {profileName}</p>
+            </div>
+
+            <div class="actions">
+                <a class="logout-link" href={logoutUrl}>Log Out</a>
+            </div>
+        </div>
+    </template>
+
+    <template if:true={isGuestUser}>
+        <div class="guest-card">
+            You are not logged in.
+        </div>
+    </template>
+</template>
