@@ -19,8 +19,24 @@
             </div>
 
             <div class="actions">
-                <a class="logout-link" href={logoutUrl}>Log Out</a>
-            </div>
+                <a
+                    class="action-link portal-link"
+                    href="http://localhost:5173/?mode=portal"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    React App
+                </a>
+                <a
+                    class="action-link portal-link"
+                    href="https://react-sf-sso-demo-agentforce.vercel.app/?mode=portal"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Vercel React App
+                </a>
+                <a class="action-link logout-link" href={logoutUrl}>Log Out</a>
+            </div>         
         </div>
     </template>
 
