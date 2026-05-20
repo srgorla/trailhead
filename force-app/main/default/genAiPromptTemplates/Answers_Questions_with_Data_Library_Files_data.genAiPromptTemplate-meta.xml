@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPromptTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Answers Questions with Data Library Files data</description>
+    <developerName>Answers_Questions_with_Data_Library_Files_data</developerName>
+    <masterLabel>Answers Questions with Data Library Files data</masterLabel>
+    <overridable>false</overridable>
+    <templateVersions>
+        <content>Answer questions using the Data library files data 
+Question:
+{!$Input:Query}
+Suporting data to answer questions:
+
+
+
+</content>
+        <inputs>
+            <apiName>Query</apiName>
+            <definition>primitive://String</definition>
+            <referenceName>Input:Query</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>RetrieverIdOrName</apiName>
+            <definition>primitive://String</definition>
+            <referenceName>Input:RetrieverIdOrName</referenceName>
+            <required>true</required>
+        </inputs>
+        <primaryModel>sfdc_ai__DefaultOpenAIGPT4OmniMini</primaryModel>
+        <status>Draft</status>
+        <versionIdentifier>DFq/EJSVbECntCwkIhS8AXc7qi3GcLxINMhkwpZrRoE=_1</versionIdentifier>
+    </templateVersions>
+    <templateVersions>
+        <content>Answer questions using the Data library files data 
+Question:
+{!$Input:Query}
+Supporting data to answer questions:
+
+
+{!$EinsteinSearch:File_FilesFAQ_1Cx_F5q4d326fcf.results}
+</content>
+        <inputs>
+            <apiName>Query</apiName>
+            <definition>primitive://String</definition>
+            <referenceName>Input:Query</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>RetrieverIdOrName</apiName>
+            <definition>primitive://String</definition>
+            <referenceName>Input:RetrieverIdOrName</referenceName>
+            <required>true</required>
+        </inputs>
+        <primaryModel>sfdc_ai__DefaultOpenAIGPT4OmniMini</primaryModel>
+        <status>Draft</status>
+        <templateDataProviders>
+            <definition>invocable://getEinsteinRetrieverResults/File_FilesFAQ_1Cx_F5q4d326fcf</definition>
+            <parameters>
+                <definition>primitive://String</definition>
+                <isRequired>true</isRequired>
+                <parameterName>searchText</parameterName>
+                <valueExpression>{!$Input:Query}</valueExpression>
+            </parameters>
+            <referenceName>EinsteinSearch:File_FilesFAQ_1Cx_F5q4d326fcf</referenceName>
+        </templateDataProviders>
+        <versionIdentifier>DFq/EJSVbECntCwkIhS8AXc7qi3GcLxINMhkwpZrRoE=_2</versionIdentifier>
+    </templateVersions>
+    <templateVersions>
+        <content>Answer questions using the Data library files data 
+Question:
+{!$Input:Query}
+Supporting data to answer questions:
+{!$EinsteinSearch:File_FilesFAQ_1Cx_F5q4d326fcf.results}
+
+</content>
+        <inputs>
+            <apiName>RetrieverIdOrName</apiName>
+            <definition>primitive://String</definition>
+            <referenceName>Input:RetrieverIdOrName</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Query</apiName>
+            <definition>primitive://String</definition>
+            <referenceName>Input:Query</referenceName>
+            <required>true</required>
+        </inputs>
+        <primaryModel>sfdc_ai__DefaultOpenAIGPT4OmniMini</primaryModel>
+        <status>Draft</status>
+        <templateDataProviders>
+            <definition>invocable://getEinsteinRetrieverResults/File_FilesFAQ_1Cx_F5q4d326fcf</definition>
+            <parameters>
+                <definition>primitive://String</definition>
+                <isRequired>true</isRequired>
+                <parameterName>searchText</parameterName>
+                <valueExpression>{!$Input:Query}</valueExpression>
+            </parameters>
+            <referenceName>EinsteinSearch:File_FilesFAQ_1Cx_F5q4d326fcf</referenceName>
+        </templateDataProviders>
+        <versionIdentifier>DFq/EJSVbECntCwkIhS8AXc7qi3GcLxINMhkwpZrRoE=_3</versionIdentifier>
+    </templateVersions>
+    <type>einstein_gpt__knowledgeAnswers</type>
+    <visibility>Global</visibility>
+</GenAiPromptTemplate>

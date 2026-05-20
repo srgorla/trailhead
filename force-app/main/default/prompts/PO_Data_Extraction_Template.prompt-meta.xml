@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Prompt xmlns="http://soap.sforce.com/2006/04/metadata">
+    <masterLabel>PO Data Extraction Template</masterLabel>
+    <promptVersions>
+        <masterLabel>Version 1</masterLabel>
+        <promptTemplateText>You are an AI assistant specialized in extracting purchase order information from documents.
+
+Analyze the provided file and extract ALL information into a structured JSON format.
+
+File ID: {!$Input:ContentVersion.Id}
+File Name: {!$Input:ContentVersion.Title}
+
+Extract the following information from the purchase order:
+
+HEADER INFORMATION:
+1. PO Number (e.g., PO-2026-10458)
+2. PO Date
+3. Requested Delivery Date
+
+VENDOR INFORMATION:
+- Company Name
+- Vendor ID (if available)
+- Full Address (Street, City, State, Zip)
+- Phone
+- Email
+
+BUYER INFORMATION (Company issuing the PO):
+- Company Name
+- Contact Name
+- Full Address (Street, City, State, Zip)
+- Phone
+- Email
+
+SHIP TO INFORMATION:
+- Name/Location
+- Full Address (Street, City, State, Zip)
+- Receiving hours (if available)
+
+BILL TO INFORMATION:
+- Name/Department
+- Full Address (Street, City, State, Zip)
+
+LINE ITEMS (Extract ALL line items):
+For each line item, extract:
+- Line Number
+- Item/SKU Code
+- Product Name
+- Description (full description text)
+- Quantity
+- Unit Price
+- Line Total
+
+FINANCIAL INFORMATION:
+- Subtotal
+- Tax Rate (percentage)
+- Tax Amount
+- Shipping Amount
+- Grand Total
+
+ADDITIONAL INFORMATION:
+- Payment Terms
+- Shipping Method
+- Notes
+- Authorized By (Name)
+- Authorized By Title
+
+Return ONLY valid JSON in this EXACT format (no markdown, no code blocks):
+
+{
+  "poNumber": "string",
+  "poDate": "YYYY-MM-DD",
+  "requestedDeliveryDate": "YYYY-MM-DD",
+  "vendor": {
+    "companyName": "string",
+    "vendorId": "string",
+    "address": {
+      "street": "string",
+      "city": "string",
+      "state": "string",
+      "zipCode": "string"
+    },
+    "phone": "string",
+    "email": "string"
+  },
+  "buyer": {
+    "companyName": "string",
+    "contactName": "string",
+    "address": {
+      "street": "string",
+      "city": "string",
+      "state": "string",
+      "zipCode": "string"
+    },
+    "phone": "string",
+    "email": "string"
+  },
+  "shipTo": {
+    "name": "string",
+    "address": {
+      "street": "string",
+      "city": "string",
+      "state": "string",
+      "zipCode": "string"
+    }
+  },
+  "billTo": {
+    "name": "string",
+    "address": {
+      "street": "string",
+      "city": "string",
+      "state": "string",
+      "zipCode": "string"
+    }
+  },
+  "lineItems": [
+    {
+      "lineNumber": 1,
+      "itemCode": "string",
+      "productName": "string",
+      "description": "string",
+      "quantity": number,
+      "unitPrice": number,
+      "lineTotal": number
+    }
+  ],
+  "subtotal": number,
+  "taxRate": number,
+  "taxAmount": number,
+  "shippingAmount": number,
+  "orderTotal": number,
+  "paymentTerms": "string",
+  "shippingMethod": "string",
+  "notes": "string",
+  "authorizedBy": "string",
+  "authorizedByTitle": "string"
+}</promptTemplateText>
+        <status>Published</status>
+        <versionNumber>1</versionNumber>
+    </promptVersions>
+</Prompt>

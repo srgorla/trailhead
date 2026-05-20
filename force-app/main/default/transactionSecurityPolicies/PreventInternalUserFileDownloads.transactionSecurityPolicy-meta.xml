@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TransactionSecurityPolicy xmlns="http://soap.sforce.com/2006/04/metadata">
+    <action>
+        <block>true</block>
+        <endSession>false</endSession>
+        <freezeUser>false</freezeUser>
+        <notifications>
+            <inApp>false</inApp>
+            <sendEmail>false</sendEmail>
+            <user>sgorla143@agentforce.com</user>
+        </notifications>
+        <twoFactorAuthentication>false</twoFactorAuthentication>
+    </action>
+    <active>false</active>
+    <apexClass>PreventFileDownloadCondition</apexClass>
+    <description>Prevents internal users from downloading files. System Administrators are exempt. This policy monitors file download events and blocks them based on user profile.</description>
+    <developerName>PreventInternalUserFileDownloads</developerName>
+    <eventName>FileEventStore</eventName>
+    <masterLabel>Prevent Internal User File Downloads</masterLabel>
+    <type>CustomApexPolicy</type>
+</TransactionSecurityPolicy>
