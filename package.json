@@ -30,6 +30,9 @@
     "prettier": "^3.5.3",
     "prettier-plugin-apex": "^2.2.6"
   },
+  "dependencies": {
+    "salesforce-pubsub-api-client": "^5.0.0"
+  },
   "lint-staged": {
     "**/*.{cls,cmp,component,css,html,js,json,md,page,trigger,xml,yaml,yml}": [
       "prettier --write"
@@ -38,7 +41,7 @@
       "eslint"
     ],
     "**/lwc/**": [
-        "sfdx-lwc-jest -- --bail --findRelatedTests --passWithNoTests"
+      "sfdx-lwc-jest -- --bail --findRelatedTests --passWithNoTests"
     ]
   }
 }
