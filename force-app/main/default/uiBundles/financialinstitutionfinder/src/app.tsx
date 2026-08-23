@@ -22,6 +22,19 @@ type AccountNode = {
   Supports_Enrollment__c: FieldValue<boolean>;
 };
 
+type AccountEdge = {
+  cursor: string;
+  node: AccountNode;
+};
+
+type AccountConnection = {
+  edges: AccountEdge[];
+  pageInfo: {
+    hasNextPage: boolean;
+    endCursor: string | null;
+  };
+};
+
 type Institution = {
   id: string;
   name: string;
@@ -36,21 +49,27 @@ type Institution = {
 type GraphQLResponse = {
   uiapi: {
     query: {
-      Account: {
-        edges: Array<{
-          node: AccountNode;
-        }>;
-      };
+      Account: AccountConnection;
     };
   };
 };
 
+type GraphQLError = {
+  message: string;
+};
+
+type FinancialInstitutionsResult = {
+  data?: GraphQLResponse;
+  errors?: GraphQLError[];
+};
+
 const FINANCIAL_INSTITUTIONS_QUERY = `
-query FinancialInstitutions {
+query FinancialInstitutions($after: String) {
   uiapi {
     query {
       Account(
         first: 200
+        after: $after
         where: {
           and: [
             { Publicly_Listed__c: { eq: true } }
@@ -58,8 +77,9 @@ query FinancialInstitutions {
           ]
         }
         orderBy: { Name: { order: ASC } }
-      ) {
+        ) {
         edges {
+          cursor
           node {
             Id
             Name { value }
@@ -71,6 +91,10 @@ query FinancialInstitutions {
             Enrollment_URL__c { value }
             Supports_Enrollment__c { value }
           }
+        }
+        pageInfo {
+          hasNextPage
+          endCursor
         }
       }
     }
@@ -129,6 +153,21 @@ function filterInstitutions(
   });
 }
 
+function filterBySearch(institutions: Institution[], searchText: string): Institution[] {
+  const normalizedSearch = searchText.trim().toLowerCase();
+
+  if (normalizedSearch.length === 0) {
+    return institutions;
+  }
+
+  return institutions.filter(institution =>
+    [institution.name, institution.keywords, institution.city]
+      .join(' ')
+      .toLowerCase()
+      .includes(normalizedSearch)
+  );
+}
+
 function InstitutionName({ institution }: { institution: Institution }) {
   const actionUrl = institution.enrollmentUrl || institution.website;
 
@@ -163,6 +202,57 @@ function InstitutionList({ institutions }: { institutions: Institution[] }) {
   );
 }
 
+function ZelleInfoFooter() {
+  return (
+    <footer className="zelle-info">
+      <section className="zelle-info-panel" aria-labelledby="zelle-info-heading">
+        <h2 id="zelle-info-heading">What is Zelle<sup>®</sup>?</h2>
+        <p>
+          Zelle<sup>®</sup> is a fast, safe and easy way to send and receive money directly between almost any bank
+          accounts in the U.S., typically within minutes.<sup>1</sup> With just an email address or U.S. mobile phone
+          number, you can send money to and receive money from friends, family and others you trust.
+        </p>
+        <a className="learn-more" href="https://www.zellepay.com/how-it-works" target="_blank" rel="noreferrer">
+          Learn More
+        </a>
+      </section>
+
+      <section className="zelle-footer-nav" aria-label="Zelle footer links">
+        <div className="footer-lockup">
+          <img src={zelleLogo} alt="Zelle" />
+          <nav>
+            <a href="https://www.zellepay.com/contact-us" target="_blank" rel="noreferrer">
+              Contact Us
+            </a>
+            <a href="https://www.zellepay.com/financial-institutions" target="_blank" rel="noreferrer">
+              Partners
+            </a>
+            <a href="https://www.zellepay.com/press-releases" target="_blank" rel="noreferrer">
+              Press
+            </a>
+            <a href="https://www.zellepay.com/legal" target="_blank" rel="noreferrer">
+              Legal
+            </a>
+            <a href="https://www.zellepay.com/privacy" target="_blank" rel="noreferrer">
+              Your Privacy Rights
+            </a>
+          </nav>
+        </div>
+        <div className="footer-rule" />
+        <p className="footnote">
+          <sup>1</sup> Must have a bank account in the U.S. to use Zelle<sup>®</sup>. Transactions typically occur in
+          minutes when the recipient&apos;s email address or U.S. mobile number is already enrolled with Zelle
+          <sup>®</sup>.
+        </p>
+        <p className="copyright">
+          ©2026 Early Warning Services, LLC. All rights reserved. Zelle, the Zelle related marks, and the color purple
+          are registered trademarks or trademarks of Early Warning Services, LLC.
+        </p>
+      </section>
+    </footer>
+  );
+}
+
 function DirectoryPage() {
   const [institutions, setInstitutions] = useState<Institution[]>([]);
   const [searchText, setSearchText] = useState('');
@@ -179,16 +269,28 @@ function DirectoryPage() {
 
       try {
         const data = await createDataSDK();
-        const result = await data.graphql?.query<GraphQLResponse, Record<string, never>>({
-          query: FINANCIAL_INSTITUTIONS_QUERY,
-          variables: {}
-        });
+        const rows: Institution[] = [];
+        let after: string | null = null;
+        let hasNextPage = true;
 
-        if (result?.errors?.length) {
-          throw new Error(result.errors.map(item => item.message).join('; '));
+        while (hasNextPage) {
+          const result: FinancialInstitutionsResult | undefined = await data.graphql?.query<
+            GraphQLResponse,
+            { after: string | null }
+          >({
+            query: FINANCIAL_INSTITUTIONS_QUERY,
+            variables: { after }
+          });
+
+          if (result?.errors?.length) {
+            throw new Error(result.errors.map(item => item.message).join('; '));
+          }
+
+          const accountConnection: AccountConnection | undefined = result?.data?.uiapi.query.Account;
+          rows.push(...(accountConnection?.edges.map(edge => mapInstitution(edge.node)) || []));
+          hasNextPage = accountConnection?.pageInfo.hasNextPage === true;
+          after = accountConnection?.pageInfo.endCursor || null;
         }
-
-        const rows = result?.data?.uiapi.query.Account.edges.map(edge => mapInstitution(edge.node)) || [];
 
         if (isMounted) {
           setInstitutions(rows);
@@ -211,10 +313,20 @@ function DirectoryPage() {
     };
   }, []);
 
+  const searchFilteredInstitutions = useMemo(() => filterBySearch(institutions, searchText), [institutions, searchText]);
+  const availableLetters = useMemo(() => new Set(searchFilteredInstitutions.map(institution => getLetter(institution.name))), [
+    searchFilteredInstitutions
+  ]);
   const filteredInstitutions = useMemo(
     () => filterInstitutions(institutions, searchText, selectedLetter),
     [institutions, searchText, selectedLetter]
   );
+
+  useEffect(() => {
+    if (selectedLetter !== 'All' && !availableLetters.has(selectedLetter)) {
+      setSelectedLetter('All');
+    }
+  }, [availableLetters, selectedLetter]);
 
   return (
     <main className="app-shell">
@@ -256,16 +368,21 @@ function DirectoryPage() {
 
       <nav className="alphabet-band" aria-label="Filter by first letter">
         <div className="alphabet-filter">
-          {zelleAlphabet.map(letter => (
-            <button
-              key={letter}
-              type="button"
-              className={selectedLetter === letter ? 'active' : ''}
-              onClick={() => setSelectedLetter(selectedLetter === letter ? 'All' : letter)}
-            >
-              {letter}
-            </button>
-          ))}
+          {zelleAlphabet.map(letter => {
+            const hasMatches = availableLetters.has(letter);
+
+            return (
+              <button
+                key={letter}
+                type="button"
+                className={selectedLetter === letter ? 'active' : ''}
+                disabled={!hasMatches}
+                onClick={() => setSelectedLetter(selectedLetter === letter ? 'All' : letter)}
+              >
+                {letter}
+              </button>
+            );
+          })}
         </div>
       </nav>
 
@@ -288,6 +405,8 @@ function DirectoryPage() {
       )}
 
       {!isLoading && !error && filteredInstitutions.length > 0 && <InstitutionList institutions={filteredInstitutions} />}
+
+      <ZelleInfoFooter />
     </main>
   );
 }

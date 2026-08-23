@@ -141,6 +141,8 @@ button {
 .alphabet-filter button:disabled,
 .alphabet-filter button[aria-disabled="true"] {
   color: #d8c8ef;
+  cursor: default;
+  text-decoration: none;
 }
 .results-summary {
   margin-top: 48px;
@@ -202,13 +204,119 @@ a.institution-name:hover {
 .state-panel p {
   margin: 8px 0 0;
 }
+.zelle-info {
+  margin-top: 32px;
+  color: #fff;
+  background: #6d1ed4;
+}
+.zelle-info-panel {
+  width: min(900px, calc(100% - 48px));
+  margin: 0 auto;
+  padding: 68px 0 76px;
+  text-align: center;
+}
+.zelle-info-panel h2 {
+  margin: 0 0 42px;
+  color: #fff;
+  font-size: 62px;
+  font-weight: 200;
+  line-height: 1.08;
+}
+.zelle-info-panel p {
+  margin: 0 auto;
+  max-width: 780px;
+  color: #ffffffeb;
+  font-size: 22px;
+  font-weight: 300;
+  line-height: 1.55;
+}
+.learn-more {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 210px;
+  min-height: 62px;
+  margin-top: 48px;
+  border-radius: 6px;
+  color: #fff;
+  background: #fff3;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+.learn-more:hover {
+  background: #ffffff47;
+}
+.zelle-footer-nav {
+  padding: 48px 0 54px;
+  background: #5f13b8;
+}
+.footer-lockup,
+.footer-rule,
+.footnote,
+.copyright {
+  width: min(900px, calc(100% - 48px));
+  margin-right: auto;
+  margin-left: auto;
+}
+.footer-lockup {
+  display: flex;
+  align-items: center;
+  gap: 34px;
+}
+.footer-lockup img {
+  display: block;
+  width: 88px;
+  height: auto;
+  flex: 0 0 auto;
+}
+.footer-lockup nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 22px 32px;
+}
+.footer-lockup a {
+  color: #ffffffe6;
+  font-size: 16px;
+  line-height: 1.3;
+  text-decoration: none;
+}
+.footer-lockup a:hover {
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.footer-rule {
+  height: 1px;
+  margin-top: 34px;
+  margin-bottom: 28px;
+  background: #ffffff2e;
+}
+.footnote,
+.copyright {
+  color: #ffffffd6;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.45;
+}
+.copyright {
+  margin-top: 36px;
+}
 @media (max-width: 640px) {
   .brand-inner,
   .search-inner,
   .alphabet-filter,
   .results-summary,
   .results-list,
-  .state-panel {
+  .state-panel,
+  .zelle-info-panel,
+  .footer-lockup,
+  .footer-rule,
+  .footnote,
+  .copyright {
     width: min(100% - 32px, 1240px);
   }
   .brand-inner {
@@ -240,5 +348,30 @@ a.institution-name:hover {
   .letter-results {
     grid-template-columns: 1fr;
     row-gap: 18px;
+  }
+  .zelle-info {
+    margin-top: 12px;
+  }
+  .zelle-info-panel {
+    padding: 52px 0 60px;
+  }
+  .zelle-info-panel h2 {
+    margin-bottom: 30px;
+    font-size: 42px;
+  }
+  .zelle-info-panel p {
+    font-size: 18px;
+  }
+  .learn-more {
+    width: 100%;
+    margin-top: 36px;
+  }
+  .footer-lockup {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .footer-lockup nav {
+    gap: 16px 24px;
   }
 }
