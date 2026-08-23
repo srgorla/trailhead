@@ -4,7 +4,7 @@ import salesforce from '@salesforce/vite-plugin-ui-bundle';
 
 export default defineConfig({
     base: './',
-    plugins: [react(), salesforce()],
+    plugins: [react(), salesforce({ orgAlias: 'fifinder_test' })],
     build: {
         outDir: 'dist',
         assetsDir: 'assets',
