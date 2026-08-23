@@ -347,11 +347,9 @@ function DirectoryPage() {
       <header className="brand-header">
         <div className="brand-inner">
           <div className="zelle-lockup" aria-label="Zelle Find Your Bank">
-            <img
-              className="zelle-wordmark"
-              src={zelleLogo}
-              alt="Zelle"
-            />
+            <a className="zelle-home-link" href="https://www.zellepay.com/" target="_blank" rel="noreferrer">
+              <img className="zelle-wordmark" src={zelleLogo} alt="Zelle" />
+            </a>
             <span className="lockup-divider" aria-hidden="true" />
             <span className="lockup-title">Find Your Bank</span>
           </div>
@@ -361,7 +359,7 @@ function DirectoryPage() {
       <section className="search-hero" aria-label="Institution search">
         <div className="search-inner">
           <label className="search-box">
-            <Search size={42} strokeWidth={1.5} aria-hidden="true" />
+            <Search className="search-icon" size={42} strokeWidth={1.5} aria-hidden="true" />
             <input
               value={searchText}
               onChange={event => {

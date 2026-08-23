@@ -16187,7 +16187,7 @@ const Uy =
   "You should call navigate() in a React.useEffect(), not when your component is first rendered.";
 function Z1() {
   let { isDataRoute: a } = z.useContext(ca);
-  return a ? r2() : F1();
+  return a ? rb() : F1();
 }
 function F1() {
   De(
@@ -16255,7 +16255,7 @@ function K1(a, l, r) {
           Object.assign(U, { route: r.manifest[U.route.id] || U.route })
         )
       : cy(a, { pathname: b });
-  return e2(
+  return eb(
     C &&
       C.map((U) =>
         Object.assign({}, U, {
@@ -16292,7 +16292,7 @@ function K1(a, l, r) {
   );
 }
 function J1() {
-  let a = i2(),
+  let a = ib(),
     l = mr(a)
       ? `${a.status} ${a.statusText}`
       : a instanceof Error
@@ -16422,7 +16422,7 @@ function P1({ routeContext: a, match: l, children: r }) {
     z.createElement(ca.Provider, { value: a }, r)
   );
 }
-function e2(a, l = [], r) {
+function eb(a, l = [], r) {
   let s = r?.state;
   if (a == null) {
     if (!s) return null;
@@ -16486,7 +16486,7 @@ function e2(a, l = [], r) {
       (X = b.route.errorElement || $1),
       h &&
         (p < 0 && C === 0
-          ? (u2(
+          ? (ub(
               "route-fallback",
               !1,
               "No `HydrateFallback` element provided to render during initial hydration"
@@ -16531,20 +16531,20 @@ function e2(a, l = [], r) {
 function uf(a) {
   return `${a} must be used within a data router.  See https://reactrouter.com/en/main/routers/picking-a-router.`;
 }
-function t2(a) {
+function tb(a) {
   let l = z.useContext(dl);
   return (De(l, uf(a)), l);
 }
-function n2(a) {
+function nb(a) {
   let l = z.useContext(gr);
   return (De(l, uf(a)), l);
 }
-function a2(a) {
+function ab(a) {
   let l = z.useContext(ca);
   return (De(l, uf(a)), l);
 }
 function sf(a) {
-  let l = a2(a),
+  let l = ab(a),
     r = l.matches[l.matches.length - 1];
   return (
     De(
@@ -16554,17 +16554,17 @@ function sf(a) {
     r.route.id
   );
 }
-function l2() {
+function lb() {
   return sf("useRouteId");
 }
-function i2() {
+function ib() {
   let a = z.useContext(rf),
-    l = n2("useRouteError"),
+    l = nb("useRouteError"),
     r = sf("useRouteError");
   return a !== void 0 ? a : l.errors?.[r];
 }
-function r2() {
-  let { router: a } = t2("useNavigate"),
+function rb() {
+  let { router: a } = tb("useNavigate"),
     l = sf("useNavigate"),
     r = z.useRef(!1);
   return (
@@ -16584,15 +16584,15 @@ function r2() {
   );
 }
 const k0 = {};
-function u2(a, l, r) {
+function ub(a, l, r) {
   k0[a] || ((k0[a] = !0), jt(!1, r));
 }
 const Y0 = {};
 function V0(a, l) {
   !a && !Y0[l] && ((Y0[l] = !0), console.warn(l));
 }
-const s2 = ["HydrateFallback", "hydrateFallbackElement"];
-var c2 = class {
+const sb = ["HydrateFallback", "hydrateFallbackElement"];
+var cb = class {
   status = "pending";
   promise;
   resolve;
@@ -16608,7 +16608,7 @@ var c2 = class {
     });
   }
 };
-function o2({ router: a, flushSync: l, onError: r, useTransitions: s }) {
+function ob({ router: a, flushSync: l, onError: r, useTransitions: s }) {
   s = xy() || s;
   let [o, f] = z.useState(a.state),
     [h, p] = z.useOptimistic(o),
@@ -16706,7 +16706,7 @@ function o2({ router: a, flushSync: l, onError: r, useTransitions: s }) {
     );
   (z.useLayoutEffect(() => a.subscribe(ne), [a, ne]),
     z.useEffect(() => {
-      g.isTransitioning && !g.flushSync && O(new c2());
+      g.isTransitioning && !g.flushSync && O(new cb());
     }, [g]),
     z.useEffect(() => {
       if (C && v && a.window) {
@@ -16787,7 +16787,7 @@ function o2({ router: a, flushSync: l, onError: r, useTransitions: s }) {
             lf.Provider,
             { value: g },
             z.createElement(
-              h2,
+              hb,
               {
                 basename: se,
                 location: h.location,
@@ -16795,7 +16795,7 @@ function o2({ router: a, flushSync: l, onError: r, useTransitions: s }) {
                 navigator: oe,
                 useTransitions: s
               },
-              z.createElement(f2, {
+              z.createElement(fb, {
                 routes: a.routes,
                 manifest: a.manifest,
                 future: a.future,
@@ -16821,8 +16821,8 @@ function G0(a, l) {
     fetchers: l.fetchers
   };
 }
-const f2 = z.memo(d2);
-function d2({
+const fb = z.memo(db);
+function db({
   routes: a,
   manifest: l,
   future: r,
@@ -16832,7 +16832,7 @@ function d2({
 }) {
   return K1(a, void 0, { manifest: l, state: s, isStatic: o, onError: f });
 }
-function h2({
+function hb({
   basename: a = "/",
   children: l = null,
   location: r,
@@ -16899,23 +16899,23 @@ const Zu = "application/x-www-form-urlencoded";
 function ns(a) {
   return typeof HTMLElement < "u" && a instanceof HTMLElement;
 }
-function m2(a) {
+function mb(a) {
   return ns(a) && a.tagName.toLowerCase() === "button";
 }
-function y2(a) {
+function yb(a) {
   return ns(a) && a.tagName.toLowerCase() === "form";
 }
-function p2(a) {
+function pb(a) {
   return ns(a) && a.tagName.toLowerCase() === "input";
 }
-function v2(a) {
+function vb(a) {
   return !!(a.metaKey || a.altKey || a.ctrlKey || a.shiftKey);
 }
-function g2(a, l) {
-  return a.button === 0 && (!l || l === "_self") && !v2(a);
+function gb(a, l) {
+  return a.button === 0 && (!l || l === "_self") && !vb(a);
 }
 let Vu = null;
-function b2() {
+function bb() {
   if (Vu === null)
     try {
       (new FormData(document.createElement("form"), 0), (Vu = !1));
@@ -16924,13 +16924,13 @@ function b2() {
     }
   return Vu;
 }
-const E2 = new Set([
+const Eb = new Set([
   "application/x-www-form-urlencoded",
   "multipart/form-data",
   "text/plain"
 ]);
 function _o(a) {
-  return a != null && !E2.has(a)
+  return a != null && !Eb.has(a)
     ? (jt(
         !1,
         `"${a}" is not a valid \`encType\` for \`<Form>\`/\`<fetcher.Form>\` and will default to "${Zu}"`
@@ -16938,15 +16938,15 @@ function _o(a) {
       null)
     : a;
 }
-function S2(a, l) {
+function Sb(a, l) {
   let r, s, o, f, h;
-  if (y2(a)) {
+  if (yb(a)) {
     let p = a.getAttribute("action");
     ((s = p ? Tn(p, l) : null),
       (r = a.getAttribute("method") || "get"),
       (o = _o(a.getAttribute("enctype")) || Zu),
       (f = new FormData(a)));
-  } else if (m2(a) || (p2(a) && (a.type === "submit" || a.type === "image"))) {
+  } else if (mb(a) || (pb(a) && (a.type === "submit" || a.type === "image"))) {
     let p = a.form;
     if (p == null)
       throw new Error(
@@ -16961,7 +16961,7 @@ function S2(a, l) {
         _o(p.getAttribute("enctype")) ||
         Zu),
       (f = new FormData(p, a)),
-      !b2())
+      !bb())
     ) {
       let { name: y, type: g, value: b } = a;
       if (g === "image") {
@@ -16999,7 +16999,7 @@ function Ly(a, l) {
     r
   );
 }
-async function T2(a, l) {
+async function Tb(a, l) {
   if (a.id in l) return l[a.id];
   try {
     let r = await import(a.module);
@@ -17016,7 +17016,7 @@ async function T2(a, l) {
     );
   }
 }
-function R2(a) {
+function Rb(a) {
   return a == null
     ? !1
     : a.href == null
@@ -17025,14 +17025,14 @@ function R2(a) {
         typeof a.imageSizes == "string"
       : typeof a.rel == "string" && typeof a.href == "string";
 }
-async function A2(a, l, r) {
-  return D2(
+async function Ab(a, l, r) {
+  return Db(
     (
       await Promise.all(
         a.map(async (s) => {
           let o = l.routes[s.route.id];
           if (o) {
-            let f = await T2(o, r);
+            let f = await Tb(o, r);
             return f.links ? f.links() : [];
           }
           return [];
@@ -17040,7 +17040,7 @@ async function A2(a, l, r) {
       )
     )
       .flat(1)
-      .filter(R2)
+      .filter(Rb)
       .filter((s) => s.rel === "stylesheet" || s.rel === "preload")
       .map((s) =>
         s.rel === "stylesheet"
@@ -17078,8 +17078,8 @@ function Q0(a, l, r, s, o, f) {
         })
       : [];
 }
-function N2(a, l, { includeHydrateFallback: r } = {}) {
-  return C2(
+function Nb(a, l, { includeHydrateFallback: r } = {}) {
+  return Cb(
     a
       .map((s) => {
         let o = l.routes[s.route.id];
@@ -17098,26 +17098,26 @@ function N2(a, l, { includeHydrateFallback: r } = {}) {
       .flat(1)
   );
 }
-function C2(a) {
+function Cb(a) {
   return [...new Set(a)];
 }
-function O2(a) {
+function Ob(a) {
   let l = {},
     r = Object.keys(a).sort();
   for (let s of r) l[s] = a[s];
   return l;
 }
-function D2(a, l) {
+function Db(a, l) {
   let r = new Set();
   return (
     new Set(l),
     a.reduce((s, o) => {
-      let f = JSON.stringify(O2(o));
+      let f = JSON.stringify(Ob(o));
       return (r.has(f) || (r.add(f), s.push({ key: f, link: o })), s);
     }, [])
   );
 }
-function _2() {
+function _b() {
   let a = z.useContext(dl);
   return (
     cf(
@@ -17127,7 +17127,7 @@ function _2() {
     a
   );
 }
-function w2() {
+function wb() {
   let a = z.useContext(gr);
   return (
     cf(
@@ -17146,7 +17146,7 @@ function ff() {
     a
   );
 }
-function x2(a, l) {
+function xb(a, l) {
   let r = z.useContext(of),
     [s, o] = z.useState(!1),
     [f, h] = z.useState(!1),
@@ -17211,26 +17211,26 @@ function lr(a, l) {
     (a && a(r), r.defaultPrevented || l(r));
   };
 }
-function M2({ page: a, ...l }) {
+function Mb({ page: a, ...l }) {
   let r = xy(),
     { nonce: s } = ff(),
-    { router: o } = _2(),
+    { router: o } = _b(),
     f = z.useMemo(() => cy(o.routes, a, o.basename), [o.routes, a, o.basename]);
   return f
     ? (l.nonce == null && s && (l = { ...l, nonce: s }),
       r
-        ? z.createElement(U2, { page: a, matches: f, ...l })
-        : z.createElement(L2, { page: a, matches: f, ...l }))
+        ? z.createElement(Ub, { page: a, matches: f, ...l })
+        : z.createElement(Lb, { page: a, matches: f, ...l }))
     : null;
 }
-function z2(a) {
+function zb(a) {
   let { manifest: l, routeModules: r } = ff(),
     [s, o] = z.useState([]);
   return (
     z.useEffect(() => {
       let f = !1;
       return (
-        A2(a, l, r).then((h) => {
+        Ab(a, l, r).then((h) => {
           f || o(h);
         }),
         () => {
@@ -17241,7 +17241,7 @@ function z2(a) {
     s
   );
 }
-function U2({ page: a, matches: l, ...r }) {
+function Ub({ page: a, matches: l, ...r }) {
   let s = oa(),
     o = z.useMemo(() => {
       if (a === s.pathname + s.search + s.hash) return [];
@@ -17271,10 +17271,10 @@ function U2({ page: a, matches: l, ...r }) {
     )
   );
 }
-function L2({ page: a, matches: l, ...r }) {
+function Lb({ page: a, matches: l, ...r }) {
   let s = oa(),
     { manifest: o, routeModules: f } = ff(),
-    { loaderData: h, matches: p } = w2(),
+    { loaderData: h, matches: p } = wb(),
     v = z.useMemo(() => Q0(a, l, p, o, s, "data"), [a, l, p, o, s]),
     y = z.useMemo(() => Q0(a, l, p, o, s, "assets"), [a, l, p, o, s]),
     g = z.useMemo(() => {
@@ -17310,8 +17310,8 @@ function L2({ page: a, matches: l, ...r }) {
         [X.pathname + X.search]
       );
     }, [h, s, o, v, l, a, f]),
-    b = z.useMemo(() => N2(y, o), [y, o]),
-    C = z2(y);
+    b = z.useMemo(() => Nb(y, o), [y, o]),
+    C = zb(y);
   return z.createElement(
     z.Fragment,
     null,
@@ -17337,41 +17337,41 @@ function L2({ page: a, matches: l, ...r }) {
     )
   );
 }
-function j2(...a) {
+function jb(...a) {
   return (l) => {
     a.forEach((r) => {
       typeof r == "function" ? r(l) : r != null && (r.current = l);
     });
   };
 }
-const H2 =
+const Hb =
   typeof window < "u" &&
   typeof window.document < "u" &&
   typeof window.document.createElement < "u";
 try {
-  H2 && (window.__reactRouterVersion = "8.3.0");
+  Hb && (window.__reactRouterVersion = "8.3.0");
 } catch {}
-function B2(a, l) {
+function Bb(a, l) {
   return m1({
     basename: l?.basename,
     getContext: l?.getContext,
     future: l?.future,
     history: wg({ window: l?.window }),
-    hydrationData: l?.hydrationData || q2(),
+    hydrationData: l?.hydrationData || qb(),
     routes: a,
     mapRouteProperties: sy,
-    hydrationRouteProperties: s2,
+    hydrationRouteProperties: sb,
     dataStrategy: l?.dataStrategy,
     patchRoutesOnNavigation: l?.patchRoutesOnNavigation,
     window: l?.window,
     instrumentations: l?.instrumentations
   }).initialize();
 }
-function q2() {
+function qb() {
   let a = window?.__staticRouterHydrationData;
-  return (a && a.errors && (a = { ...a, errors: k2(a.errors) }), a);
+  return (a && a.errors && (a = { ...a, errors: kb(a.errors) }), a);
 }
-function k2(a) {
+function kb(a) {
   if (!a) return null;
   let l = Object.entries(a),
     r = {};
@@ -17426,8 +17426,8 @@ const jy = z.forwardRef(function (
       (Je.pathname = Je.pathname === "/" ? Z : hn([Z, Je.pathname])),
       (J = $.createHref(Je)));
   }
-  let [L, Te, He] = x2(s, U),
-    Xe = Q2(g, {
+  let [L, Te, He] = xb(s, U),
+    Xe = Qb(g, {
       replace: h,
       mask: p,
       state: v,
@@ -17447,16 +17447,16 @@ const jy = z.forwardRef(function (
       ...He,
       href: (Be ? J : void 0) || oe.absoluteURL || se,
       onClick: Be ? Oe : l,
-      ref: j2(X, Te),
+      ref: jb(X, Te),
       target: y,
       "data-discover": !ne && r === "render" ? "true" : void 0
     });
   return L && !ne
-    ? z.createElement(z.Fragment, null, rt, z.createElement(M2, { page: se }))
+    ? z.createElement(z.Fragment, null, rt, z.createElement(Mb, { page: se }))
     : rt;
 });
 jy.displayName = "Link";
-const Y2 = z.forwardRef(function (
+const Yb = z.forwardRef(function (
   {
     "aria-current": l = "page",
     caseSensitive: r = !1,
@@ -17474,7 +17474,7 @@ const Y2 = z.forwardRef(function (
     C = oa(),
     O = z.useContext(gr),
     { navigator: U, basename: X } = z.useContext(Rn),
-    Z = O != null && J2(b) && p === !0,
+    Z = O != null && Jb(b) && p === !0,
     $ = U.encodeLocation ? U.encodeLocation(b).pathname : b.pathname,
     te = C.pathname,
     ne =
@@ -17519,8 +17519,8 @@ const Y2 = z.forwardRef(function (
     typeof v == "function" ? v(J) : v
   );
 });
-Y2.displayName = "NavLink";
-const V2 = z.forwardRef(
+Yb.displayName = "NavLink";
+const Vb = z.forwardRef(
   (
     {
       discover: a = "render",
@@ -17541,8 +17541,8 @@ const V2 = z.forwardRef(
     U
   ) => {
     let { useTransitions: X } = z.useContext(Rn),
-      Z = F2(),
-      $ = K2(p, { relative: y }),
+      Z = Fb(),
+      $ = Kb(p, { relative: y }),
       te = h.toLowerCase() === "get" ? "get" : "post",
       ne = typeof p == "string" && Pu.test(p),
       oe = (se) => {
@@ -17574,15 +17574,15 @@ const V2 = z.forwardRef(
     });
   }
 );
-V2.displayName = "Form";
-function G2(a) {
+Vb.displayName = "Form";
+function Gb(a) {
   return `${a} must be used within a data router.  See https://reactrouter.com/en/main/routers/picking-a-router.`;
 }
 function Hy(a) {
   let l = z.useContext(dl);
-  return (De(l, G2(a)), l);
+  return (De(l, Gb(a)), l);
 }
-function Q2(
+function Qb(
   a,
   {
     target: l,
@@ -17601,7 +17601,7 @@ function Q2(
     C = Er(a, { relative: h });
   return z.useCallback(
     (O) => {
-      if (g2(O, l)) {
+      if (gb(O, l)) {
         O.preventDefault();
         let U = r !== void 0 ? r : zn(b) === zn(C),
           X = () =>
@@ -17620,19 +17620,19 @@ function Q2(
     [b, g, C, r, s, o, l, a, f, h, p, v, y]
   );
 }
-let X2 = 0,
-  Z2 = () => `__${String(++X2)}__`;
-function F2() {
+let Xb = 0,
+  Zb = () => `__${String(++Xb)}__`;
+function Fb() {
   let { router: a } = Hy("useSubmit"),
     { basename: l } = z.useContext(Rn),
-    r = l2(),
+    r = lb(),
     s = a.fetch,
     o = a.navigate;
   return z.useCallback(
     async (f, h = {}) => {
-      let { action: p, method: v, encType: y, formData: g, body: b } = S2(f, l);
+      let { action: p, method: v, encType: y, formData: g, body: b } = Sb(f, l);
       h.navigate === !1
-        ? await s(h.fetcherKey || Z2(), r, h.action || p, {
+        ? await s(h.fetcherKey || Zb(), r, h.action || p, {
             defaultShouldRevalidate: h.defaultShouldRevalidate,
             preventScrollReset: h.preventScrollReset,
             formData: g,
@@ -17658,7 +17658,7 @@ function F2() {
     [s, o, l, r]
   );
 }
-function K2(a, { relative: l } = {}) {
+function Kb(a, { relative: l } = {}) {
   let { basename: r } = z.useContext(Rn),
     s = z.useContext(ca);
   De(s, "useFormAction must be used inside a RouteContext");
@@ -17684,7 +17684,7 @@ function K2(a, { relative: l } = {}) {
     zn(f)
   );
 }
-function J2(a, { relative: l } = {}) {
+function Jb(a, { relative: l } = {}) {
   let r = z.useContext(lf);
   De(
     r != null,
@@ -17697,15 +17697,15 @@ function J2(a, { relative: l } = {}) {
     h = Tn(r.nextLocation.pathname, s) || r.nextLocation.pathname;
   return $u(o.pathname, h) != null || $u(o.pathname, f) != null;
 }
-const $2 = "hostMetaData";
-function I2(a) {
+const $b = "hostMetaData";
+function Ib(a) {
   let l;
   try {
     l = new URLSearchParams(a);
   } catch {
     return null;
   }
-  const r = l.get($2);
+  const r = l.get($b);
   if (!r) return null;
   let s;
   try {
@@ -17740,12 +17740,12 @@ function qy(a) {
 function df(a) {
   return By(a) && a.jsonrpc === "2.0";
 }
-function W2(a) {
+function Wb(a) {
   if (!df(a)) return !1;
   const l = a;
   return !("id" in l) && typeof l.method == "string";
 }
-function P2(a) {
+function Pb(a) {
   if (!df(a)) return !1;
   const l = a;
   return qy(l) && "result" in l && !("error" in l) && !("method" in l);
@@ -17757,10 +17757,10 @@ function ky(a) {
   const r = l.error;
   return By(r) && typeof r.code == "number";
 }
-function eb(a) {
-  return P2(a) || ky(a);
+function e2(a) {
+  return Pb(a) || ky(a);
 }
-class tb {
+class t2 {
   nextRequestId = 1;
   pending = new Map();
   notificationHandlers = new Map();
@@ -17774,7 +17774,7 @@ class tb {
       this.notificationHandlers.get(l).add(r));
   }
   onMessage = (l) => {
-    if (eb(l)) {
+    if (e2(l)) {
       const r = this.pending.get(l.id);
       if (!r) return;
       (this.pending.delete(l.id),
@@ -17784,7 +17784,7 @@ class tb {
           : r.resolve(l.result));
       return;
     }
-    if (W2(l)) {
+    if (Wb(l)) {
       this.onInboundMeta(l, l._meta);
       const r = this.notificationHandlers.get(l.method);
       if (r) {
@@ -17817,7 +17817,7 @@ class tb {
     s !== void 0 && (l._meta = s);
   }
 }
-let nb = class {
+let n2 = class {
   targetOrigin;
   constructor(l) {
     this.targetOrigin = l;
@@ -17835,9 +17835,9 @@ let nb = class {
     );
   }
 };
-const ab = 500,
-  lb = "2026-01-26";
-class sl extends tb {
+const a2 = 500,
+  l2 = "2026-01-26";
+class sl extends t2 {
   static initPromise = null;
   hostCtx = {};
   _handshakeSucceeded = !1;
@@ -17845,7 +17845,7 @@ class sl extends tb {
     if (!sl.initPromise) {
       const r = l?.targetOrigin ?? "*";
       sl.initPromise = (async () => {
-        const s = new sl(new nb(r));
+        const s = new sl(new n2(r));
         return (await s.handshake(l), s);
       })();
     }
@@ -17855,13 +17855,13 @@ class sl extends tb {
     sl.initPromise = null;
   }
   async handshake(l) {
-    const r = l?.handshakeTimeoutMs ?? ab,
+    const r = l?.handshakeTimeoutMs ?? a2,
       s = l?.appInfo ?? { name: "mcp-app", version: "1.0.0" };
     try {
       const o = Symbol("timeout"),
         f = await Promise.race([
           this.request("ui/initialize", {
-            protocolVersion: lb,
+            protocolVersion: l2,
             appInfo: s,
             appCapabilities: {}
           }),
@@ -17905,23 +17905,23 @@ var Wl = ((a) => (
 ))(Wl || {});
 let wo = null,
   Yy;
-async function ib() {
+async function i2() {
   return typeof window > "u"
     ? "Mosaic"
     : window.openai
       ? "OpenAI"
-      : ub()
-        ? sb()
+      : u2()
+        ? s2()
           ? "Micro-Frontend"
           : (await sl.getInstance(Yy)).handshakeSucceeded
             ? "MCP-Apps"
             : "WebApp"
         : "WebApp";
 }
-async function rb(a) {
-  return (wo || ((Yy = a?.mcpApps), (wo = ib())), wo);
+async function r2(a) {
+  return (wo || ((Yy = a?.mcpApps), (wo = i2())), wo);
 }
-function ub() {
+function u2() {
   if (typeof window > "u") return !1;
   try {
     return window.parent !== window;
@@ -17929,7 +17929,7 @@ function ub() {
     return !0;
   }
 }
-function sb() {
+function s2() {
   if (typeof window > "u") return !1;
   try {
     if (window.parent === window) return !1;
@@ -17937,16 +17937,16 @@ function sb() {
     return !1;
   }
   const a = window.location?.search;
-  return typeof a != "string" ? !1 : I2(a) !== null;
+  return typeof a != "string" ? !1 : Ib(a) !== null;
 }
-async function cb(a) {
-  return await rb();
+async function c2(a) {
+  return await r2();
 }
-const ob = new Set(["then", "catch", "finally"]);
-function fb(a, l) {
+const o2 = new Set(["then", "catch", "finally"]);
+function f2(a, l) {
   return new Proxy(a, {
     get(r, s, o) {
-      if (typeof s == "symbol" || ob.has(s)) {
+      if (typeof s == "symbol" || o2.has(s)) {
         const f = Reflect.get(r, s, o);
         return typeof f == "function" ? f.bind(r) : f;
       }
@@ -17955,11 +17955,11 @@ Use \`const sdk = await ${l}();\` before accessing SDK methods.`);
     }
   });
 }
-const { freeze: db, keys: Vy } = Object,
+const { freeze: d2, keys: Vy } = Object,
   { isArray: Gy } = Array,
   { stringify: X0 } = JSON,
-  hb = WeakSet;
-let mb = class {
+  h2 = WeakSet;
+let m2 = class {
     constructor(l) {
       this.value = l;
     }
@@ -17970,7 +17970,7 @@ let mb = class {
       return !this.isOk();
     }
   },
-  yb = class {
+  y2 = class {
     constructor(l) {
       this.error = l;
     }
@@ -17981,9 +17981,9 @@ let mb = class {
       return !this.isOk();
     }
   };
-const Mn = (a) => new mb(a),
-  xn = (a) => new yb(a);
-class pb extends Error {
+const Mn = (a) => new m2(a),
+  xn = (a) => new y2(a);
+class p2 extends Error {
   constructor(l) {
     (super(l), (this.name = "DataNotFoundError"));
   }
@@ -18060,7 +18060,7 @@ var Qy = ((a) => (
   (a[(a.GatewayTimeout = 504)] = "GatewayTimeout"),
   a
 ))(Qy || {});
-function vb(a) {
+function v2(a) {
   switch (a) {
     case 200:
       return "OK";
@@ -18078,17 +18078,17 @@ function vb(a) {
       return `Unexpected HTTP Status Code: ${a}`;
   }
 }
-class gb extends Error {
+class g2 extends Error {
   constructor(l, r, s) {
     (super(),
       (this.status = l),
       (this.body = r),
       (this.headers = s || {}),
       (this.ok = l >= 200 && this.status <= 299),
-      (this.statusText = vb(l)));
+      (this.statusText = v2(l)));
   }
 }
-const Z0 = new hb();
+const Z0 = new h2();
 function ai(a) {
   if (!(typeof a != "object" || a === null || Z0.has(a))) {
     if ((Z0.add(a), Gy(a)))
@@ -18097,7 +18097,7 @@ function ai(a) {
       const l = Vy(a);
       for (let r = 0, s = l.length; r < s; r += 1) ai(a[l[r]]);
     }
-    db(a);
+    d2(a);
   }
 }
 class Xy extends Error {
@@ -18105,7 +18105,7 @@ class Xy extends Error {
     (super(), (this.data = l), (this.type = "user-visible"));
   }
 }
-function bb(a) {
+function b2(a) {
   return a instanceof Error && "type" in a && a.type === "user-visible";
 }
 function Zy(a = { request: [], retry: void 0, response: [], finally: [] }, l) {
@@ -18160,7 +18160,7 @@ function yr(
 function Fu(a, l) {
   if (!!!a) throw new Error(l);
 }
-const Eb = 10,
+const E2 = 10,
   Fy = 2;
 function mf(a) {
   return as(a, []);
@@ -18172,36 +18172,36 @@ function as(a, l) {
     case "function":
       return a.name ? `[function ${a.name}]` : "[function]";
     case "object":
-      return Sb(a, l);
+      return S2(a, l);
     default:
       return String(a);
   }
 }
-function Sb(a, l) {
+function S2(a, l) {
   if (a === null) return "null";
   if (l.includes(a)) return "[Circular]";
   const r = [...l, a];
-  if (Tb(a)) {
+  if (T2(a)) {
     const s = a.toJSON();
     if (s !== a) return typeof s == "string" ? s : as(s, r);
-  } else if (Array.isArray(a)) return Ab(a, r);
-  return Rb(a, r);
+  } else if (Array.isArray(a)) return A2(a, r);
+  return R2(a, r);
 }
-function Tb(a) {
+function T2(a) {
   return typeof a.toJSON == "function";
 }
-function Rb(a, l) {
+function R2(a, l) {
   const r = Object.entries(a);
   return r.length === 0
     ? "{}"
     : l.length > Fy
-      ? "[" + Nb(a) + "]"
+      ? "[" + N2(a) + "]"
       : "{ " + r.map(([o, f]) => o + ": " + as(f, l)).join(", ") + " }";
 }
-function Ab(a, l) {
+function A2(a, l) {
   if (a.length === 0) return "[]";
   if (l.length > Fy) return "[Array]";
-  const r = Math.min(Eb, a.length),
+  const r = Math.min(E2, a.length),
     s = a.length - r,
     o = [];
   for (let f = 0; f < r; ++f) o.push(as(a[f], l));
@@ -18212,7 +18212,7 @@ function Ab(a, l) {
     "[" + o.join(", ") + "]"
   );
 }
-function Nb(a) {
+function N2(a) {
   const l = Object.prototype.toString
     .call(a)
     .replace(/^\[object /, "")
@@ -18223,8 +18223,8 @@ function Nb(a) {
   }
   return l;
 }
-const Cb = globalThis.process && !0,
-  Ob = Cb
+const C2 = globalThis.process && !0,
+  O2 = C2
     ? function (l, r) {
         return l instanceof r;
       }
@@ -18273,23 +18273,23 @@ class Ky {
     return "Source";
   }
 }
-function Db(a) {
-  return Ob(a, Ky);
+function D2(a) {
+  return O2(a, Ky);
 }
-function _b(a, l) {
+function _2(a, l) {
   if (!!!a) throw new Error("Unexpected invariant triggered.");
 }
-const wb = /\r\n|[\n\r]/g;
+const w2 = /\r\n|[\n\r]/g;
 function Vo(a, l) {
   let r = 0,
     s = 1;
-  for (const o of a.body.matchAll(wb)) {
-    if ((typeof o.index == "number" || _b(!1), o.index >= l)) break;
+  for (const o of a.body.matchAll(w2)) {
+    if ((typeof o.index == "number" || _2(!1), o.index >= l)) break;
     ((r = o.index + o[0].length), (s += 1));
   }
   return { line: s, column: l + 1 - r };
 }
-function xb(a) {
+function x2(a) {
   return Jy(a.source, Vo(a.source, a.start));
 }
 function Jy(a, l) {
@@ -18406,10 +18406,10 @@ var Y;
     (a.BLOCK_STRING = "BlockString"),
     (a.COMMENT = "Comment"));
 })(Y || (Y = {}));
-function Mb(a) {
+function M2(a) {
   return typeof a == "object" && a !== null;
 }
-function zb(a) {
+function z2(a) {
   const l = a[0];
   return l == null || "kind" in l || "length" in l
     ? {
@@ -18432,7 +18432,7 @@ class yf extends Error {
       path: y,
       originalError: g,
       extensions: b
-    } = zb(r);
+    } = z2(r);
     (super(l),
       (this.name = "GraphQLError"),
       (this.path = y ?? void 0),
@@ -18451,7 +18451,7 @@ class yf extends Error {
         v && p
           ? v.map((U) => Vo(p, U))
           : C?.map((U) => Vo(U.source, U.start))));
-    const O = Mb(g?.extensions) ? g?.extensions : void 0;
+    const O = M2(g?.extensions) ? g?.extensions : void 0;
     ((this.extensions =
       (f = b ?? O) !== null && f !== void 0 ? f : Object.create(null)),
       Object.defineProperties(this, {
@@ -18487,7 +18487,7 @@ class yf extends Error {
           (l +=
             `
 
-` + xb(r.loc));
+` + x2(r.loc));
     else if (this.source && this.locations)
       for (const r of this.locations)
         l +=
@@ -18514,7 +18514,7 @@ function K0(a) {
 function Rt(a, l, r) {
   return new yf(`Syntax Error: ${r}`, { source: a, positions: [l] });
 }
-class Ub {
+class U2 {
   constructor(l, r, s) {
     ((this.start = l.start),
       (this.end = r.end),
@@ -18626,10 +18626,10 @@ const Iy = {
     EnumTypeExtension: ["name", "directives", "values"],
     InputObjectTypeExtension: ["name", "directives", "fields"]
   },
-  Lb = new Set(Object.keys(Iy));
+  L2 = new Set(Object.keys(Iy));
 function J0(a) {
   const l = a?.kind;
-  return typeof l == "string" && Lb.has(l);
+  return typeof l == "string" && L2.has(l);
 }
 var Pl;
 (function (a) {
@@ -18649,10 +18649,10 @@ function Wy(a) {
 function Py(a) {
   return Wy(a) || a === 95;
 }
-function jb(a) {
+function j2(a) {
   return Wy(a) || pr(a) || a === 95;
 }
-function Hb(a) {
+function H2(a) {
   var l;
   let r = Number.MAX_SAFE_INTEGER,
     s = null,
@@ -18660,7 +18660,7 @@ function Hb(a) {
   for (let h = 0; h < a.length; ++h) {
     var f;
     const p = a[h],
-      v = Bb(p);
+      v = B2(p);
     v !== p.length &&
       ((s = (f = s) !== null && f !== void 0 ? f : h),
       (o = h),
@@ -18670,12 +18670,12 @@ function Hb(a) {
     .map((h, p) => (p === 0 ? h : h.slice(r)))
     .slice((l = s) !== null && l !== void 0 ? l : 0, o + 1);
 }
-function Bb(a) {
+function B2(a) {
   let l = 0;
   for (; l < a.length && Go(a.charCodeAt(l));) ++l;
   return l;
 }
-function qb(a, l) {
+function q2(a, l) {
   const r = a.replace(/"""/g, '\\"""'),
     s = r.split(/\r\n|[\n\r]/g),
     o = s.length === 1,
@@ -18700,7 +18700,7 @@ function qb(a, l) {
     '"""' + b + '"""'
   );
 }
-class kb {
+class k2 {
   constructor(l) {
     const r = new $y(Y.SOF, 0, 0, 0, 0);
     ((this.source = l),
@@ -18721,14 +18721,14 @@ class kb {
       do
         if (l.next) l = l.next;
         else {
-          const r = Vb(this, l.end);
+          const r = V2(this, l.end);
           ((l.next = r), (r.prev = l), (l = r));
         }
       while (l.kind === Y.COMMENT);
     return l;
   }
 }
-function Yb(a) {
+function Y2(a) {
   return (
     a === Y.BANG ||
     a === Y.DOLLAR ||
@@ -18772,7 +18772,7 @@ function vt(a, l, r, s, o) {
     h = 1 + r - a.lineStart;
   return new $y(l, r, s, f, h, o);
 }
-function Vb(a, l) {
+function V2(a, l) {
   const r = a.source.body,
     s = r.length;
   let o = l;
@@ -18794,7 +18794,7 @@ function Vb(a, l) {
           (a.lineStart = o));
         continue;
       case 35:
-        return Gb(a, o);
+        return G2(a, o);
       case 33:
         return vt(a, Y.BANG, o, o + 1);
       case 36:
@@ -18827,11 +18827,11 @@ function Vb(a, l) {
         return vt(a, Y.BRACE_R, o, o + 1);
       case 34:
         return r.charCodeAt(o + 1) === 34 && r.charCodeAt(o + 2) === 34
-          ? Jb(a, o)
-          : Xb(a, o);
+          ? J2(a, o)
+          : X2(a, o);
     }
-    if (pr(f) || f === 45) return Qb(a, o, f);
-    if (Py(f)) return $b(a, o);
+    if (pr(f) || f === 45) return Q2(a, o, f);
+    if (Py(f)) return $2(a, o);
     throw Rt(
       a.source,
       o,
@@ -18844,7 +18844,7 @@ function Vb(a, l) {
   }
   return vt(a, Y.EOF, s, s);
 }
-function Gb(a, l) {
+function G2(a, l) {
   const r = a.source.body,
     s = r.length;
   let o = l + 1;
@@ -18857,7 +18857,7 @@ function Gb(a, l) {
   }
   return vt(a, Y.COMMENT, l, o, r.slice(l + 1, o));
 }
-function Qb(a, l, r) {
+function Q2(a, l, r) {
   const s = a.source.body;
   let o = l,
     f = r,
@@ -18903,7 +18903,7 @@ function xo(a, l, r) {
   for (; pr(s.charCodeAt(o));) ++o;
   return o;
 }
-function Xb(a, l) {
+function X2(a, l) {
   const r = a.source.body,
     s = r.length;
   let o = l + 1,
@@ -18917,9 +18917,9 @@ function Xb(a, l) {
       const v =
         r.charCodeAt(o + 1) === 117
           ? r.charCodeAt(o + 2) === 123
-            ? Zb(a, o)
-            : Fb(a, o)
-          : Kb(a, o);
+            ? Z2(a, o)
+            : F2(a, o)
+          : K2(a, o);
       ((h += v.value), (o += v.size), (f = o));
       continue;
     }
@@ -18930,7 +18930,7 @@ function Xb(a, l) {
   }
   throw Rt(a.source, o, "Unterminated string.");
 }
-function Zb(a, l) {
+function Z2(a, l) {
   const r = a.source.body;
   let s = 0,
     o = 3;
@@ -18948,7 +18948,7 @@ function Zb(a, l) {
     `Invalid Unicode escape sequence: "${r.slice(l, l + o)}".`
   );
 }
-function Fb(a, l) {
+function F2(a, l) {
   const r = a.source.body,
     s = $0(r, l + 2);
   if (ii(s)) return { value: String.fromCodePoint(s), size: 6 };
@@ -18979,7 +18979,7 @@ function rr(a) {
         ? a - 87
         : -1;
 }
-function Kb(a, l) {
+function K2(a, l) {
   const r = a.source.body;
   switch (r.charCodeAt(l + 1)) {
     case 34:
@@ -19009,7 +19009,7 @@ function Kb(a, l) {
     `Invalid character escape sequence: "${r.slice(l, l + 2)}".`
   );
 }
-function Jb(a, l) {
+function J2(a, l) {
   const r = a.source.body,
     s = r.length;
   let o = a.lineStart,
@@ -19026,7 +19026,7 @@ function Jb(a, l) {
         Y.BLOCK_STRING,
         l,
         f + 3,
-        Hb(v).join(`
+        H2(v).join(`
 `)
       );
       return ((a.line += v.length - 1), (a.lineStart = o), g);
@@ -19055,13 +19055,13 @@ function Jb(a, l) {
   }
   throw Rt(a.source, f, "Unterminated string.");
 }
-function $b(a, l) {
+function $2(a, l) {
   const r = a.source.body,
     s = r.length;
   let o = l + 1;
   for (; o < s;) {
     const f = r.charCodeAt(o);
-    if (jb(f)) ++o;
+    if (j2(f)) ++o;
     else break;
   }
   return vt(a, Y.NAME, l, o, r.slice(l, o));
@@ -19088,8 +19088,8 @@ var Qo;
     (a.INPUT_OBJECT = "INPUT_OBJECT"),
     (a.INPUT_FIELD_DEFINITION = "INPUT_FIELD_DEFINITION"));
 })(Qo || (Qo = {}));
-function Ib(a, l) {
-  const r = new Wb(a, l),
+function I2(a, l) {
+  const r = new W2(a, l),
     s = r.parseDocument();
   return (
     Object.defineProperty(s, "tokenCount", {
@@ -19099,10 +19099,10 @@ function Ib(a, l) {
     s
   );
 }
-class Wb {
+class W2 {
   constructor(l, r = {}) {
-    const s = Db(l) ? l : new Ky(l);
-    ((this._lexer = new kb(s)), (this._options = r), (this._tokenCounter = 0));
+    const s = D2(l) ? l : new Ky(l);
+    ((this._lexer = new k2(s)), (this._options = r), (this._tokenCounter = 0));
   }
   get tokenCount() {
     return this._tokenCounter;
@@ -19796,7 +19796,7 @@ class Wb {
   node(l, r) {
     return (
       this._options.noLocation !== !0 &&
-        (r.loc = new Ub(l, this._lexer.lastToken, this._lexer.source)),
+        (r.loc = new U2(l, this._lexer.lastToken, this._lexer.source)),
       r
     );
   }
@@ -19873,9 +19873,9 @@ function Gu(a) {
   return np(a.kind) + (l != null ? ` "${l}"` : "");
 }
 function np(a) {
-  return Yb(a) ? `"${a}"` : a;
+  return Y2(a) ? `"${a}"` : a;
 }
-function Pb(a) {
+function P2(a) {
   return `"${a.replace(eE, tE)}"`;
 }
 const eE = /[\x00-\x1f\x22\x5c\x7f-\x9f]/g;
@@ -20215,7 +20215,7 @@ const rE = 80,
     },
     IntValue: { leave: ({ value: a }) => a },
     FloatValue: { leave: ({ value: a }) => a },
-    StringValue: { leave: ({ value: a, block: l }) => (l ? qb(a) : Pb(a)) },
+    StringValue: { leave: ({ value: a, block: l }) => (l ? q2(a) : P2(a)) },
     BooleanValue: { leave: ({ value: a }) => (a ? "true" : "false") },
     NullValue: { leave: () => "null" },
     EnumValue: { leave: ({ value: a }) => a },
@@ -20859,7 +20859,7 @@ class vE extends gf {
           );
         this.collectCacheMissInstrumentation(r, l?.instrumentationAttributes);
         const o = new Xy(
-          new gb(Qy.GatewayTimeout, {
+          new g2(Qy.GatewayTimeout, {
             error: "Cache miss for only-if-cached request"
           })
         );
@@ -21579,7 +21579,7 @@ const Wu = () => {},
   Ko = async () => {};
 function bf(a) {
   try {
-    return Mn(Ib(a));
+    return Mn(I2(a));
   } catch (l) {
     return xn(fl(l));
   }
@@ -21951,7 +21951,7 @@ class ES extends kE {
   readFromCache(l) {
     const r = this.buildKey(),
       s = l.get(r)?.value;
-    return At(s === void 0 ? xn(new pb()) : Mn(s));
+    return At(s === void 0 ? xn(new p2()) : Mn(s));
   }
   writeToCache(l, r) {
     if (
@@ -21989,7 +21989,7 @@ class ES extends kE {
   }
 }
 function fp(a) {
-  if (bb(a) && a.data && typeof a.data == "object") {
+  if (b2(a) && a.data && typeof a.data == "object") {
     const l = a.data;
     if (l.data != null) return l.data;
   }
@@ -22196,7 +22196,7 @@ async function wS(a, l) {
 }
 async function xS(a) {
   try {
-    switch (await cb(a?.surface)) {
+    switch (await c2(a?.surface)) {
       case Wl.OpenAI:
         return new tS();
       case Wl.WebApp:
@@ -22214,7 +22214,7 @@ async function xS(a) {
   }
 }
 function MS(a) {
-  return fb(
+  return f2(
     (async () => {
       const l = await xS(a);
       return wS(l, []);
@@ -22680,10 +22680,16 @@ function lT() {
               className: "zelle-lockup",
               "aria-label": "Zelle Find Your Bank",
               children: [
-                ee.jsx("img", {
-                  className: "zelle-wordmark",
-                  src: hp,
-                  alt: "Zelle"
+                ee.jsx("a", {
+                  className: "zelle-home-link",
+                  href: "https://www.zellepay.com/",
+                  target: "_blank",
+                  rel: "noreferrer",
+                  children: ee.jsx("img", {
+                    className: "zelle-wordmark",
+                    src: hp,
+                    alt: "Zelle"
+                  })
                 }),
                 ee.jsx("span", {
                   className: "lockup-divider",
@@ -22706,6 +22712,7 @@ function lT() {
               className: "search-box",
               children: [
                 ee.jsx(GS, {
+                  className: "search-icon",
                   size: 42,
                   strokeWidth: 1.5,
                   "aria-hidden": "true"
@@ -22796,7 +22803,7 @@ function iT() {
 }
 const iy = globalThis.SFDC_ENV?.basePath,
   rT = typeof iy == "string" ? iy.replace(/\/+$/, "") : void 0,
-  uT = B2(
+  uT = Bb(
     [
       { path: "/", element: ee.jsx(lT, {}) },
       { path: "*", element: ee.jsx(iT, {}) }
@@ -22804,5 +22811,5 @@ const iy = globalThis.SFDC_ENV?.basePath,
     { basename: rT }
   );
 _g.createRoot(document.getElementById("root")).render(
-  ee.jsx(z.StrictMode, { children: ee.jsx(o2, { router: uT }) })
+  ee.jsx(z.StrictMode, { children: ee.jsx(ob, { router: uT }) })
 );
