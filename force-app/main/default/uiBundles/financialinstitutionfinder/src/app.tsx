@@ -168,7 +168,13 @@ function filterBySearch(institutions: Institution[], searchText: string): Instit
   );
 }
 
-function InstitutionName({ institution }: { institution: Institution }) {
+function InstitutionName({
+  institution,
+  onSelect
+}: {
+  institution: Institution;
+  onSelect: (institution: Institution) => void;
+}) {
   const actionUrl = institution.enrollmentUrl || institution.website;
 
   if (!actionUrl) {
@@ -176,13 +182,19 @@ function InstitutionName({ institution }: { institution: Institution }) {
   }
 
   return (
-    <a className="institution-name" href={actionUrl} target="_blank" rel="noreferrer">
+    <button className="institution-name institution-trigger" type="button" onClick={() => onSelect(institution)}>
       {institution.name}
-    </a>
+    </button>
   );
 }
 
-function InstitutionList({ institutions }: { institutions: Institution[] }) {
+function InstitutionList({
+  institutions,
+  onSelectInstitution
+}: {
+  institutions: Institution[];
+  onSelectInstitution: (institution: Institution) => void;
+}) {
   const groups = groupInstitutions(institutions);
   const letters = zelleAlphabet.filter(letter => groups[letter]?.length);
 
@@ -193,11 +205,66 @@ function InstitutionList({ institutions }: { institutions: Institution[] }) {
           <h2 id={`letter-${letter}`}>{letter}</h2>
           <div className="letter-results">
             {groups[letter].map(institution => (
-              <InstitutionName key={institution.id} institution={institution} />
+              <InstitutionName key={institution.id} institution={institution} onSelect={onSelectInstitution} />
             ))}
           </div>
         </section>
       ))}
+    </div>
+  );
+}
+
+function BankRedirectModal({
+  institution,
+  onCancel
+}: {
+  institution: Institution;
+  onCancel: () => void;
+}) {
+  const actionUrl = institution.enrollmentUrl || institution.website;
+
+  if (!actionUrl) {
+    return null;
+  }
+
+  return (
+    <div className="modal-backdrop" role="presentation">
+      <section
+        className="bank-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="bank-modal-title"
+        aria-describedby="bank-modal-description"
+      >
+        <header className="bank-modal-header">
+          <h2 id="bank-modal-title">Great News!</h2>
+        </header>
+        <div className="bank-modal-body">
+          <p className="bank-modal-offer">{institution.name} Offers Zelle<sup>®</sup></p>
+          {institution.logoUrl ? (
+            <img className="bank-modal-logo" src={institution.logoUrl} alt={`${institution.name} logo`} />
+          ) : (
+            <div className="bank-modal-logo-fallback" aria-hidden="true">
+              {institution.name.slice(0, 2).toUpperCase()}
+            </div>
+          )}
+          <p id="bank-modal-description" className="bank-modal-primary">
+            Your bank offers Zelle<sup>®</sup>! You can use your banking app to send and receive money with Zelle
+            <sup>®</sup>.
+          </p>
+          <p className="bank-modal-disclaimer">
+            By selecting "Continue to your bank", you will be taken to an external interface with different privacy and
+            information security policy. Zelle<sup>®</sup> is not responsible for and does not endorse the products,
+            services or content that is offered or expressed.
+          </p>
+          <a className="continue-bank-link" href={actionUrl} target="_blank" rel="noreferrer">
+            Continue to your bank
+          </a>
+          <button className="cancel-modal-button" type="button" onClick={onCancel}>
+            Cancel
+          </button>
+        </div>
+      </section>
     </div>
   );
 }
@@ -271,6 +338,7 @@ function DirectoryPage() {
   const [institutions, setInstitutions] = useState<Institution[]>([]);
   const [searchText, setSearchText] = useState('');
   const [selectedLetter, setSelectedLetter] = useState('All');
+  const [selectedInstitution, setSelectedInstitution] = useState<Institution | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -416,9 +484,15 @@ function DirectoryPage() {
         <div className="state-panel">No matching institutions found.</div>
       )}
 
-      {!isLoading && !error && filteredInstitutions.length > 0 && <InstitutionList institutions={filteredInstitutions} />}
+      {!isLoading && !error && filteredInstitutions.length > 0 && (
+        <InstitutionList institutions={filteredInstitutions} onSelectInstitution={setSelectedInstitution} />
+      )}
 
       <ZelleInfoFooter />
+
+      {selectedInstitution && (
+        <BankRedirectModal institution={selectedInstitution} onCancel={() => setSelectedInstitution(null)} />
+      )}
     </main>
   );
 }

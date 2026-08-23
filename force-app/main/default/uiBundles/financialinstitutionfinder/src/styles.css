@@ -234,10 +234,134 @@ button {
   text-decoration: none;
 }
 
-a.institution-name:hover {
+.institution-trigger {
+  display: inline;
+  border: 0;
+  padding: 0;
+  text-align: left;
+  background: transparent;
+}
+
+a.institution-name:hover,
+.institution-trigger:hover {
   color: #6d1ed4;
   text-decoration: underline;
   text-underline-offset: 3px;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: start center;
+  padding: 120px 24px 48px;
+  background: rgba(0, 0, 0, 0.48);
+}
+
+.bank-modal {
+  width: min(600px, 100%);
+  overflow: hidden;
+  border-radius: 4px;
+  color: #504c52;
+  background: #ffffff;
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.34);
+}
+
+.bank-modal-header {
+  padding: 28px 24px 30px;
+  background: #6d1ed4;
+  text-align: center;
+}
+
+.bank-modal-header h2 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 40px;
+  font-weight: 200;
+  line-height: 1.1;
+}
+
+.bank-modal-body {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 36px 48px 34px;
+  text-align: center;
+}
+
+.bank-modal-offer {
+  margin: 0;
+  color: #504c52;
+  font-size: 24px;
+  font-weight: 300;
+  line-height: 1.35;
+}
+
+.bank-modal-logo {
+  display: block;
+  max-width: 180px;
+  max-height: 72px;
+  margin: 34px 0 36px;
+  object-fit: contain;
+}
+
+.bank-modal-logo-fallback {
+  display: inline-grid;
+  min-width: 88px;
+  min-height: 58px;
+  margin: 34px 0 36px;
+  place-items: center;
+  color: #6d1ed4;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.bank-modal-primary {
+  margin: 0;
+  max-width: 490px;
+  color: #504c52;
+  font-size: 19px;
+  font-weight: 300;
+  line-height: 1.45;
+}
+
+.bank-modal-disclaimer {
+  margin: 28px 0 36px;
+  max-width: 490px;
+  color: #504c52;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.55;
+}
+
+.continue-bank-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 72px;
+  border-radius: 6px;
+  color: #ffffff;
+  background: #6d1ed4;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.continue-bank-link:hover {
+  background: #5f13b8;
+}
+
+.cancel-modal-button {
+  margin-top: 26px;
+  border: 0;
+  color: #2f80d1;
+  background: transparent;
+  font-size: 18px;
+  font-weight: 300;
 }
 
 .state-panel {
@@ -617,5 +741,35 @@ a.institution-name:hover {
 
   .social-links {
     gap: 14px;
+  }
+
+  .modal-backdrop {
+    align-items: start;
+    padding: 72px 16px 32px;
+  }
+
+  .bank-modal-header {
+    padding: 22px 18px 24px;
+  }
+
+  .bank-modal-header h2 {
+    font-size: 32px;
+  }
+
+  .bank-modal-body {
+    padding: 28px 24px 30px;
+  }
+
+  .bank-modal-offer {
+    font-size: 20px;
+  }
+
+  .bank-modal-primary {
+    font-size: 17px;
+  }
+
+  .continue-bank-link {
+    min-height: 62px;
+    font-size: 15px;
   }
 }
