@@ -6,7 +6,7 @@ Create a public, unauthenticated React app similar in behavior to the Zelle "Fin
 
 Financial institution data will come from Salesforce `Account` records. Institution logos will come from files attached to the corresponding `Account` records.
 
-This plan is for a Salesforce Multi-Framework external React app hosted through a dedicated public LWR Experience Cloud site.
+This plan is for a Salesforce Multi-Framework external React app hosted through a dedicated public Experience Cloud site container.
 
 ## Delivery Approach
 
@@ -16,7 +16,7 @@ Code-first means:
 
 - Store all app, site, object, field, permission, routing, and asset metadata in this Salesforce DX project.
 - Use Salesforce CLI commands for org validation, deployment, retrieval, and publishing.
-- Use metadata files for the LWR site, Experience Cloud configuration, Network, Custom Site, UIBundle, permissions, objects, and fields.
+- Use metadata files for the React external app site, Experience Cloud configuration, Network, Custom Site, UIBundle, permissions, objects, and fields.
 - Use scripts, Salesforce CLI, and metadata for sample data and logo setup.
 - Use deployment manifests or package directories so the work can be repeated in scratch orgs, sandboxes, and later environments.
 - Document any unavoidable manual org prerequisite as an exception.
@@ -31,7 +31,7 @@ Expected exceptions:
 
 ```text
 Public user browser
-  -> Public LWR Experience Cloud site
+  -> Public Experience Cloud React app site
   -> Salesforce Multi-Framework external React UIBundle
   -> Salesforce-supported public data access through Data SDK, GraphQL, UI API, CMS, or static assets
   -> Account records filtered as financial institutions
@@ -42,11 +42,11 @@ Use an external app, not an internal app.
 
 ## Site Decision
 
-Create a dedicated public LWR Experience Cloud site for this app.
+Create a dedicated public Experience Cloud site for this React external app.
 
 Recommended site characteristics:
 
-- Site type: LWR Experience Cloud site.
+- Site type/framework: Salesforce Multi-Framework React external app site, shown in Digital Experiences as framework `React`.
 - Authentication: public guest access, no login required.
 - Purpose: host only the financial institution finder experience and closely related public pages.
 - System URL shape: use the generated Experience Cloud path, currently `/fifinderapp`, in scratch/dev orgs.
@@ -54,17 +54,17 @@ Recommended site characteristics:
 - Guest profile: grant only the minimum permissions needed for the public API and public assets.
 - Creation and configuration: managed through Salesforce DX metadata and CLI wherever possible.
 
-Reasons to use a dedicated LWR site:
+Reasons to use a dedicated Experience Cloud site:
 
 - The app needs a public unauthenticated URL.
 - External Multi-Framework apps are surfaced through Experience Cloud, not the internal App Launcher.
-- LWR is the better fit for a lightweight, public, React-based experience.
+- The app itself is React packaged as `UIBundle`; it is not implemented as LWR components.
 - Dedicated guest-user permissions are easier to reason about and audit.
 - Branding, routing, caching, and public access can be managed separately from other sites.
 
 External app characteristics:
 
-- Public access through an LWR Experience Cloud site URL.
+- Public access through an Experience Cloud site URL.
 - No Salesforce login required for visitors.
 - Uses public/guest user permissions.
 - React app is packaged as Salesforce `UIBundle` metadata.
@@ -97,7 +97,7 @@ Implement this without Apex classes unless there is no other safe or supportable
 
 Primary no-Apex options to evaluate:
 
-- Multi-Framework Data SDK with GraphQL or UI API from the public LWR external app.
+- Multi-Framework Data SDK with GraphQL or UI API from the public React external app.
 - Guest-user read access limited to public-safe `Account` fields.
 - Public Experience Cloud data access rules and sharing settings.
 - Public logo URLs stored on `Account`.
@@ -177,7 +177,7 @@ Use one of these strategies:
 2. Alternative: Resolve the primary logo by querying linked files where the title starts with `logo`.
 3. Long-term: Maintain a dedicated custom object such as `Financial_Institution_Asset__c`.
 
-If Salesforce Files are directly usable by the public LWR site, the frontend can use a logo URL such as:
+If Salesforce Files are directly usable by the public Experience Cloud site, the frontend can use a logo URL such as:
 
 ```text
 /sfc/servlet.shepherd/version/download/{ContentVersionId}
@@ -295,7 +295,7 @@ src/utils/searchParams.ts
 
 ## Salesforce Multi-Framework Setup
 
-Use the external React app template and connect it to the dedicated public LWR Experience Cloud site.
+Use the external React app template and connect it to the dedicated public Experience Cloud React app site.
 
 Expected metadata shape:
 
@@ -312,14 +312,14 @@ force-app/main/default/permissionsets/
 
 Salesforce docs describe external React apps as being surfaced through Experience Cloud. External apps require additional site metadata such as `DigitalExperience`, `DigitalExperienceConfig`, `Network`, and `CustomSite`.
 
-For this project, the Experience Cloud site should be an LWR site. Do not plan this as an internal App Launcher app.
+For this project, use the React external app site shape created from the `reactexternalapp` template. Do not plan this as an internal App Launcher app or as a standard LWR component-based site.
 
 ## Code-First Configuration Plan
 
 Manage these items in source control:
 
 ```text
-LWR Experience Cloud site metadata
+Experience Cloud React app site metadata
 External React UIBundle metadata
 Custom Account fields
 Permission set for public app administration/testing
@@ -358,7 +358,7 @@ Do not rely on undocumented manual Setup changes as the primary implementation p
 
 1. Confirm the target org supports Salesforce Multi-Framework external apps using CLI/org metadata checks.
 2. Capture any one-time org prerequisites in `MANUAL_ORG_PREREQUISITES.md` only if they cannot be represented as metadata.
-3. For a standard public LWR site, create the site with Salesforce CLI, then retrieve generated site metadata and commit it to the project.
+3. Create the public React external app site with Salesforce CLI, then retrieve generated site metadata and commit it to the project.
 4. Generate or adapt a Multi-Framework external React app from the `reactexternalapp` template and commit the UIBundle metadata.
 5. For a direct external React app site, use the `reactexternalapp` app-container metadata shape at site creation time. Do not create a standard LWR site first and try to convert it later.
 6. Add Account fields needed for public financial institution listing as source-tracked metadata.
@@ -369,7 +369,7 @@ Do not rely on undocumented manual Setup changes as the primary implementation p
 11. Build the React search and listing UI.
 12. Connect the React app to the selected no-Apex public data source.
 13. Configure guest user access through deployable metadata where supported, then retrieve generated guest profile/site metadata and commit it.
-14. Validate the public LWR site without login in a private browser session.
+14. Validate the public React external app site without login in a private browser session.
 15. Add automated frontend tests for grouping, search, empty state, and error state.
 16. Deploy to sandbox from source, then package/promote after review.
 
@@ -416,7 +416,7 @@ Current implementation:
 
 Experience Cloud guest user needs:
 
-- Access to the public LWR site.
+- Access to the public Experience Cloud React app site.
 - Access to the external React app route.
 - Read access only to public-safe fields if direct public record access is used.
 - File visibility for logo assets, or an alternate public asset strategy.
@@ -474,7 +474,7 @@ PublicFinancialInstitutionControllerTest
 
 The MVP is complete when:
 
-- A public LWR Experience Cloud URL loads the React app without login.
+- A public Experience Cloud React app URL loads without login.
 - Visitors can search financial institutions by name.
 - Visitors can browse by alphabet letter.
 - Results show institution name.
@@ -500,7 +500,7 @@ Primary risks:
 
 - Guest user access to Account and Files can be difficult to configure safely.
 - Salesforce Files may not be directly public depending on site and file settings.
-- Multi-Framework external app and LWR site support may depend on org edition, release, and enabled features.
+- Multi-Framework external app support may depend on org edition, release, and enabled features.
 - Some Experience Cloud and guest-profile metadata may be generated by Salesforce and require a retrieve-then-commit loop.
 - A no-Apex direct query path may require guest permissions that are too broad for the desired security model.
 - Loading thousands of Accounts through live GraphQL pagination can still take time after first render; production should consider caching or static snapshot generation if the directory changes infrequently.
@@ -516,7 +516,7 @@ Recommended risk reduction:
 
 Phase 1: Platform validation
 
-- Create the dedicated public LWR Experience Cloud site with Salesforce CLI, then retrieve the generated metadata.
+- Create the dedicated public React external app site with Salesforce CLI, then retrieve the generated metadata.
 - Create one public Account through a repeatable script.
 - Attach one logo through a repeatable script or documented CLI process.
 - Prove one no-Apex public data access path.
