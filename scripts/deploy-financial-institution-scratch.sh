@@ -11,6 +11,8 @@ BANK_DATA_FILE="scripts/data/zelle-financial-institutions-accounts.csv"
 UI_BUNDLE_DIR="force-app/main/default/uiBundles/financialinstitutionfinder"
 IMPORT_DATA="true"
 OPEN_ORG="false"
+RESTART_LOCALHOST="false"
+LOCALHOST_PORT="5173"
 
 usage() {
     cat <<'EOF'
@@ -33,12 +35,15 @@ Options:
   --ui-bundle-dir <path>     React UI bundle directory for localhost env setup.
                              Default: force-app/main/default/uiBundles/financialinstitutionfinder
   --skip-data                Skip Account data import.
+  --restart-localhost        Restart local Vite dev server after deployment.
+  --localhost-port <port>    Localhost port to restart/check.
+                             Default: 5173
   --open                     Open the scratch org after deployment.
   -h, --help                 Show this help.
 
 Examples:
   scripts/deploy-financial-institution-scratch.sh --dev-hub react-enroll-zelle --alias fi_test
-  npm run fi:scratch:deploy -- --dev-hub react-enroll-zelle --alias fi_test --open
+  npm run fi:scratch:deploy -- --dev-hub react-enroll-zelle --alias fi_test --restart-localhost --open
 EOF
 }
 
@@ -71,6 +76,14 @@ while [[ $# -gt 0 ]]; do
         --skip-data)
             IMPORT_DATA="false"
             shift
+            ;;
+        --restart-localhost)
+            RESTART_LOCALHOST="true"
+            shift
+            ;;
+        --localhost-port)
+            LOCALHOST_PORT="$2"
+            shift 2
             ;;
         --open)
             OPEN_ORG="true"
@@ -143,6 +156,31 @@ run_json_retry() {
 
 require_command sf
 require_command node
+
+restart_localhost() {
+    local log_file="$UI_BUNDLE_DIR/vite.local.log"
+
+    echo "Restarting local Vite dev server on http://127.0.0.1:${LOCALHOST_PORT}/..."
+    if command -v lsof >/dev/null 2>&1; then
+        local pids
+        pids="$(lsof -tiTCP:"$LOCALHOST_PORT" -sTCP:LISTEN -n -P || true)"
+        if [[ -n "$pids" ]]; then
+            echo "Stopping existing process(es) on port $LOCALHOST_PORT: $pids"
+            kill $pids || true
+            sleep 2
+        fi
+    else
+        echo "lsof not found; skipping existing localhost process cleanup."
+    fi
+
+    (
+        cd "$UI_BUNDLE_DIR"
+        npm run dev -- --host 127.0.0.1 --port "$LOCALHOST_PORT" > vite.local.log 2>&1 &
+        echo $! > vite.local.pid
+    )
+
+    echo "Local Vite dev server started. Log: $log_file"
+}
 
 if [[ ! -f "$SCRATCH_DEF" ]]; then
     echo "Scratch org definition file not found: $SCRATCH_DEF" >&2
@@ -283,6 +321,10 @@ if [[ "$OPEN_ORG" == "true" ]]; then
     sf org open --target-org "$SCRATCH_ALIAS" --path /lightning/setup/SetupOneHome/home
 fi
 
+if [[ "$RESTART_LOCALHOST" == "true" ]]; then
+    restart_localhost
+fi
+
 cat <<EOF
 
 Done.
@@ -290,4 +332,5 @@ Scratch org alias: $SCRATCH_ALIAS
 Scratch org username: $SCRATCH_USERNAME
 Guest username: $GUEST_USERNAME
 Public app URL: $PUBLIC_URL
+Localhost URL: http://127.0.0.1:${LOCALHOST_PORT}/
 EOF
