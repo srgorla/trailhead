@@ -360,6 +360,14 @@ Manifest strategy:
 - The guest sharing rule is intentionally excluded from the bootstrap manifest because it can fail when the target org has not created the site and guest-user context yet.
 - After the bootstrap deploy succeeds, deploy the guest sharing rule once, query the generated guest username, assign the guest permission set, and then use the full manifest for later changes.
 
+Scratch org automation:
+
+```bash
+npm run fi:scratch:deploy -- --dev-hub react-enroll-zelle --alias fi_test --open
+```
+
+The script `scripts/deploy-financial-institution-scratch.sh` creates the scratch org, deploys the bootstrap manifest, deploys the guest sharing rule, assigns admin and guest permission sets, imports the prepared Account data CSV, verifies records/site/CSP, and prints the public app URL.
+
 Use retrieval when Salesforce generates site-related metadata that must be committed back into the project. Do not hand-author first-create Experience Cloud site metadata unless deploy validation proves the shape is accepted by the target org.
 
 Deployment portability notes:
