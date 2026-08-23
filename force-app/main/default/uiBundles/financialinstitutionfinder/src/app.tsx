@@ -354,6 +354,7 @@ function DirectoryPage() {
         const rows: Institution[] = [];
         let after: string | null = null;
         let hasNextPage = true;
+        let hasRenderedFirstPage = false;
 
         while (hasNextPage) {
           const result: FinancialInstitutionsResult | undefined = await data.graphql?.query<
@@ -372,10 +373,15 @@ function DirectoryPage() {
           rows.push(...(accountConnection?.edges.map(edge => mapInstitution(edge.node)) || []));
           hasNextPage = accountConnection?.pageInfo.hasNextPage === true;
           after = accountConnection?.pageInfo.endCursor || null;
-        }
 
-        if (isMounted) {
-          setInstitutions(rows);
+          if (isMounted) {
+            setInstitutions([...rows]);
+
+            if (!hasRenderedFirstPage) {
+              setIsLoading(false);
+              hasRenderedFirstPage = true;
+            }
+          }
         }
       } catch (loadError) {
         if (isMounted) {
