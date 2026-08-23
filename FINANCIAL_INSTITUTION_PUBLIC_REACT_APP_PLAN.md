@@ -550,5 +550,17 @@ Phase 4: Polish
 - Salesforce Multi-Framework overview: https://developer.salesforce.com/docs/platform/multiframework/guide
 - React development with Multi-Framework: https://developer.salesforce.com/docs/platform/multiframework/guide/reactdev-overview.html
 - Data SDK: https://developer.salesforce.com/docs/platform/multiframework/guide/reactdev-data-sdk-intro.html
+- Salesforce GA blog, "Build with React on Salesforce: Multi-Framework Is Now GA": https://developer.salesforce.com/blogs/2026/07/build-with-react-on-salesforce-multi-framework-is-now-ga
 - Salesforce Custom URLs/root path mapping: https://help.salesforce.com/s/articleView?id=platform.custom_url_add.htm&type=5
+- YouTube walkthrough/reference: https://www.youtube.com/watch?v=UgSbHHN1XNc
 - Target functional reference: https://enroll.zellepay.com/
+
+## GA Blog Compliance Check
+
+- Uses `@salesforce/platform-sdk`, not the beta `@salesforce/sdk-data` package.
+- Uses the GA Data SDK read shape `data.graphql?.query(...)`.
+- Optional-chains through the GraphQL result because `result.data` can be undefined.
+- Uses `UIBundle` target `Experience`, which the GA blog says remains the target for customer-facing apps.
+- Does not use deprecated `AppLauncher` target metadata.
+- Does not use deprecated `UiBundleSettings` scratch org configuration.
+- Deploys the generated `dist/` bundle output because Salesforce serves the built React app from the `UIBundle` metadata.
