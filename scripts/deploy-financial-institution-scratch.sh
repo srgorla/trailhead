@@ -8,6 +8,7 @@ SCRATCH_DEF="config/project-scratch-def.json"
 BOOTSTRAP_MANIFEST="manifest/financialInstitutionPublicAppScratchBootstrap.xml"
 FULL_MANIFEST="manifest/financialInstitutionPublicApp.xml"
 BANK_DATA_FILE="scripts/data/zelle-financial-institutions-accounts.csv"
+UI_BUNDLE_DIR="force-app/main/default/uiBundles/financialinstitutionfinder"
 IMPORT_DATA="true"
 OPEN_ORG="false"
 
@@ -29,6 +30,8 @@ Options:
                              Default: config/project-scratch-def.json
   --data-file <path>         Account CSV data file to import.
                              Default: scripts/data/zelle-financial-institutions-accounts.csv
+  --ui-bundle-dir <path>     React UI bundle directory for localhost env setup.
+                             Default: force-app/main/default/uiBundles/financialinstitutionfinder
   --skip-data                Skip Account data import.
   --open                     Open the scratch org after deployment.
   -h, --help                 Show this help.
@@ -59,6 +62,10 @@ while [[ $# -gt 0 ]]; do
             ;;
         --data-file)
             BANK_DATA_FILE="$2"
+            shift 2
+            ;;
+        --ui-bundle-dir)
+            UI_BUNDLE_DIR="$2"
             shift 2
             ;;
         --skip-data)
@@ -157,6 +164,11 @@ if [[ "$IMPORT_DATA" == "true" && ! -f "$BANK_DATA_FILE" ]]; then
     exit 1
 fi
 
+if [[ ! -d "$UI_BUNDLE_DIR" ]]; then
+    echo "UI bundle directory not found: $UI_BUNDLE_DIR" >&2
+    exit 1
+fi
+
 echo "Creating scratch org '$SCRATCH_ALIAS' from Dev Hub '$DEV_HUB_ALIAS'..."
 create_json="$(run_json sf org create scratch \
     --definition-file "$SCRATCH_DEF" \
@@ -173,6 +185,10 @@ echo "Scratch org created."
 echo "  Alias: $SCRATCH_ALIAS"
 echo "  Username: $SCRATCH_USERNAME"
 echo "  Org ID: $SCRATCH_ORG_ID"
+
+LOCAL_ENV_FILE="$UI_BUNDLE_DIR/.env.local"
+printf 'VITE_SF_ORG_ALIAS=%s\n' "$SCRATCH_ALIAS" > "$LOCAL_ENV_FILE"
+echo "Localhost Vite target updated: $LOCAL_ENV_FILE -> $SCRATCH_ALIAS"
 
 echo "Deploying bootstrap manifest..."
 sf project deploy start --manifest "$BOOTSTRAP_MANIFEST" --target-org "$SCRATCH_ALIAS" --wait 30
