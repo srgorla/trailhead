@@ -339,7 +339,7 @@ sf project retrieve start --metadata "Network"
 sf project retrieve start --metadata "CustomSite"
 ```
 
-Use retrieval when Salesforce generates site-related metadata that must be committed back into the project.
+Use retrieval when Salesforce generates site-related metadata that must be committed back into the project. Do not hand-author first-create Experience Cloud site metadata unless deploy validation proves the shape is accepted by the target org.
 
 Do not rely on undocumented manual Setup changes as the primary implementation path. If a manual step is unavoidable, capture it in a short `MANUAL_ORG_PREREQUISITES.md` file with the reason, owner, and whether it is one-time or repeatable.
 
@@ -347,8 +347,8 @@ Do not rely on undocumented manual Setup changes as the primary implementation p
 
 1. Confirm the target org supports Salesforce Multi-Framework external apps using CLI/org metadata checks.
 2. Capture any one-time org prerequisites in `MANUAL_ORG_PREREQUISITES.md` only if they cannot be represented as metadata.
-3. Create or retrieve the dedicated public LWR Experience Cloud site metadata and commit it to the project.
-4. Generate a Multi-Framework external React app and commit the UIBundle metadata.
+3. Create the dedicated public LWR Experience Cloud site with Salesforce CLI, then retrieve generated site metadata and commit it to the project.
+4. Generate or adapt a Multi-Framework external React app from the `reactexternalapp` template and commit the UIBundle metadata.
 5. Add Account fields needed for public financial institution listing as source-tracked metadata.
 6. Add sample financial institution Account records through Salesforce CLI data import or another repeatable no-Apex script.
 7. Attach logo files to sample Account records through a repeatable script or documented CLI data process.
@@ -473,7 +473,7 @@ Recommended risk reduction:
 
 Phase 1: Platform validation
 
-- Create or retrieve the dedicated public LWR Experience Cloud site metadata.
+- Create the dedicated public LWR Experience Cloud site with Salesforce CLI, then retrieve the generated metadata.
 - Create one public Account through a repeatable script.
 - Attach one logo through a repeatable script or documented CLI process.
 - Prove one no-Apex public data access path.
@@ -481,7 +481,7 @@ Phase 1: Platform validation
 
 Phase 2: React MVP
 
-- Generate the external React app.
+- Generate or adapt the external React app from the `reactexternalapp` template.
 - Build search, alphabet filter, and result list.
 - Connect to the selected no-Apex public data source.
 
