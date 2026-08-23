@@ -47,7 +47,7 @@ button {
 .brand-inner {
   display: flex;
   align-items: center;
-  min-height: 96px;
+  min-height: 82px;
 }
 .zelle-lockup {
   display: flex;
@@ -57,22 +57,22 @@ button {
 }
 .zelle-wordmark {
   display: block;
-  width: 146px;
+  width: 118px;
   height: auto;
 }
 .lockup-divider {
   width: 1px;
-  height: 48px;
+  height: 38px;
   background: #ffffff52;
 }
 .lockup-title {
   color: #fff;
-  font-size: 34px;
+  font-size: 30px;
   font-weight: 300;
   line-height: 1.1;
 }
 .search-hero {
-  padding: 26px 0 30px;
+  padding: 22px 0 26px;
 }
 .search-box {
   display: flex;
@@ -94,7 +94,7 @@ button {
   outline: 0;
   color: #fff;
   background: transparent;
-  font-size: 34px;
+  font-size: 30px;
   font-weight: 300;
   line-height: 1.2;
 }
@@ -115,14 +115,14 @@ button {
   background: #f0e8ff;
 }
 .alphabet-band {
-  padding: 28px 0 30px;
+  padding: 26px 0 28px;
   border-bottom: 1px solid #d9d9d9;
   background: #eeeeef;
 }
 .alphabet-filter {
   display: grid;
   grid-template-columns: repeat(14, minmax(32px, 1fr));
-  gap: 24px 44px;
+  gap: 22px 40px;
 }
 .alphabet-filter button {
   min-height: 28px;
@@ -130,7 +130,7 @@ button {
   border-radius: 0;
   color: #7e37dc;
   background: transparent;
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 700;
   text-decoration: underline;
   text-underline-offset: 2px;
@@ -145,7 +145,7 @@ button {
   text-decoration: none;
 }
 .results-summary {
-  margin-top: 48px;
+  margin-top: 42px;
   color: #6f6a72;
   font-size: 16px;
 }
@@ -154,31 +154,31 @@ button {
 }
 .results-list {
   display: grid;
-  gap: 44px;
-  padding: 54px 0 80px;
+  gap: 40px;
+  padding: 44px 0 72px;
 }
 .letter-section {
   display: grid;
-  grid-template-columns: 180px minmax(0, 1fr);
-  gap: 64px;
+  grid-template-columns: 170px minmax(0, 1fr);
+  gap: 58px;
 }
 .letter-section h2 {
   margin: 0;
   color: #4d4a50;
-  font-size: 56px;
+  font-size: 48px;
   font-weight: 300;
   line-height: 1;
 }
 .letter-results {
   display: grid;
   grid-template-columns: repeat(3, minmax(170px, 1fr));
-  column-gap: 72px;
-  row-gap: 26px;
+  column-gap: 64px;
+  row-gap: 22px;
 }
 .institution-name {
   min-width: 0;
   color: #504c52;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 400;
   line-height: 1.45;
   overflow-wrap: anywhere;
@@ -212,13 +212,13 @@ a.institution-name:hover {
 .zelle-info-panel {
   width: min(900px, calc(100% - 48px));
   margin: 0 auto;
-  padding: 68px 0 76px;
+  padding: 62px 0 70px;
   text-align: center;
 }
 .zelle-info-panel h2 {
   margin: 0 0 42px;
   color: #fff;
-  font-size: 62px;
+  font-size: 54px;
   font-weight: 200;
   line-height: 1.08;
 }
@@ -226,7 +226,7 @@ a.institution-name:hover {
   margin: 0 auto;
   max-width: 780px;
   color: #ffffffeb;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 300;
   line-height: 1.55;
 }
@@ -334,29 +334,29 @@ a.institution-name:hover {
     margin-left: 32px;
   }
   .brand-inner {
-    min-height: 78px;
+    min-height: 70px;
   }
   .zelle-lockup {
     gap: 18px;
   }
   .zelle-wordmark {
-    width: 114px;
+    width: 92px;
   }
   .lockup-divider {
-    height: 38px;
+    height: 32px;
   }
   .lockup-title {
-    font-size: 30px;
+    font-size: 25px;
   }
   .search-hero {
-    padding: 18px 0 20px;
+    padding: 14px 0 16px;
   }
   .search-box {
     max-width: none;
   }
   .alphabet-band {
     position: fixed;
-    top: 280px;
+    top: 236px;
     right: 14px;
     z-index: 2;
     padding: 0;
@@ -369,29 +369,35 @@ a.institution-name:hover {
     margin: 0;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
+    gap: 7px;
   }
   .alphabet-filter button {
-    width: 28px;
-    min-height: 20px;
-    font-size: 16px;
+    width: 26px;
+    min-height: 18px;
+    font-size: 14px;
     line-height: 1;
     text-decoration: none;
   }
   .results-summary {
-    margin-top: 42px;
+    margin-top: 34px;
   }
   .results-list {
-    gap: 38px;
-    padding-top: 34px;
+    gap: 34px;
+    padding-top: 30px;
   }
   .letter-section {
-    grid-template-columns: 180px minmax(0, 1fr);
-    gap: 42px;
+    grid-template-columns: 160px minmax(0, 1fr);
+    gap: 34px;
+  }
+  .letter-section h2 {
+    font-size: 42px;
   }
   .letter-results {
     grid-template-columns: 1fr;
-    row-gap: 22px;
+    row-gap: 18px;
+  }
+  .institution-name {
+    font-size: 16px;
   }
 }
 @media (max-width: 640px) {
@@ -408,32 +414,32 @@ a.institution-name:hover {
     width: min(100% - 32px, 1240px);
   }
   .brand-inner {
-    min-height: 74px;
+    min-height: 66px;
   }
   .zelle-lockup {
     gap: 12px;
   }
   .zelle-wordmark {
-    width: 94px;
+    width: 84px;
   }
   .lockup-divider {
-    height: 32px;
+    height: 28px;
   }
   .lockup-title {
-    font-size: 22px;
+    font-size: 20px;
   }
   .search-hero {
     padding: 18px 0;
   }
   .search-box {
-    min-height: 52px;
+    min-height: 48px;
     gap: 14px;
   }
   .search-box input {
-    font-size: 26px;
+    font-size: 24px;
   }
   .alphabet-band {
-    top: 218px;
+    top: 202px;
     right: 8px;
   }
   .alphabet-filter {
@@ -452,7 +458,7 @@ a.institution-name:hover {
     gap: 20px;
   }
   .letter-section h2 {
-    font-size: 48px;
+    font-size: 40px;
   }
   .letter-results {
     grid-template-columns: 1fr;
@@ -466,10 +472,10 @@ a.institution-name:hover {
   }
   .zelle-info-panel h2 {
     margin-bottom: 30px;
-    font-size: 42px;
+    font-size: 36px;
   }
   .zelle-info-panel p {
-    font-size: 18px;
+    font-size: 16px;
   }
   .learn-more {
     width: 100%;
