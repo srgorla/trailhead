@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <!-- Public financial institution finder deployment manifest. -->
+    <!-- Add generated LWR site metadata after the site is created/retrieved. -->
+    <types>
+        <members>Account.Public_Display_Name__c</members>
+        <members>Account.Public_Search_Keywords__c</members>
+        <members>Account.Publicly_Listed__c</members>
+        <members>Account.Supports_Enrollment__c</members>
+        <members>Account.Enrollment_URL__c</members>
+        <members>Account.Institution_Status__c</members>
+        <members>Account.Logo_URL__c</members>
+        <members>Account.Logo_ContentVersionId__c</members>
+        <name>CustomField</name>
+    </types>
+    <types>
+        <members>Financial_Institution_Public_App_Admin</members>
+        <name>PermissionSet</name>
+    </types>
+    <types>
+        <members>FinancialInstitutionFinder</members>
+        <name>UIBundle</name>
+    </types>
+    <version>67.0</version>
+</Package>
