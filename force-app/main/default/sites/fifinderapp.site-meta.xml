@@ -25,9 +25,9 @@
     <referrerPolicyOriginWhenCrossOrigin
   >true</referrerPolicyOriginWhenCrossOrigin>
     <selfRegPage>CommunitiesSelfReg</selfRegPage>
-    <siteAdmin>sgorla143@agentforce.com</siteAdmin>
+    <siteAdmin>sgorla@pipeline.com</siteAdmin>
     <siteGuestRecordDefaultOwner
-  >sgorla143@agentforce.com</siteGuestRecordDefaultOwner>
+  >sgorla@pipeline.com</siteGuestRecordDefaultOwner>
     <siteType>ChatterNetwork</siteType>
     <urlPathPrefix>fifinderappvforcesite</urlPathPrefix>
 </CustomSite>
