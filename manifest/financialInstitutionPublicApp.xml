@@ -17,9 +17,5 @@
         <members>Financial_Institution_Public_App_Admin</members>
         <name>PermissionSet</name>
     </types>
-    <types>
-        <members>FinancialInstitutionFinder</members>
-        <name>UIBundle</name>
-    </types>
     <version>67.0</version>
 </Package>
