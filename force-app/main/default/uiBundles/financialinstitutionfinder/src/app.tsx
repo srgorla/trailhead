@@ -2,7 +2,8 @@ import { StrictMode, useEffect, useMemo, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router';
 import { createDataSDK } from '@salesforce/platform-sdk';
-import { Building2, ExternalLink, Search, X } from 'lucide-react';
+import { Search, X } from 'lucide-react';
+import zelleLogo from './assets/zelle-logo.svg';
 import './styles.css';
 
 type FieldValue<T> = {
@@ -77,7 +78,7 @@ query FinancialInstitutions {
 }
 `;
 
-const alphabet = ['All', '#', ...'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')];
+const zelleAlphabet = [...'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''), '#'];
 
 function mapInstitution(node: AccountNode): Institution {
   const name = node.Public_Display_Name__c.value || node.Name.value || 'Unnamed institution';
@@ -92,15 +93,6 @@ function mapInstitution(node: AccountNode): Institution {
     enrollmentUrl: node.Enrollment_URL__c.value || node.Website.value || '',
     supportsEnrollment: node.Supports_Enrollment__c.value === true
   };
-}
-
-function getInitials(name: string): string {
-  return name
-    .split(/\s+/)
-    .filter(Boolean)
-    .slice(0, 2)
-    .map(part => part[0]?.toUpperCase())
-    .join('');
 }
 
 function getLetter(name: string): string {
@@ -137,45 +129,17 @@ function filterInstitutions(
   });
 }
 
-function InstitutionLogo({ institution }: { institution: Institution }) {
-  const [hasError, setHasError] = useState(false);
+function InstitutionName({ institution }: { institution: Institution }) {
+  const actionUrl = institution.enrollmentUrl || institution.website;
 
-  if (!institution.logoUrl || hasError) {
-    return <div className="logo-fallback">{getInitials(institution.name) || <Building2 size={20} />}</div>;
+  if (!actionUrl) {
+    return <span className="institution-name">{institution.name}</span>;
   }
 
   return (
-    <img
-      className="institution-logo"
-      src={institution.logoUrl}
-      alt=""
-      loading="lazy"
-      onError={() => setHasError(true)}
-    />
-  );
-}
-
-function InstitutionRow({ institution }: { institution: Institution }) {
-  const actionUrl = institution.enrollmentUrl || institution.website;
-
-  return (
-    <article className="institution-row">
-      <InstitutionLogo institution={institution} />
-      <div className="institution-copy">
-        <h3>{institution.name}</h3>
-        <p>{institution.city || 'Online banking'}</p>
-      </div>
-      <div className="institution-actions">
-        <span className={institution.supportsEnrollment ? 'status-pill ready' : 'status-pill'}>
-          {institution.supportsEnrollment ? 'Enrollment' : 'Info'}
-        </span>
-        {actionUrl && (
-          <a className="open-link" href={actionUrl} target="_blank" rel="noreferrer" aria-label={`Open ${institution.name}`}>
-            <ExternalLink size={18} />
-          </a>
-        )}
-      </div>
-    </article>
+    <a className="institution-name" href={actionUrl} target="_blank" rel="noreferrer">
+      {institution.name}
+    </a>
   );
 }
 
@@ -190,7 +154,7 @@ function InstitutionList({ institutions }: { institutions: Institution[] }) {
           <h2 id={`letter-${letter}`}>{letter}</h2>
           <div className="letter-results">
             {groups[letter].map(institution => (
-              <InstitutionRow key={institution.id} institution={institution} />
+              <InstitutionName key={institution.id} institution={institution} />
             ))}
           </div>
         </section>
@@ -254,41 +218,56 @@ function DirectoryPage() {
 
   return (
     <main className="app-shell">
-      <header className="page-header">
-        <p className="eyebrow">Public directory</p>
-        <h1>Find your financial institution</h1>
-        <p className="intro">Search active public financial institution records from Salesforce.</p>
+      <header className="brand-header">
+        <div className="brand-inner">
+          <div className="zelle-lockup" aria-label="Zelle Find Your Bank">
+            <img
+              className="zelle-wordmark"
+              src={zelleLogo}
+              alt="Zelle"
+            />
+            <span className="lockup-divider" aria-hidden="true" />
+            <span className="lockup-title">Find Your Bank</span>
+          </div>
+        </div>
       </header>
 
-      <section className="search-panel" aria-label="Institution search">
-        <label className="search-box">
-          <Search size={20} aria-hidden="true" />
-          <input
-            value={searchText}
-            onChange={event => setSearchText(event.target.value)}
-            placeholder="Search by institution name or city"
-            aria-label="Search by institution name or city"
-          />
-          {searchText && (
-            <button className="clear-button" type="button" onClick={() => setSearchText('')} aria-label="Clear search">
-              <X size={18} />
-            </button>
-          )}
-        </label>
+      <section className="search-hero" aria-label="Institution search">
+        <div className="search-inner">
+          <label className="search-box">
+            <Search size={42} strokeWidth={1.5} aria-hidden="true" />
+            <input
+              value={searchText}
+              onChange={event => {
+                setSearchText(event.target.value);
+                setSelectedLetter('All');
+              }}
+              placeholder="Search"
+              aria-label="Search by institution name or city"
+            />
+            {searchText && (
+              <button className="clear-button" type="button" onClick={() => setSearchText('')} aria-label="Clear search">
+                <X size={22} />
+              </button>
+            )}
+          </label>
+        </div>
+      </section>
 
-        <div className="alphabet-filter" aria-label="Filter by first letter">
-          {alphabet.map(letter => (
+      <nav className="alphabet-band" aria-label="Filter by first letter">
+        <div className="alphabet-filter">
+          {zelleAlphabet.map(letter => (
             <button
               key={letter}
               type="button"
               className={selectedLetter === letter ? 'active' : ''}
-              onClick={() => setSelectedLetter(letter)}
+              onClick={() => setSelectedLetter(selectedLetter === letter ? 'All' : letter)}
             >
               {letter}
             </button>
           ))}
         </div>
-      </section>
+      </nav>
 
       <section className="results-summary" aria-live="polite">
         <strong>{filteredInstitutions.length}</strong>
