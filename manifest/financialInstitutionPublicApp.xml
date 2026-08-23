@@ -15,7 +15,12 @@
     </types>
     <types>
         <members>Financial_Institution_Public_App_Admin</members>
+        <members>Financial_Institution_Public_App_Guest</members>
         <name>PermissionSet</name>
+    </types>
+    <types>
+        <members>Account.PublicActiveFinancialInstitutions</members>
+        <name>SharingGuestRule</name>
     </types>
     <types>
         <members>financialinstitutionfinder</members>
