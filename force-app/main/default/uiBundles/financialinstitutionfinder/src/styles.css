@@ -56,13 +56,13 @@ button {
 .brand-inner {
   display: flex;
   align-items: center;
-  min-height: 82px;
+  min-height: 64px;
 }
 
 .zelle-lockup {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 20px;
   color: #ffffff;
 }
 
@@ -75,33 +75,33 @@ button {
 
 .zelle-wordmark {
   display: block;
-  width: 118px;
+  width: 104px;
   height: auto;
 }
 
 .lockup-divider {
   width: 1px;
-  height: 38px;
+  height: 32px;
   background: rgba(255, 255, 255, 0.32);
 }
 
 .lockup-title {
   color: #ffffff;
-  font-size: 30px;
+  font-size: 26px;
   font-weight: 200;
   line-height: 1.1;
 }
 
 .search-hero {
-  padding: 22px 0 26px;
+  padding: 16px 0 18px;
 }
 
 .search-box {
   display: flex;
   align-items: center;
   max-width: 560px;
-  min-height: 58px;
-  gap: 18px;
+  min-height: 48px;
+  gap: 16px;
   color: #ffffff;
   background: transparent;
 }
@@ -123,7 +123,7 @@ button {
   outline: 0;
   color: #ffffff;
   background: transparent;
-  font-size: 30px;
+  font-size: 26px;
   font-weight: 200;
   line-height: 1.2;
 }
@@ -409,27 +409,27 @@ a.institution-name:hover {
   }
 
   .brand-inner {
-    min-height: 70px;
+    min-height: 58px;
   }
 
   .zelle-lockup {
-    gap: 18px;
+    gap: 16px;
   }
 
   .zelle-wordmark {
-    width: 92px;
+    width: 86px;
   }
 
   .lockup-divider {
-    height: 32px;
+    height: 28px;
   }
 
   .lockup-title {
-    font-size: 25px;
+    font-size: 22px;
   }
 
   .search-hero {
-    padding: 14px 0 16px;
+    padding: 12px 0 14px;
   }
 
   .search-box {
@@ -438,7 +438,7 @@ a.institution-name:hover {
 
   .alphabet-band {
     position: fixed;
-    top: 236px;
+    top: 208px;
     right: 14px;
     z-index: 2;
     padding: 0;
@@ -515,7 +515,7 @@ a.institution-name:hover {
   }
 
   .brand-inner {
-    min-height: 66px;
+    min-height: 56px;
   }
 
   .zelle-lockup {
@@ -523,7 +523,7 @@ a.institution-name:hover {
   }
 
   .zelle-wordmark {
-    width: 84px;
+    width: 78px;
   }
 
   .lockup-divider {
@@ -531,24 +531,24 @@ a.institution-name:hover {
   }
 
   .lockup-title {
-    font-size: 20px;
+    font-size: 18px;
   }
 
   .search-hero {
-    padding: 18px 0;
+    padding: 12px 0;
   }
 
   .search-box {
-    min-height: 48px;
-    gap: 14px;
+    min-height: 42px;
+    gap: 12px;
   }
 
   .search-box input {
-    font-size: 24px;
+    font-size: 22px;
   }
 
   .alphabet-band {
-    top: 202px;
+    top: 174px;
     right: 8px;
   }
 
