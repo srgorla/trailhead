@@ -155,12 +155,13 @@ button {
   background: transparent;
   font-size: 16px;
   font-weight: 700;
-  text-decoration: underline;
-  text-underline-offset: 2px;
+  text-decoration: none;
 }
 
 .alphabet-filter button.active {
   color: #3f235f;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .alphabet-filter button:disabled,
@@ -388,8 +389,9 @@ a.institution-name:hover {
   .results-summary,
   .results-list,
   .state-panel {
-    width: calc(100% - 120px);
-    margin-left: 32px;
+    width: min(760px, calc(100% - 136px));
+    margin-right: 88px;
+    margin-left: auto;
   }
 
   .brand-inner {
@@ -480,13 +482,20 @@ a.institution-name:hover {
   .search-inner,
   .results-summary,
   .results-list,
-  .state-panel,
+  .state-panel {
+    width: min(100% - 72px, 1240px);
+    margin-right: auto;
+    margin-left: 16px;
+  }
+
   .zelle-info-panel,
   .footer-lockup,
   .footer-rule,
   .footnote,
   .copyright {
     width: min(100% - 32px, 1240px);
+    margin-right: auto;
+    margin-left: auto;
   }
 
   .brand-inner {
