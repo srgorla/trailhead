@@ -1,6 +1,7 @@
 :root {
   color: #464348;
   background: #fff;
+  --desktop-content-nudge: 36px;
   font-family:
     ui-sans-serif,
     system-ui,
@@ -43,6 +44,7 @@ button {
 .state-panel {
   width: min(1080px, calc(100% - 48px));
   margin: 0 auto;
+  transform: translate(var(--desktop-content-nudge));
 }
 .brand-inner {
   display: flex;
@@ -346,6 +348,7 @@ a.institution-name:hover {
     width: min(720px, calc(100% - 136px));
     margin-right: 96px;
     margin-left: auto;
+    transform: none;
   }
   .brand-inner {
     min-height: 58px;
