@@ -17,6 +17,10 @@
         <name>PermissionSet</name>
     </types>
     <types>
+        <members>ZellePay_Logos</members>
+        <name>CspTrustedSite</name>
+    </types>
+    <types>
         <members>financialinstitutionfinder</members>
         <name>UIBundle</name>
     </types>

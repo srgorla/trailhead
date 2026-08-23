@@ -335,6 +335,7 @@ Recommended project additions:
 
 ```text
 manifest/financialInstitutionPublicApp.xml
+manifest/financialInstitutionPublicAppScratchBootstrap.xml
 scripts/data/create-financial-institution-sample-data.md
 scripts/data/upload-financial-institution-logos.md
 scripts/validate-public-financial-institution-app.sh
@@ -351,6 +352,13 @@ sf project retrieve start --metadata "CustomSite"
 ```
 
 Use retrieval when Salesforce generates site-related metadata that must be committed back into the project. Do not hand-author first-create Experience Cloud site metadata unless deploy validation proves the shape is accepted by the target org.
+
+Deployment portability notes:
+
+- Both deployment manifests include `CspTrustedSite:ZellePay_Logos` so externally hosted bank logo images from `https://enroll.zellepay.com` are allowed by the site Content Security Policy.
+- Do not commit org-specific `siteAdmin` or `siteGuestRecordDefaultOwner` values in `force-app/main/default/sites/fifinderapp.site-meta.xml`. Those values contain usernames that are unique per org and can make first-time site deploys fail in the next target org.
+- When the site is created from metadata without those explicit owner fields, Salesforce can keep the target org's existing/default site owner behavior. If a specific owner is required later, set it as a target-org post-deploy operation rather than changing the shared source file.
+- After first-time site creation in a new org, query the generated guest username and assign `Financial_Institution_Public_App_Guest` with `sf org assign permset --name Financial_Institution_Public_App_Guest --on-behalf-of <guest_username> --target-org <alias>`.
 
 Do not rely on undocumented manual Setup changes as the primary implementation path. If a manual step is unavoidable, capture it in a short `MANUAL_ORG_PREREQUISITES.md` file with the reason, owner, and whether it is one-time or repeatable.
 

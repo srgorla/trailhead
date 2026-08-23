@@ -19,6 +19,10 @@
         <name>PermissionSet</name>
     </types>
     <types>
+        <members>ZellePay_Logos</members>
+        <name>CspTrustedSite</name>
+    </types>
+    <types>
         <members>Account.PublicActiveFinancialInstitutions</members>
         <name>SharingGuestRule</name>
     </types>
