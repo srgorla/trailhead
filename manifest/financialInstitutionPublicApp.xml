@@ -21,5 +21,21 @@
         <members>financialinstitutionfinder</members>
         <name>UIBundle</name>
     </types>
+    <types>
+        <members>site/Financial_Institution_Finder1</members>
+        <name>DigitalExperienceBundle</name>
+    </types>
+    <types>
+        <members>Financial_Institution_Finder1</members>
+        <name>DigitalExperienceConfig</name>
+    </types>
+    <types>
+        <members>Financial Institution Finder</members>
+        <name>Network</name>
+    </types>
+    <types>
+        <members>Financial_Institution_Finder</members>
+        <name>CustomSite</name>
+    </types>
     <version>67.0</version>
 </Package>

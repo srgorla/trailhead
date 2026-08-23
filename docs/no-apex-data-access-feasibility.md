@@ -69,16 +69,21 @@ The filtered query returned zero rows because sample public financial institutio
 
 `aforce_de` includes the `Build Your Own (LWR)` Experience Cloud template.
 
-This supports the planned public LWR site creation command:
+The public LWR site was created with the Salesforce CLI. Two platform constraints were confirmed:
+
+- LWR site URL path prefixes must be alphanumeric, so `findyourbank` is valid and `find-your-bank` is not.
+- `UNAUTHENTICATED` is not supported for LWR site creation in this org. Use `AUTHENTICATED_WITH_PUBLIC_ACCESS_ENABLED` for public guest access.
 
 ```bash
 sf community create \
   --name "Financial Institution Finder" \
   --template-name "Build Your Own (LWR)" \
-  --url-path-prefix "find-your-bank" \
+  --url-path-prefix "findyourbank" \
   --target-org aforce_de \
-  templateParams.AuthenticationType=UNAUTHENTICATED
+  templateParams.AuthenticationType=AUTHENTICATED_WITH_PUBLIC_ACCESS_ENABLED
 ```
+
+The generated site metadata can be retrieved and deployed, but the generated site's `appContainer` property is read-only after site creation. If the site must be created as a direct external React app container, that must be done through the `reactexternalapp` metadata creation path before the site exists, not by converting a standard generated LWR site after creation.
 
 ## Open Validation
 
@@ -88,8 +93,9 @@ Authenticated GraphQL works, but unauthenticated public access must still be val
 
 Next validation targets:
 
-- Create the public LWR site.
-- Retrieve generated site and guest profile metadata.
+- Deploy the `financialinstitutionfinder` UIBundle.
+- Determine the supported metadata path for attaching the UIBundle to the generated public LWR site.
+- Retrieve generated guest profile metadata.
 - Configure guest access to only public-safe `Account` fields.
 - Test the React app or a minimal public route in an incognito browser.
 - Confirm whether `Logo_URL__c`, static resources, CMS images, or Salesforce Files are the best public logo strategy.
