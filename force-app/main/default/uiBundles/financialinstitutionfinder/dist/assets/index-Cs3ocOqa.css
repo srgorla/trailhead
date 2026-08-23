@@ -278,6 +278,9 @@ a.institution-name:hover {
   align-items: center;
   gap: 22px 32px;
 }
+.footer-lockup nav:not(.social-links) {
+  flex: 1 1 auto;
+}
 .footer-lockup a {
   color: #ffffffe6;
   font-size: 16px;
@@ -288,6 +291,22 @@ a.institution-name:hover {
   color: #fff;
   text-decoration: underline;
   text-underline-offset: 4px;
+}
+.social-links {
+  flex: 0 0 auto;
+  gap: 18px;
+}
+.social-links a {
+  display: inline-grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+}
+.social-links a:hover {
+  text-decoration: none;
+}
+.social-links svg {
+  display: block;
 }
 .footer-rule {
   height: 1px;
@@ -463,5 +482,8 @@ a.institution-name:hover {
   }
   .footer-lockup nav {
     gap: 16px 24px;
+  }
+  .social-links {
+    gap: 14px;
   }
 }

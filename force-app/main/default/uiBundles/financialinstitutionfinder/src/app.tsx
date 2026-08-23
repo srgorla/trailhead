@@ -2,7 +2,7 @@ import { StrictMode, useEffect, useMemo, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router';
 import { createDataSDK } from '@salesforce/platform-sdk';
-import { Search, X } from 'lucide-react';
+import { Facebook, Instagram, Search, Twitter, X, Youtube } from 'lucide-react';
 import zelleLogo from './assets/zelle-logo.svg';
 import './styles.css';
 
@@ -235,6 +235,20 @@ function ZelleInfoFooter() {
             </a>
             <a href="https://www.zellepay.com/privacy" target="_blank" rel="noreferrer">
               Your Privacy Rights
+            </a>
+          </nav>
+          <nav className="social-links" aria-label="Zelle social media">
+            <a href="https://twitter.com/Zelle" target="_blank" rel="noreferrer" aria-label="Zelle on Twitter">
+              <Twitter size={22} strokeWidth={2.4} aria-hidden="true" />
+            </a>
+            <a href="https://www.facebook.com/Zelle" target="_blank" rel="noreferrer" aria-label="Zelle on Facebook">
+              <Facebook size={22} strokeWidth={2.4} aria-hidden="true" />
+            </a>
+            <a href="https://www.instagram.com/zellepay/" target="_blank" rel="noreferrer" aria-label="Zelle on Instagram">
+              <Instagram size={22} strokeWidth={2.4} aria-hidden="true" />
+            </a>
+            <a href="https://www.youtube.com/user/ZellePay" target="_blank" rel="noreferrer" aria-label="Zelle on YouTube">
+              <Youtube size={24} strokeWidth={2.2} aria-hidden="true" />
             </a>
           </nav>
         </div>
