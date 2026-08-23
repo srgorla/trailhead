@@ -41,7 +41,7 @@ button {
 .results-summary,
 .results-list,
 .state-panel {
-  width: min(1240px, calc(100% - 48px));
+  width: min(1080px, calc(100% - 48px));
   margin: 0 auto;
 }
 .brand-inner {
@@ -74,7 +74,7 @@ button {
 .lockup-title {
   color: #fff;
   font-size: 30px;
-  font-weight: 300;
+  font-weight: 200;
   line-height: 1.1;
 }
 .search-hero {
@@ -105,7 +105,7 @@ button {
   color: #fff;
   background: transparent;
   font-size: 30px;
-  font-weight: 300;
+  font-weight: 200;
   line-height: 1.2;
 }
 .search-box input::placeholder {
@@ -132,7 +132,7 @@ button {
 .alphabet-filter {
   display: grid;
   grid-template-columns: repeat(14, minmax(32px, 1fr));
-  gap: 22px 40px;
+  gap: 22px 34px;
 }
 .alphabet-filter button {
   min-height: 28px;
@@ -141,7 +141,7 @@ button {
   color: #7e37dc;
   background: transparent;
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 600;
   text-decoration: none;
 }
 .alphabet-filter button.active {
@@ -156,42 +156,44 @@ button {
   text-decoration: none;
 }
 .results-summary {
-  margin-top: 42px;
+  margin-top: 52px;
   color: #6f6a72;
   font-size: 16px;
+  font-weight: 300;
 }
 .results-summary strong {
   color: #4a464c;
+  font-weight: 600;
 }
 .results-list {
   display: grid;
   gap: 40px;
-  padding: 44px 0 72px;
+  padding: 58px 0 72px;
 }
 .letter-section {
   display: grid;
-  grid-template-columns: 170px minmax(0, 1fr);
-  gap: 58px;
+  grid-template-columns: 150px minmax(0, 1fr);
+  gap: 54px;
 }
 .letter-section h2 {
   margin: 0;
   color: #4d4a50;
   font-size: 48px;
-  font-weight: 300;
+  font-weight: 200;
   line-height: 1;
 }
 .letter-results {
   display: grid;
   grid-template-columns: repeat(3, minmax(170px, 1fr));
-  column-gap: 64px;
-  row-gap: 22px;
+  column-gap: 60px;
+  row-gap: 26px;
 }
 .institution-name {
   min-width: 0;
   color: #504c52;
   font-size: 18px;
-  font-weight: 400;
-  line-height: 1.45;
+  font-weight: 300;
+  line-height: 1.5;
   overflow-wrap: anywhere;
   text-decoration: none;
 }
@@ -341,8 +343,8 @@ a.institution-name:hover {
   .results-summary,
   .results-list,
   .state-panel {
-    width: min(760px, calc(100% - 136px));
-    margin-right: 88px;
+    width: min(720px, calc(100% - 136px));
+    margin-right: 96px;
     margin-left: auto;
   }
   .brand-inner {
@@ -387,19 +389,20 @@ a.institution-name:hover {
     width: 26px;
     min-height: 18px;
     font-size: 14px;
+    font-weight: 600;
     line-height: 1;
     text-decoration: none;
   }
   .results-summary {
-    margin-top: 34px;
+    margin-top: 42px;
   }
   .results-list {
     gap: 34px;
-    padding-top: 30px;
+    padding-top: 42px;
   }
   .letter-section {
-    grid-template-columns: 160px minmax(0, 1fr);
-    gap: 34px;
+    grid-template-columns: 145px minmax(0, 1fr);
+    gap: 40px;
   }
   .letter-section h2 {
     font-size: 42px;
@@ -410,6 +413,7 @@ a.institution-name:hover {
   }
   .institution-name {
     font-size: 16px;
+    font-weight: 300;
   }
 }
 @media (max-width: 640px) {
