@@ -43,6 +43,7 @@ $RECYCLE.BIN/
 .env
 .env.local
 *.local.log
+*.local.pid
 
 # Python Salesforce Functions
 **/__pycache__/
