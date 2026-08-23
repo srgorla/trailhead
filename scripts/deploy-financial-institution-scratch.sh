@@ -109,6 +109,31 @@ run_json() {
     printf '%s' "$output"
 }
 
+run_json_retry() {
+    local max_attempts="$1"
+    local sleep_seconds="$2"
+    shift 2
+
+    local attempt=1
+    local output
+    while true; do
+        if output="$("$@" 2>&1)"; then
+            printf '%s' "$output"
+            return 0
+        fi
+
+        if [[ "$attempt" -ge "$max_attempts" ]]; then
+            echo "$output" >&2
+            return 1
+        fi
+
+        echo "Command failed on attempt $attempt/$max_attempts. Retrying in ${sleep_seconds}s..." >&2
+        echo "$output" >&2
+        sleep "$sleep_seconds"
+        attempt=$((attempt + 1))
+    done
+}
+
 require_command sf
 require_command node
 
@@ -180,7 +205,7 @@ sf org assign permset \
 
 if [[ "$IMPORT_DATA" == "true" ]]; then
     echo "Importing bank Account data from $BANK_DATA_FILE..."
-    import_json="$(run_json sf data import bulk \
+    import_json="$(run_json_retry 3 10 sf data import bulk \
         --sobject Account \
         --file "$BANK_DATA_FILE" \
         --target-org "$SCRATCH_ALIAS" \
