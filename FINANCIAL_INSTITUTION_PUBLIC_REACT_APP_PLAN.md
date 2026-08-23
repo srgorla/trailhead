@@ -345,11 +345,20 @@ force-app/main/default/permissionsets/Financial_Institution_Public_App_Admin.per
 Prefer these workflows:
 
 ```bash
-sf project deploy start --manifest manifest/financialInstitutionPublicApp.xml
+sf project deploy start --manifest manifest/financialInstitutionPublicAppScratchBootstrap.xml --target-org <alias>
+sf project deploy start --metadata SharingGuestRule:Account.PublicActiveFinancialInstitutions --target-org <alias>
+sf project deploy start --manifest manifest/financialInstitutionPublicApp.xml --target-org <alias>
 sf project retrieve start --metadata "ExperienceBundle"
 sf project retrieve start --metadata "Network"
 sf project retrieve start --metadata "CustomSite"
 ```
+
+Manifest strategy:
+
+- Keep `manifest/financialInstitutionPublicAppScratchBootstrap.xml` for first-time setup in a new scratch org, sandbox, or dev org. It deploys the fields, permission sets, CSP trusted site, React UI bundle, Custom Site, Network, Digital Experience config, and Digital Experience bundle.
+- Keep `manifest/financialInstitutionPublicApp.xml` for normal deploys after the site exists. It includes the same app/site metadata plus `SharingGuestRule:Account.PublicActiveFinancialInstitutions`.
+- The guest sharing rule is intentionally excluded from the bootstrap manifest because it can fail when the target org has not created the site and guest-user context yet.
+- After the bootstrap deploy succeeds, deploy the guest sharing rule once, query the generated guest username, assign the guest permission set, and then use the full manifest for later changes.
 
 Use retrieval when Salesforce generates site-related metadata that must be committed back into the project. Do not hand-author first-create Experience Cloud site metadata unless deploy validation proves the shape is accepted by the target org.
 
