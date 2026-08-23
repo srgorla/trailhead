@@ -366,7 +366,7 @@ Scratch org automation:
 npm run fi:scratch:deploy -- --dev-hub react-enroll-zelle --alias fi_test --restart-localhost --open
 ```
 
-The script `scripts/deploy-financial-institution-scratch.sh` creates the scratch org, deploys the bootstrap manifest, deploys the guest sharing rule, assigns admin and guest permission sets, imports the prepared Account data CSV, verifies records/site/CSP, updates the local Vite org target, optionally restarts localhost, and prints the public app URL.
+The script `scripts/deploy-financial-institution-scratch.sh` creates the scratch org, deploys the bootstrap manifest, deploys the guest sharing rule, assigns admin and guest permission sets, imports the prepared Account data CSV, verifies records/site/CSP, updates the local Vite org target, and prints the public app URL. When `--restart-localhost` is provided, the script starts Vite as the final foreground step so the terminal remains attached to the local dev server.
 
 Use retrieval when Salesforce generates site-related metadata that must be committed back into the project. Do not hand-author first-create Experience Cloud site metadata unless deploy validation proves the shape is accepted by the target org.
 
