@@ -184,7 +184,7 @@ function InstitutionName({ institution }: { institution: Institution }) {
 
 function InstitutionList({ institutions }: { institutions: Institution[] }) {
   const groups = groupInstitutions(institutions);
-  const letters = Object.keys(groups).sort();
+  const letters = zelleAlphabet.filter(letter => groups[letter]?.length);
 
   return (
     <div className="results-list">

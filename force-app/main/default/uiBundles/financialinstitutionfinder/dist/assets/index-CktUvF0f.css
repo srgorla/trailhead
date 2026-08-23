@@ -305,10 +305,79 @@ a.institution-name:hover {
 .copyright {
   margin-top: 36px;
 }
+@media (max-width: 1100px) {
+  .brand-inner,
+  .search-inner,
+  .results-summary,
+  .results-list,
+  .state-panel {
+    width: calc(100% - 120px);
+    margin-left: 32px;
+  }
+  .brand-inner {
+    min-height: 78px;
+  }
+  .zelle-lockup {
+    gap: 18px;
+  }
+  .zelle-wordmark {
+    width: 114px;
+  }
+  .lockup-divider {
+    height: 38px;
+  }
+  .lockup-title {
+    font-size: 30px;
+  }
+  .search-hero {
+    padding: 18px 0 20px;
+  }
+  .search-box {
+    max-width: none;
+  }
+  .alphabet-band {
+    position: fixed;
+    top: 280px;
+    right: 14px;
+    z-index: 2;
+    padding: 0;
+    border: 0;
+    background: transparent;
+  }
+  .alphabet-filter {
+    display: flex;
+    width: auto;
+    margin: 0;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  .alphabet-filter button {
+    width: 28px;
+    min-height: 20px;
+    font-size: 16px;
+    line-height: 1;
+    text-decoration: none;
+  }
+  .results-summary {
+    margin-top: 42px;
+  }
+  .results-list {
+    gap: 38px;
+    padding-top: 34px;
+  }
+  .letter-section {
+    grid-template-columns: 180px minmax(0, 1fr);
+    gap: 42px;
+  }
+  .letter-results {
+    grid-template-columns: 1fr;
+    row-gap: 22px;
+  }
+}
 @media (max-width: 640px) {
   .brand-inner,
   .search-inner,
-  .alphabet-filter,
   .results-summary,
   .results-list,
   .state-panel,
@@ -320,23 +389,44 @@ a.institution-name:hover {
     width: min(100% - 32px, 1240px);
   }
   .brand-inner {
-    min-height: 82px;
+    min-height: 74px;
   }
   .zelle-lockup {
-    gap: 16px;
+    gap: 12px;
   }
   .zelle-wordmark {
-    width: 112px;
+    width: 94px;
+  }
+  .lockup-divider {
+    height: 32px;
   }
   .lockup-title {
-    font-size: 24px;
+    font-size: 22px;
+  }
+  .search-hero {
+    padding: 18px 0;
+  }
+  .search-box {
+    min-height: 52px;
+    gap: 14px;
   }
   .search-box input {
-    font-size: 28px;
+    font-size: 26px;
+  }
+  .alphabet-band {
+    top: 218px;
+    right: 8px;
   }
   .alphabet-filter {
-    grid-template-columns: repeat(6, minmax(28px, 1fr));
-    gap: 18px 24px;
+    gap: 5px;
+  }
+  .alphabet-filter button {
+    width: 24px;
+    min-height: 18px;
+    font-size: 13px;
+  }
+  .results-summary {
+    margin-top: 34px;
   }
   .letter-section {
     grid-template-columns: 1fr;
