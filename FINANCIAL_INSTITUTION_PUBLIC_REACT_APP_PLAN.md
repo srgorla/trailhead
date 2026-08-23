@@ -347,19 +347,20 @@ Do not rely on undocumented manual Setup changes as the primary implementation p
 
 1. Confirm the target org supports Salesforce Multi-Framework external apps using CLI/org metadata checks.
 2. Capture any one-time org prerequisites in `MANUAL_ORG_PREREQUISITES.md` only if they cannot be represented as metadata.
-3. Create the dedicated public LWR Experience Cloud site with Salesforce CLI, then retrieve generated site metadata and commit it to the project.
+3. For a standard public LWR site, create the site with Salesforce CLI, then retrieve generated site metadata and commit it to the project.
 4. Generate or adapt a Multi-Framework external React app from the `reactexternalapp` template and commit the UIBundle metadata.
-5. Add Account fields needed for public financial institution listing as source-tracked metadata.
-6. Add sample financial institution Account records through Salesforce CLI data import or another repeatable no-Apex script.
-7. Attach logo files to sample Account records through a repeatable script or documented CLI data process.
-8. Implement the no-Apex public data access path.
-9. Add tests for filtering, search, and public field control where testable in frontend/unit tests.
-10. Build the React search and listing UI.
-11. Connect the React app to the selected no-Apex public data source.
-12. Configure guest user access through deployable metadata where supported, then retrieve generated guest profile/site metadata and commit it.
-13. Validate the public LWR site without login in a private browser session.
-14. Add automated frontend tests for grouping, search, empty state, and error state.
-15. Deploy to sandbox from source, then package/promote after review.
+5. For a direct external React app site, use the `reactexternalapp` app-container metadata shape at site creation time. Do not create a standard LWR site first and try to convert it later.
+6. Add Account fields needed for public financial institution listing as source-tracked metadata.
+7. Add sample financial institution Account records through Salesforce CLI data import or another repeatable no-Apex script.
+8. Attach logo files to sample Account records through a repeatable script or documented CLI data process.
+9. Implement the no-Apex public data access path.
+10. Add tests for filtering, search, and public field control where testable in frontend/unit tests.
+11. Build the React search and listing UI.
+12. Connect the React app to the selected no-Apex public data source.
+13. Configure guest user access through deployable metadata where supported, then retrieve generated guest profile/site metadata and commit it.
+14. Validate the public LWR site without login in a private browser session.
+15. Add automated frontend tests for grouping, search, empty state, and error state.
+16. Deploy to sandbox from source, then package/promote after review.
 
 ## React Data Access
 

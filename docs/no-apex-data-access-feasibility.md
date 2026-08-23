@@ -85,6 +85,40 @@ sf community create \
 
 The generated site metadata can be retrieved and deployed, but the generated site's `appContainer` property is read-only after site creation. If the site must be created as a direct external React app container, that must be done through the `reactexternalapp` metadata creation path before the site exists, not by converting a standard generated LWR site after creation.
 
+## External React App Container Probe
+
+The supported external React path was validated with a generated `reactexternalapp` probe.
+
+The probe dry-run deployed successfully when it included:
+
+- The `financialinstitutionfinder` UIBundle.
+- A generated `DigitalExperienceBundle` containing only `sfdc_cms__site`.
+- A generated `DigitalExperienceConfig`.
+- A generated `Network`.
+- A generated `CustomSite`.
+- `content.json` with `appContainer` set to `true`.
+- `content.json` with `appSpace` set to `c__financialinstitutionfinder`.
+- `authenticationType` set to `AUTHENTICATED_WITH_PUBLIC_ACCESS_ENABLED`.
+
+The probe did not require the generated authentication Apex classes for metadata validation.
+
+This confirms that the correct code-first path is not to convert the standard LWR site after creation. Instead, create a separate external React app-container site from `reactexternalapp`-style metadata, or create the final site from that metadata shape before the site exists.
+
+Validated app-container site content shape:
+
+```json
+{
+  "type": "sfdc_cms__site",
+  "title": "fifinderapp",
+  "contentBody": {
+    "authenticationType": "AUTHENTICATED_WITH_PUBLIC_ACCESS_ENABLED",
+    "appContainer": true,
+    "appSpace": "c__financialinstitutionfinder"
+  },
+  "urlName": "fifinderapp"
+}
+```
+
 ## Open Validation
 
 The remaining no-Apex risk is guest-user access.
@@ -94,7 +128,8 @@ Authenticated GraphQL works, but unauthenticated public access must still be val
 Next validation targets:
 
 - Deploy the `financialinstitutionfinder` UIBundle.
-- Determine the supported metadata path for attaching the UIBundle to the generated public LWR site.
+- Add a source-controlled external React app-container site using the validated `reactexternalapp` metadata shape.
+- Decide whether to keep the standard generated LWR site or replace it later with the app-container site as the public entry point.
 - Retrieve generated guest profile metadata.
 - Configure guest access to only public-safe `Account` fields.
 - Test the React app or a minimal public route in an incognito browser.
