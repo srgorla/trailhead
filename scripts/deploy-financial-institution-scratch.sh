@@ -113,7 +113,10 @@ json_get() {
     node -e "
 const fs = require('fs');
 const input = fs.readFileSync(0, 'utf8');
-const data = JSON.parse(input);
+const jsonStart = input.indexOf('{');
+const jsonEnd = input.lastIndexOf('}');
+if (jsonStart === -1 || jsonEnd === -1 || jsonEnd < jsonStart) process.exit(1);
+const data = JSON.parse(input.slice(jsonStart, jsonEnd + 1));
 const value = (${expression})(data);
 if (value === undefined || value === null || value === '') process.exit(1);
 console.log(value);

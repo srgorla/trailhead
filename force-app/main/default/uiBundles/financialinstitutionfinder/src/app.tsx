@@ -1,8 +1,9 @@
 import { StrictMode, useEffect, useMemo, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { createBrowserRouter, RouterProvider } from 'react-router';
+import { createBrowserRouter, Link, RouterProvider } from 'react-router';
 import { createDataSDK } from '@salesforce/platform-sdk';
-import { Facebook, Instagram, Search, Twitter, X, Youtube } from 'lucide-react';
+import QRCode from 'qrcode';
+import { Copy, Download, Facebook, Instagram, Printer, Search, Share2, Twitter, X, Youtube } from 'lucide-react';
 import zelleLogo from './assets/zelle-logo.svg';
 import './styles.css';
 
@@ -44,6 +45,24 @@ type Institution = {
   logoUrl: string;
   enrollmentUrl: string;
   supportsEnrollment: boolean;
+};
+
+type MerchantQrForm = {
+  name: string;
+  action: 'payment' | 'request';
+  token: string;
+  amount: string;
+  currency: string;
+  note: string;
+};
+
+type MerchantQrPayload = {
+  name: string;
+  action: string;
+  token: string;
+  amount?: number;
+  currency?: string;
+  note?: string;
 };
 
 type GraphQLResponse = {
@@ -103,6 +122,73 @@ query FinancialInstitutions($after: String) {
 `;
 
 const zelleAlphabet = [...'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''), '#'];
+const ZELLE_QR_BASE_URL = 'https://enroll.zellepay.com/qr-codes';
+
+const initialMerchantQrForm: MerchantQrForm = {
+  name: '',
+  action: 'payment',
+  token: '',
+  amount: '',
+  currency: 'USD',
+  note: ''
+};
+
+function encodeBase64(value: string): string {
+  const bytes = new TextEncoder().encode(value);
+  let binary = '';
+
+  bytes.forEach(byte => {
+    binary += String.fromCharCode(byte);
+  });
+
+  return btoa(binary);
+}
+
+function buildMerchantQrPayload(form: MerchantQrForm): MerchantQrPayload {
+  const payload: MerchantQrPayload = {
+    name: form.name.trim(),
+    action: form.action,
+    token: form.token.trim()
+  };
+
+  if (form.amount.trim()) {
+    const amount = Number(form.amount);
+
+    if (Number.isFinite(amount) && amount > 0) {
+      payload.amount = amount;
+    }
+  }
+
+  if (form.currency.trim()) {
+    payload.currency = form.currency.trim().toUpperCase();
+  }
+
+  if (form.note.trim()) {
+    payload.note = form.note.trim();
+  }
+
+  return payload;
+}
+
+function buildMerchantQrUrl(form: MerchantQrForm): string {
+  const payload = buildMerchantQrPayload(form);
+  const encodedPayload = encodeBase64(JSON.stringify(payload));
+  const url = new URL(ZELLE_QR_BASE_URL);
+  url.searchParams.set('data', encodedPayload);
+
+  return url.toString();
+}
+
+function isMerchantQrFormValid(form: MerchantQrForm): boolean {
+  const amount = form.amount.trim();
+
+  return (
+    form.name.trim().length > 0 &&
+    form.action.trim().length > 0 &&
+    form.token.trim().length > 0 &&
+    (amount.length === 0 || (Number.isFinite(Number(amount)) && Number(amount) > 0))
+  );
+}
 
 function mapInstitution(node: AccountNode): Institution {
   const name = node.Public_Display_Name__c.value || node.Name.value || 'Unnamed institution';
@@ -334,6 +420,224 @@ function ZelleInfoFooter() {
   );
 }
 
+function MerchantQrPage() {
+  const [form, setForm] = useState<MerchantQrForm>(initialMerchantQrForm);
+  const [qrDataUrl, setQrDataUrl] = useState('');
+  const [copiedMessage, setCopiedMessage] = useState('');
+  const isValid = isMerchantQrFormValid(form);
+  const merchantQrUrl = buildMerchantQrUrl(form);
+  const payload = buildMerchantQrPayload(form);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    async function generateQr() {
+      const dataUrl = await QRCode.toDataURL(merchantQrUrl, {
+        errorCorrectionLevel: 'M',
+        margin: 2,
+        width: 320,
+        color: {
+          dark: '#1f1b24',
+          light: '#ffffff'
+        }
+      });
+
+      if (isMounted) {
+        setQrDataUrl(dataUrl);
+      }
+    }
+
+    void generateQr();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [merchantQrUrl]);
+
+  function updateForm<K extends keyof MerchantQrForm>(field: K, value: MerchantQrForm[K]) {
+    setForm(current => ({ ...current, [field]: value }));
+    setCopiedMessage('');
+  }
+
+  async function copyQrLink() {
+    if (!merchantQrUrl) {
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(merchantQrUrl);
+      setCopiedMessage('Link copied');
+    } catch {
+      setCopiedMessage('Copy failed');
+    }
+  }
+
+  function printQr() {
+    window.print();
+  }
+
+  function downloadQr() {
+    if (!qrDataUrl) {
+      return;
+    }
+
+    const link = document.createElement('a');
+    link.href = qrDataUrl;
+    link.download = `${form.name.trim() || 'merchant'}-zelle-qr.png`;
+    link.click();
+  }
+
+  async function shareQr() {
+    if (!merchantQrUrl) {
+      return;
+    }
+
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: `${form.name.trim()} Zelle QR`,
+          text: form.note.trim() || `${form.name.trim()} Zelle QR`,
+          url: merchantQrUrl
+        });
+      } catch {
+        return;
+      }
+
+      return;
+    }
+
+    await copyQrLink();
+  }
+
+  return (
+    <main className="app-shell merchant-page">
+      <header className="brand-header">
+        <div className="brand-inner merchant-brand-inner">
+          <div className="zelle-lockup" aria-label="Zelle Merchant QR">
+            <a className="zelle-home-link" href="https://www.zellepay.com/" target="_blank" rel="noreferrer">
+              <img className="zelle-wordmark" src={zelleLogo} alt="Zelle" />
+            </a>
+            <span className="lockup-divider" aria-hidden="true" />
+            <span className="lockup-title">Merchant QR</span>
+          </div>
+          <Link className="merchant-header-link" to="/">
+            Find your bank
+          </Link>
+        </div>
+      </header>
+
+      <section className="merchant-workspace">
+        <form className="merchant-form" onSubmit={event => event.preventDefault()}>
+          <div className="merchant-form-row">
+            <label>
+              <span>Name</span>
+              <input
+                value={form.name}
+                onChange={event => updateForm('name', event.target.value)}
+                required
+                autoComplete="organization"
+              />
+            </label>
+
+            <label>
+              <span>Action</span>
+              <select value={form.action} onChange={event => updateForm('action', event.target.value as MerchantQrForm['action'])}>
+                <option value="payment">payment</option>
+                <option value="request">request</option>
+              </select>
+            </label>
+          </div>
+
+          <label>
+            <span>Token</span>
+            <input
+              value={form.token}
+              onChange={event => updateForm('token', event.target.value)}
+              required
+              autoComplete="email"
+              inputMode="email"
+            />
+          </label>
+
+          <div className="merchant-form-row">
+            <label>
+              <span>Amount</span>
+              <input
+                value={form.amount}
+                onChange={event => updateForm('amount', event.target.value)}
+                min="0.01"
+                step="0.01"
+                type="number"
+              />
+            </label>
+
+            <label>
+              <span>Currency</span>
+              <input
+                value={form.currency}
+                onChange={event => updateForm('currency', event.target.value.toUpperCase())}
+                maxLength={3}
+                autoComplete="off"
+              />
+            </label>
+          </div>
+
+          <label>
+            <span>Note</span>
+            <textarea value={form.note} onChange={event => updateForm('note', event.target.value)} rows={4} />
+          </label>
+        </form>
+
+        <section className="merchant-preview" aria-label="Generated QR code">
+          <div className="print-card">
+            <p className="print-card-title">{form.name.trim() || 'Merchant QR draft'}</p>
+            <div className="qr-frame">
+              {qrDataUrl ? (
+                <img src={qrDataUrl} alt={`${form.name.trim() || 'Merchant'} Zelle QR code`} />
+              ) : (
+                <span>QR preview</span>
+              )}
+            </div>
+            <p className="print-card-note">{form.note.trim() || 'Scan to pay with Zelle'}</p>
+          </div>
+
+          <div className="merchant-actions">
+            <button type="button" onClick={copyQrLink} disabled={!isValid}>
+              <Copy size={18} aria-hidden="true" />
+              Copy link
+            </button>
+            <button type="button" onClick={shareQr} disabled={!isValid}>
+              <Share2 size={18} aria-hidden="true" />
+              Share
+            </button>
+            <button type="button" onClick={printQr} disabled={!isValid || !qrDataUrl}>
+              <Printer size={18} aria-hidden="true" />
+              Print
+            </button>
+            <button type="button" onClick={downloadQr} disabled={!isValid || !qrDataUrl}>
+              <Download size={18} aria-hidden="true" />
+              Download
+            </button>
+          </div>
+
+          {copiedMessage && <p className="merchant-copy-status">{copiedMessage}</p>}
+
+          <div className="merchant-output">
+            <label>
+              <span>Payload</span>
+              <textarea readOnly value={JSON.stringify(payload, null, 2)} rows={8} />
+            </label>
+            <label>
+              <span>QR link</span>
+              <textarea readOnly value={merchantQrUrl} rows={4} />
+            </label>
+          </div>
+        </section>
+      </section>
+    </main>
+  );
+}
+
 function DirectoryPage() {
   const [institutions, setInstitutions] = useState<Institution[]>([]);
   const [searchText, setSearchText] = useState('');
@@ -427,6 +731,9 @@ function DirectoryPage() {
             <span className="lockup-divider" aria-hidden="true" />
             <span className="lockup-title">Find Your Bank</span>
           </div>
+          <Link className="merchant-header-link" to="/merchant-qr">
+            Merchant QR
+          </Link>
         </div>
       </header>
 
@@ -517,6 +824,7 @@ const basename = typeof rawBasePath === 'string' ? rawBasePath.replace(/\/+$/, '
 const router = createBrowserRouter(
   [
     { path: '/', element: <DirectoryPage /> },
+    { path: '/merchant-qr', element: <MerchantQrPage /> },
     { path: '*', element: <NotFound /> }
   ],
   { basename }

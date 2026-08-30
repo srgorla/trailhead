@@ -20,7 +20,9 @@ body {
   background: #fff;
 }
 button,
-input {
+input,
+select,
+textarea {
   font: inherit;
 }
 button {
@@ -49,6 +51,8 @@ button {
 .brand-inner {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  gap: 24px;
   min-height: 64px;
 }
 .zelle-lockup {
@@ -78,6 +82,18 @@ button {
   font-size: 26px;
   font-weight: 200;
   line-height: 1.1;
+}
+.merchant-header-link {
+  flex: 0 0 auto;
+  color: #ffffffeb;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+}
+.merchant-header-link:hover {
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 .search-hero {
   padding: 16px 0 18px;
@@ -329,6 +345,182 @@ a.institution-name:hover,
 .state-panel p {
   margin: 8px 0 0;
 }
+.merchant-page {
+  color: #342f38;
+  background: #f6f3f8;
+}
+.merchant-workspace {
+  display: grid;
+  width: min(1080px, calc(100% - 48px));
+  margin: 0 auto;
+  padding: 44px 0 72px;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 420px);
+  gap: 32px;
+}
+.merchant-form,
+.merchant-preview {
+  min-width: 0;
+  border: 1px solid #ded7e7;
+  border-radius: 8px;
+  background: #fff;
+}
+.merchant-form {
+  display: grid;
+  gap: 22px;
+  align-content: start;
+  padding: 28px;
+}
+.merchant-form-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(140px, 180px);
+  gap: 18px;
+}
+.merchant-form label,
+.merchant-output label {
+  display: grid;
+  gap: 8px;
+}
+.merchant-form span,
+.merchant-output span {
+  color: #5c5662;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.merchant-form input,
+.merchant-form select,
+.merchant-form textarea,
+.merchant-output textarea {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid #cfc7d9;
+  border-radius: 6px;
+  color: #342f38;
+  background: #fff;
+  font-size: 16px;
+  line-height: 1.4;
+}
+.merchant-form input,
+.merchant-form select {
+  min-height: 46px;
+  padding: 0 12px;
+}
+.merchant-form textarea,
+.merchant-output textarea {
+  resize: vertical;
+  padding: 12px;
+}
+.merchant-form input:focus,
+.merchant-form select:focus,
+.merchant-form textarea:focus,
+.merchant-output textarea:focus {
+  border-color: #6d1ed4;
+  outline: 3px solid rgba(109, 30, 212, 0.18);
+}
+.merchant-preview {
+  display: grid;
+  gap: 20px;
+  align-content: start;
+  padding: 24px;
+}
+.print-card {
+  display: grid;
+  min-height: 460px;
+  place-items: center;
+  align-content: center;
+  gap: 18px;
+  border: 1px solid #ded7e7;
+  border-radius: 8px;
+  padding: 26px;
+  background: #fff;
+  text-align: center;
+}
+.print-card-title {
+  margin: 0;
+  max-width: 100%;
+  color: #342f38;
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+.qr-frame {
+  display: grid;
+  width: min(100%, 320px);
+  aspect-ratio: 1;
+  place-items: center;
+  border: 1px dashed #cfc7d9;
+  border-radius: 6px;
+  background: #fff;
+}
+.qr-frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.qr-frame span {
+  color: #8a8391;
+  font-size: 15px;
+  font-weight: 600;
+}
+.print-card-note {
+  margin: 0;
+  max-width: 100%;
+  color: #5c5662;
+  font-size: 17px;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+.merchant-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.merchant-actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  gap: 8px;
+  border: 1px solid #6d1ed4;
+  border-radius: 6px;
+  color: #fff;
+  background: #6d1ed4;
+  font-size: 14px;
+  font-weight: 700;
+}
+.merchant-actions button:hover:not(:disabled) {
+  background: #5f13b8;
+}
+.merchant-actions button:disabled {
+  border-color: #d9d3e2;
+  color: #9b94a4;
+  background: #eeeaf3;
+  cursor: not-allowed;
+}
+.merchant-copy-status {
+  margin: -6px 0 0;
+  color: #276749;
+  font-size: 14px;
+  font-weight: 700;
+}
+.merchant-output {
+  display: grid;
+  gap: 14px;
+}
+.merchant-output textarea {
+  color: #504c52;
+  background: #fbfafc;
+  font-family:
+    ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Monaco,
+    Consolas,
+    Liberation Mono,
+    monospace;
+  font-size: 12px;
+}
 .zelle-info {
   margin-top: 32px;
   color: #fff;
@@ -463,6 +655,10 @@ a.institution-name:hover,
   .brand-inner {
     min-height: 58px;
   }
+  .merchant-brand-inner {
+    width: min(720px, calc(100% - 48px));
+    margin-right: auto;
+  }
   .zelle-lockup {
     gap: 16px;
   }
@@ -528,6 +724,10 @@ a.institution-name:hover,
     font-size: 16px;
     font-weight: 300;
   }
+  .merchant-workspace {
+    width: min(720px, calc(100% - 48px));
+    grid-template-columns: 1fr;
+  }
 }
 @media (max-width: 640px) {
   .brand-inner,
@@ -551,6 +751,9 @@ a.institution-name:hover,
   .brand-inner {
     min-height: 56px;
   }
+  .brand-inner {
+    gap: 14px;
+  }
   .zelle-lockup {
     gap: 12px;
   }
@@ -562,6 +765,9 @@ a.institution-name:hover,
   }
   .lockup-title {
     font-size: 18px;
+  }
+  .merchant-header-link {
+    font-size: 13px;
   }
   .search-hero {
     padding: 12px 0;
@@ -649,5 +855,52 @@ a.institution-name:hover,
   .continue-bank-link {
     min-height: 62px;
     font-size: 15px;
+  }
+  .merchant-workspace {
+    width: min(100% - 32px, 1240px);
+    padding: 28px 0 48px;
+  }
+  .merchant-form,
+  .merchant-preview {
+    padding: 18px;
+  }
+  .merchant-form-row,
+  .merchant-actions {
+    grid-template-columns: 1fr;
+  }
+  .print-card {
+    min-height: 400px;
+    padding: 20px;
+  }
+  .print-card-title {
+    font-size: 22px;
+  }
+}
+@media print {
+  body {
+    background: #fff;
+  }
+  .merchant-page .brand-header,
+  .merchant-form,
+  .merchant-actions,
+  .merchant-copy-status,
+  .merchant-output {
+    display: none;
+  }
+  .merchant-workspace {
+    display: block;
+    width: 100%;
+    padding: 0;
+  }
+  .merchant-preview {
+    border: 0;
+    padding: 0;
+  }
+  .print-card {
+    width: 5in;
+    min-height: 6.5in;
+    margin: 0 auto;
+    border: 1px solid #d7d7d7;
+    box-shadow: none;
   }
 }
