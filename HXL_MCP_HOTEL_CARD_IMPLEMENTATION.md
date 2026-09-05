@@ -2,7 +2,7 @@
 
 ## Goal
 
-Create a Salesforce HXL hotel card that can render from MCP-compatible LLM agents, starting with ChatGPT and keeping the design reusable for other agents.
+Create a Salesforce HXL hotel card that can render through MCP clients and agent surfaces such as Agentforce, ChatGPT, Claude, Slack, and future assistants.
 
 ## Current Branch
 
@@ -10,11 +10,11 @@ Create a Salesforce HXL hotel card that can render from MCP-compatible LLM agent
 
 ## Target Architecture
 
-1. A user asks an LLM agent about a hotel.
-2. The agent calls a Salesforce MCP tool.
+1. A user asks about a hotel from an agent surface.
+2. The MCP client calls a Salesforce MCP tool.
 3. The Salesforce tool invokes Apex to return hotel data.
 4. The MCP result uses a Custom Lightning Type mapped to an HXL widget.
-5. The agent renders the hotel card UI instead of plain text when it supports HXL UI resources.
+5. The agent surface renders the hotel card UI instead of plain text when it supports HXL UI resources.
 
 ## Implementation Checkpoints
 
@@ -39,7 +39,7 @@ Status: In progress
 Status: Not started
 
 - Define the hotel fields returned by Apex.
-- Keep the contract reusable for ChatGPT and other MCP-compatible agents.
+- Keep the contract reusable across MCP clients and agent surfaces.
 
 ### 4. HXL Hotel Widget
 
@@ -73,13 +73,13 @@ Status: Not started
 - Register the HXL UI resource.
 - Activate the MCP server.
 
-### 8. Agent Client Setup
+### 8. MCP Client and Agent Surface Setup
 
 Status: Not started
 
-- Configure OAuth for ChatGPT.
-- Connect ChatGPT to the Salesforce MCP server.
-- Document notes for extending to other LLM agents.
+- Configure OAuth for the first MCP client.
+- Connect the first agent surface to the Salesforce MCP server.
+- Document notes for extending to Agentforce, ChatGPT, Claude, Slack, and other surfaces.
 
 ### 9. Validation
 
@@ -87,11 +87,11 @@ Status: Not started
 
 - Deploy metadata to the org.
 - Run Apex tests.
-- Ask a hotel question from ChatGPT.
+- Ask a hotel question from a connected agent surface.
 - Confirm the card renders from the MCP tool response.
 
 ## Notes
 
 - HXL requires Salesforce API version `67.0` or later.
 - HXL widget schemas should stay flat, while MCP result data can be nested.
-- The implementation should avoid ChatGPT-specific naming where Salesforce MCP abstractions are reusable.
+- The implementation should avoid client-specific naming where Salesforce MCP abstractions are reusable.
