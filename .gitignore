@@ -46,3 +46,4 @@ $RECYCLE.BIN/
 **/__pycache__/
 **/.venv/
 **/venv/
+force-app/main/default/uiBundles/financialinstitutionfinder/.env.local
