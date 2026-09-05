@@ -150,9 +150,10 @@ Status: In progress
 
 ### 6. Custom Lightning Types
 
-Status: Not started
+Status: In progress
 
-- Create a payload Lightning Type for hotel output values.
+- Created a payload Lightning Type for hotel output values.
+- Validated `hotelInfoOutputValues` with a Salesforce dry-run deployment.
 - Create an MCP result wrapper Lightning Type.
 - Add `renderer.json` mapping from MCP result values to the HXL widget.
 
