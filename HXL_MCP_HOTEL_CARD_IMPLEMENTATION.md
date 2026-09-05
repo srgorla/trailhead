@@ -31,7 +31,7 @@ Status: Complete
 
 Status: In progress
 
-- Update the SFDX project API version to `67.0`.
+- SFDX project API version updated to `67.0`.
 - Add metadata folders for HXL widgets and Custom Lightning Types.
 
 ### 3. Hotel Data Contract
