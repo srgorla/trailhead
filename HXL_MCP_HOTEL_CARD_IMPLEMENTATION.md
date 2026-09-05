@@ -131,10 +131,10 @@ The HXL widget schema should stay flat, even though the MCP result shape is nest
 
 ### 4. HXL Hotel Widget
 
-Status: Not started
+Status: In progress
 
-- Create the `hotelCard` HXL widget.
-- Define a flat schema for card attributes.
+- Created the `hotelCard` HXL widget bundle.
+- Defined a flat schema for card attributes.
 - Map hotel fields to card content and actions.
 
 ### 5. Apex MCP Tool
