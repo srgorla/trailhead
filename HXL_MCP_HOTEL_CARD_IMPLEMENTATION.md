@@ -146,6 +146,7 @@ Status: In progress
 - Created an invocable Apex action for hotel lookup.
 - Added Apex tests for success, empty result, missing input, and no-match paths.
 - Validated the Apex classes with a Salesforce dry-run deployment using `HotelSearchActionTest`.
+- Deployed the Apex classes to the `hxl-dev` org using `HotelSearchActionTest`.
 
 ### 6. Custom Lightning Types
 
