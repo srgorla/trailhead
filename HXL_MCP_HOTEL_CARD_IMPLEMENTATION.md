@@ -137,6 +137,7 @@ Status: In progress
 - Defined a flat schema for card attributes.
 - Mapped hotel fields to card content.
 - Validated the `hotelCard` UiWidgetBundle with a Salesforce dry-run deployment.
+- Deployed the `hotelCard` UiWidgetBundle to the `hxl-dev` org.
 
 ### 5. Apex MCP Tool
 
