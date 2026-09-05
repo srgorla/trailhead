@@ -158,7 +158,8 @@ Status: In progress
 - Created an MCP result wrapper Lightning Type schema.
 - Validated `hotelInfoResult` with a Salesforce dry-run deployment.
 - Deployed `hotelInfoResult` to the `hxl-dev` org.
-- Add `renderer.json` mapping from MCP result values to the HXL widget.
+- Added `renderer.json` mapping from MCP result values to the HXL widget.
+- Validated the `hotelInfoResult` renderer mapping with a Salesforce dry-run deployment.
 
 ### 7. MCP Server Configuration
 
