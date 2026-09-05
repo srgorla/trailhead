@@ -155,7 +155,8 @@ Status: In progress
 - Created a payload Lightning Type for hotel output values.
 - Validated `hotelInfoOutputValues` with a Salesforce dry-run deployment.
 - Deployed `hotelInfoOutputValues` to the `hxl-dev` org.
-- Create an MCP result wrapper Lightning Type.
+- Created an MCP result wrapper Lightning Type schema.
+- Validated `hotelInfoResult` with a Salesforce dry-run deployment.
 - Add `renderer.json` mapping from MCP result values to the HXL widget.
 
 ### 7. MCP Server Configuration
