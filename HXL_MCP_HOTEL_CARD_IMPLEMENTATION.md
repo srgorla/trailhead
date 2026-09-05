@@ -160,6 +160,7 @@ Status: In progress
 - Deployed `hotelInfoResult` to the `hxl-dev` org.
 - Added `renderer.json` mapping from MCP result values to the HXL widget.
 - Validated the `hotelInfoResult` renderer mapping with a Salesforce dry-run deployment.
+- Deployed the `hotelInfoResult` renderer mapping to the `hxl-dev` org.
 
 ### 7. MCP Server Configuration
 
