@@ -141,10 +141,11 @@ Status: In progress
 
 ### 5. Apex MCP Tool
 
-Status: Not started
+Status: In progress
 
-- Create an invocable Apex action for hotel lookup.
-- Add Apex tests for success, empty result, and invalid input paths.
+- Created an invocable Apex action for hotel lookup.
+- Added Apex tests for success, empty result, missing input, and no-match paths.
+- Validated the Apex classes with a Salesforce dry-run deployment using `HotelSearchActionTest`.
 
 ### 6. Custom Lightning Types
 
