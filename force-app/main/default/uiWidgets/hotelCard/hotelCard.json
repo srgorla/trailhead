@@ -5,63 +5,71 @@
       "definition": "tile/widget",
       "children": [
         {
-          "definition": "tile/card",
+          "definition": "tile/container",
           "children": [
             {
-              "definition": "tile/image",
+              "definition": "tile/column",
               "attributes": {
-                "src": "{!$attrs.imageUrl}",
-                "alt": "{!$attrs.name}"
-              }
-            },
-            {
-              "definition": "tile/text",
-              "attributes": {
-                "text": "{!$attrs.name}",
-                "variant": "heading"
-              }
-            },
-            {
-              "definition": "tile/text",
-              "attributes": {
-                "text": "{!$attrs.city}, {!$attrs.stateOrRegion}, {!$attrs.country}",
-                "variant": "body"
-              }
-            },
-            {
-              "definition": "tile/text",
-              "attributes": {
-                "text": "Rating: {!$attrs.rating}",
-                "variant": "body"
-              }
-            },
-            {
-              "definition": "tile/text",
-              "attributes": {
-                "text": "{!$attrs.currencyCode} {!$attrs.pricePerNight} per night",
-                "variant": "body"
-              }
-            },
-            {
-              "definition": "tile/text",
-              "attributes": {
-                "text": "Check-in: {!$attrs.checkInTime} | Check-out: {!$attrs.checkOutTime}",
-                "variant": "body"
-              }
-            },
-            {
-              "definition": "tile/text",
-              "attributes": {
-                "text": "{!$attrs.description}",
-                "variant": "body"
-              }
-            },
-            {
-              "definition": "tile/text",
-              "attributes": {
-                "text": "Booking: {!$attrs.bookingUrl}",
-                "variant": "body"
-              }
+                "gap": "sm"
+              },
+              "children": [
+                {
+                  "definition": "tile/image",
+                  "attributes": {
+                    "src": "{!$attrs.imageUrl}",
+                    "alt": "{!$attrs.name}"
+                  }
+                },
+                {
+                  "definition": "tile/text",
+                  "attributes": {
+                    "text": "{!$attrs.name}",
+                    "variant": "h2"
+                  }
+                },
+                {
+                  "definition": "tile/text",
+                  "attributes": {
+                    "text": "{!$attrs.city}, {!$attrs.stateOrRegion}, {!$attrs.country}",
+                    "variant": "body"
+                  }
+                },
+                {
+                  "definition": "tile/text",
+                  "attributes": {
+                    "text": "Rating: {!$attrs.rating}",
+                    "variant": "body"
+                  }
+                },
+                {
+                  "definition": "tile/text",
+                  "attributes": {
+                    "text": "{!$attrs.currencyCode} {!$attrs.pricePerNight} per night",
+                    "variant": "body"
+                  }
+                },
+                {
+                  "definition": "tile/text",
+                  "attributes": {
+                    "text": "Check-in: {!$attrs.checkInTime} | Check-out: {!$attrs.checkOutTime}",
+                    "variant": "body"
+                  }
+                },
+                {
+                  "definition": "tile/text",
+                  "attributes": {
+                    "text": "{!$attrs.description}",
+                    "variant": "body"
+                  }
+                },
+                {
+                  "definition": "tile/text",
+                  "attributes": {
+                    "text": "Booking: {!$attrs.bookingUrl}",
+                    "variant": "body"
+                  }
+                }
+              ]
             }
           ]
         }
