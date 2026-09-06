@@ -181,6 +181,7 @@ Status: In progress
 
 - Created generalized External Client App metadata for MCP client testing.
 - Used Salesforce metadata scope names `MCP` and `RefreshToken`.
+- Enabled JWT-based access tokens for named users with `isNamedUserJwtEnabled`.
 - Validated the External Client App metadata with a Salesforce dry-run deployment.
 - Deployed the `HotelMcpClient` External Client App metadata to the `hxl-dev` org.
 - Configure OAuth for the first MCP client using the generated consumer key.

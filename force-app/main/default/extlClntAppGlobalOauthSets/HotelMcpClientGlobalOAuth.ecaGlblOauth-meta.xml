@@ -9,6 +9,7 @@
   </idTokenConfig>
   <isConsumerSecretOptional>true</isConsumerSecretOptional>
   <isIntrospectAllTokens>false</isIntrospectAllTokens>
+  <isNamedUserJwtEnabled>true</isNamedUserJwtEnabled>
   <isPkceRequired>true</isPkceRequired>
   <isSecretRequiredForRefreshToken>false</isSecretRequiredForRefreshToken>
   <label>Hotel MCP Client Global OAuth</label>
