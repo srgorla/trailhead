@@ -184,6 +184,7 @@ Status: In progress
 - Enabled JWT-based access tokens for named users with `isNamedUserJwtEnabled`.
 - Validated the External Client App metadata with a Salesforce dry-run deployment.
 - Deployed the `HotelMcpClient` External Client App metadata to the `hxl-dev` org.
+- Deployed the JWT-based access token setting to the `hxl-dev` org.
 - Configure OAuth for the first MCP client using the generated consumer key.
 - Connect Postman to the Salesforce MCP server.
 - Document notes for extending to Agentforce, ChatGPT, Claude, Slack, and other surfaces.
