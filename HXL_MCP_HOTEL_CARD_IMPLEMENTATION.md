@@ -177,10 +177,13 @@ Status: In progress
 
 ### 8. MCP Client and Agent Surface Setup
 
-Status: Not started
+Status: In progress
 
+- Created External Client App metadata for Postman-based MCP testing.
+- Used Salesforce metadata scope names `MCP` and `RefreshToken`.
+- Validated the External Client App metadata with a Salesforce dry-run deployment.
 - Configure OAuth for the first MCP client.
-- Connect the first agent surface to the Salesforce MCP server.
+- Connect Postman to the Salesforce MCP server.
 - Document notes for extending to Agentforce, ChatGPT, Claude, Slack, and other surfaces.
 
 ### 9. Validation
