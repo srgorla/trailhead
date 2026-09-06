@@ -166,11 +166,12 @@ Status: In progress
 
 ### 7. MCP Server Configuration
 
-Status: Not started
+Status: In progress
 
-- Create or retrieve the Salesforce MCP server metadata.
-- Register the Apex action as an MCP tool.
-- Register the HXL UI resource.
+- Created the Salesforce MCP server in Setup and added the Apex action as an MCP tool.
+- Retrieved the MCP server definition from the `hxl-dev` org.
+- Registered the HXL UI resource in source using `ui://widget/lightningType/c__hotelInfoResult`.
+- Validated the MCP server definition with a Salesforce dry-run deployment.
 - Activate the MCP server.
 
 ### 8. MCP Client and Agent Surface Setup
