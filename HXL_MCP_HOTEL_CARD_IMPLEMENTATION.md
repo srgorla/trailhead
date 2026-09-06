@@ -182,7 +182,8 @@ Status: In progress
 - Created generalized External Client App metadata for MCP client testing.
 - Used Salesforce metadata scope names `MCP` and `RefreshToken`.
 - Validated the External Client App metadata with a Salesforce dry-run deployment.
-- Configure OAuth for the first MCP client.
+- Deployed the `HotelMcpClient` External Client App metadata to the `hxl-dev` org.
+- Configure OAuth for the first MCP client using the generated consumer key.
 - Connect Postman to the Salesforce MCP server.
 - Document notes for extending to Agentforce, ChatGPT, Claude, Slack, and other surfaces.
 
