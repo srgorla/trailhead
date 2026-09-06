@@ -189,6 +189,7 @@ Status: In progress
 - Connected Postman to the Salesforce MCP server and verified `HotelSearchAction`.
 - Added Claude callback URL metadata for the reusable MCP client app.
 - Deployed the Claude callback URL to the `hxl-dev` org.
+- Added a Trusted URL entry for `https://images.unsplash.com` so public hotel images can render in HXL over MCP.
 - Document notes for extending to Agentforce, ChatGPT, Claude, Slack, and other surfaces.
 
 ### 9. Validation
@@ -205,3 +206,4 @@ Status: Not started
 - HXL requires Salesforce API version `67.0` or later.
 - HXL widget schemas should stay flat, while MCP result data can be nested.
 - The implementation should avoid client-specific naming where Salesforce MCP abstractions are reusable.
+- Public image domains used by HXL widgets must be added as Trusted URLs in Salesforce for MCP rendering.
