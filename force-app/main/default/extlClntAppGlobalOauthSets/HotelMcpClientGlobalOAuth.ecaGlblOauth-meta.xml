@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <ExtlClntAppGlobalOauthSettings xmlns="http://soap.sforce.com/2006/04/metadata">
   <callbackUrl>https://oauth.pstmn.io/v1/callback</callbackUrl>
-  <externalClientApplication>HotelMcpPostmanClient</externalClientApplication>
+  <externalClientApplication>HotelMcpClient</externalClientApplication>
   <idTokenConfig>
     <idTokenAudience>SalesforceAudience</idTokenAudience>
     <idTokenIncludeStandardClaims>true</idTokenIncludeStandardClaims>
@@ -11,7 +11,7 @@
   <isIntrospectAllTokens>false</isIntrospectAllTokens>
   <isPkceRequired>true</isPkceRequired>
   <isSecretRequiredForRefreshToken>false</isSecretRequiredForRefreshToken>
-  <label>Hotel MCP Postman Client Global OAuth</label>
+  <label>Hotel MCP Client Global OAuth</label>
   <shouldRotateConsumerKey>false</shouldRotateConsumerKey>
   <shouldRotateConsumerSecret>false</shouldRotateConsumerSecret>
 </ExtlClntAppGlobalOauthSettings>

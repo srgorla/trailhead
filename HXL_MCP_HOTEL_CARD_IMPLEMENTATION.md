@@ -179,7 +179,7 @@ Status: In progress
 
 Status: In progress
 
-- Created External Client App metadata for Postman-based MCP testing.
+- Created generalized External Client App metadata for MCP client testing.
 - Used Salesforce metadata scope names `MCP` and `RefreshToken`.
 - Validated the External Client App metadata with a Salesforce dry-run deployment.
 - Configure OAuth for the first MCP client.
