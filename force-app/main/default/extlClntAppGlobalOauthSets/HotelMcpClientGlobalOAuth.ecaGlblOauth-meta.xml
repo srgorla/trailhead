@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <ExtlClntAppGlobalOauthSettings xmlns="http://soap.sforce.com/2006/04/metadata">
-  <callbackUrl>https://oauth.pstmn.io/v1/callback</callbackUrl>
+  <callbackUrl>https://oauth.pstmn.io/v1/callback
+https://claude.ai/api/mcp/auth_callback</callbackUrl>
   <externalClientApplication>HotelMcpClient</externalClientApplication>
   <idTokenConfig>
     <idTokenAudience>SalesforceAudience</idTokenAudience>

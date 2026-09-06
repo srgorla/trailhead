@@ -186,7 +186,8 @@ Status: In progress
 - Deployed the `HotelMcpClient` External Client App metadata to the `hxl-dev` org.
 - Deployed the JWT-based access token setting to the `hxl-dev` org.
 - Configure OAuth for the first MCP client using the generated consumer key.
-- Connect Postman to the Salesforce MCP server.
+- Connected Postman to the Salesforce MCP server and verified `HotelSearchAction`.
+- Added Claude callback URL metadata for the reusable MCP client app.
 - Document notes for extending to Agentforce, ChatGPT, Claude, Slack, and other surfaces.
 
 ### 9. Validation
