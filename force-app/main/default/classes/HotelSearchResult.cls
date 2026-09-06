@@ -1,51 +1,51 @@
-public class HotelSearchResult {
+global class HotelSearchResult {
   @InvocableVariable(label='Success')
-  public Boolean isSuccess;
+  global Boolean isSuccess;
 
   @InvocableVariable(label='Error Message')
-  public String errorMessage;
+  global String errorMessage;
 
   @InvocableVariable(label='Hotel Information')
-  public Hotel hotelInfo;
+  global Hotel hotelInfo;
 
-  public class Hotel {
+  global class Hotel {
     @InvocableVariable(label='Hotel ID')
-    public String hotelId;
+    global String hotelId;
 
     @InvocableVariable(label='Name')
-    public String name;
+    global String name;
 
     @InvocableVariable(label='City')
-    public String city;
+    global String city;
 
     @InvocableVariable(label='State or Region')
-    public String stateOrRegion;
+    global String stateOrRegion;
 
     @InvocableVariable(label='Country')
-    public String country;
+    global String country;
 
     @InvocableVariable(label='Rating')
-    public Decimal rating;
+    global Decimal rating;
 
     @InvocableVariable(label='Price per Night')
-    public Decimal pricePerNight;
+    global Decimal pricePerNight;
 
     @InvocableVariable(label='Currency Code')
-    public String currencyCode;
+    global String currencyCode;
 
     @InvocableVariable(label='Check-In Time')
-    public String checkInTime;
+    global String checkInTime;
 
     @InvocableVariable(label='Check-Out Time')
-    public String checkOutTime;
+    global String checkOutTime;
 
     @InvocableVariable(label='Image URL')
-    public String imageUrl;
+    global String imageUrl;
 
     @InvocableVariable(label='Booking URL')
-    public String bookingUrl;
+    global String bookingUrl;
 
     @InvocableVariable(label='Description')
-    public String description;
+    global String description;
   }
 }

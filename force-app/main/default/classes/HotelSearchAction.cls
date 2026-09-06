@@ -1,19 +1,19 @@
 /**
  * @description Invocable hotel lookup action for MCP clients and agent surfaces.
  */
-public with sharing class HotelSearchAction {
-  public class Request {
+global with sharing class HotelSearchAction {
+  global class Request {
     @InvocableVariable(required=true label='Hotel Name')
-    public String hotelName;
+    global String hotelName;
 
     @InvocableVariable(label='City')
-    public String city;
+    global String city;
 
     @InvocableVariable(label='State or Region')
-    public String stateOrRegion;
+    global String stateOrRegion;
 
     @InvocableVariable(label='Country')
-    public String country;
+    global String country;
   }
 
   @InvocableMethod(
@@ -21,7 +21,7 @@ public with sharing class HotelSearchAction {
     description='Returns hotel information for HXL card rendering.'
     category='Hotels'
   )
-  public static List<HotelSearchResult> searchHotels(List<Request> requests) {
+  global static List<HotelSearchResult> searchHotels(List<Request> requests) {
     List<HotelSearchResult> results = new List<HotelSearchResult>();
     if (requests == null || requests.isEmpty()) {
       return results;

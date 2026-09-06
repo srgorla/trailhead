@@ -147,6 +147,7 @@ Status: In progress
 - Added Apex tests for success, empty result, missing input, and no-match paths.
 - Validated the Apex classes with a Salesforce dry-run deployment using `HotelSearchActionTest`.
 - Deployed the Apex classes to the `hxl-dev` org using `HotelSearchActionTest`.
+- Updated the Apex action, method, and invocable data classes to `global` for custom MCP server eligibility.
 
 ### 6. Custom Lightning Types
 
