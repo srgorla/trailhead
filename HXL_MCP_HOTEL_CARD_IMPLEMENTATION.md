@@ -155,6 +155,7 @@ Status: In progress
 Status: In progress
 
 - Created a payload Lightning Type for hotel output values.
+- Added Aura-enabled Apex projection annotations so Agentforce Apex-based Lightning Types can project the hotel result shape.
 - Validated `hotelInfoOutputValues` with a Salesforce dry-run deployment.
 - Deployed `hotelInfoOutputValues` to the `hxl-dev` org.
 - Created an MCP result wrapper Lightning Type schema.
@@ -163,6 +164,8 @@ Status: In progress
 - Added `renderer.json` mapping from MCP result values to the HXL widget.
 - Validated the `hotelInfoResult` renderer mapping with a Salesforce dry-run deployment.
 - Deployed the `hotelInfoResult` renderer mapping to the `hxl-dev` org.
+- Added `hotelSearchResult` as an Agentforce action output Lightning Type with direct renderer mapping to `hotelCard`.
+- Added `hotelInfo` as an Agentforce Lightning Type for the nested `Hotel Information` action output.
 
 ### 7. MCP Server Configuration
 
