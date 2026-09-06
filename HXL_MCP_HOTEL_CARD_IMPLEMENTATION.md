@@ -188,6 +188,7 @@ Status: In progress
 - Configure OAuth for the first MCP client using the generated consumer key.
 - Connected Postman to the Salesforce MCP server and verified `HotelSearchAction`.
 - Added Claude callback URL metadata for the reusable MCP client app.
+- Deployed the Claude callback URL to the `hxl-dev` org.
 - Document notes for extending to Agentforce, ChatGPT, Claude, Slack, and other surfaces.
 
 ### 9. Validation
