@@ -172,7 +172,8 @@ Status: In progress
 - Retrieved the MCP server definition from the `hxl-dev` org.
 - Registered the HXL UI resource in source using `ui://widget/lightningType/c__hotelInfoResult`.
 - Validated the MCP server definition with a Salesforce dry-run deployment.
-- Activate the MCP server.
+- Deployed the MCP server definition to the `hxl-dev` org.
+- Activated the MCP server in Salesforce Setup.
 
 ### 8. MCP Client and Agent Surface Setup
 
