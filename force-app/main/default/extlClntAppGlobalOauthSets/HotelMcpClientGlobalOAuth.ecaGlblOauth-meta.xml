@@ -4,7 +4,9 @@
 https://claude.ai/api/mcp/auth_callback
 https://www.cursor.com/agents/mcp/oauth/callback
 http://localhost:8787/callback
-cursor://anysphere.cursor-mcp/oauth/callback</callbackUrl>
+cursor://anysphere.cursor-mcp/oauth/callback
+http://localhost:33418
+https://vscode.dev/redirect</callbackUrl>
   <externalClientApplication>HotelMcpClient</externalClientApplication>
   <idTokenConfig>
     <idTokenAudience>SalesforceAudience</idTokenAudience>

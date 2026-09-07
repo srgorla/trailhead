@@ -195,6 +195,8 @@ Status: In progress
 - Deployed the Claude callback URL to the `hxl-dev` org.
 - Added Cursor OAuth callback URLs to the reusable MCP client app for Cursor web/cloud and desktop MCP authentication.
 - Added project-level Cursor MCP configuration in `.cursor/mcp.json` using `SF_HOTEL_MCP_CLIENT_ID` environment variable interpolation.
+- Added VS Code OAuth callback URLs to the reusable MCP client app.
+- Added project-level VS Code MCP configuration in `.vscode/mcp.json` using a prompt for the Salesforce External Client App consumer key.
 - Added a Trusted URL entry for `https://images.unsplash.com` so public hotel images can render in HXL over MCP.
 - Document notes for extending to Agentforce, ChatGPT, Claude, Slack, and other surfaces.
 - End-user Salesforce testing requires assigning access to the activated Agentforce employee agent. Profile-level Agent Access works, but a permission set is the preferred repeatable assignment path for users.
@@ -216,3 +218,6 @@ Status: Not started
 - Public image domains used by HXL widgets must be added as Trusted URLs in Salesforce for MCP rendering.
 - Agentforce can redact untrusted external URLs from action output, so only display booking links after the destination domain is trusted or the URL is Salesforce-hosted.
 - Cursor supports remote MCP servers through project-level `.cursor/mcp.json`; use static OAuth with the Salesforce External Client App consumer key supplied via `SF_HOTEL_MCP_CLIENT_ID`.
+- VS Code supports remote MCP servers through project-level `.vscode/mcp.json`; use `servers`, `type: "http"`, and `oauth.clientId`. Enable MCP Apps in VS Code if testing rich UI rendering.
+- Salesforce rejected the VS Code loopback callback `http://127.0.0.1:33418` for this External Client App metadata because HTTP callback URLs are not allowed.
+- Added `http://localhost:33418` as the deployable local VS Code callback equivalent.
