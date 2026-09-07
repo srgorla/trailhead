@@ -61,13 +61,6 @@
                     "text": "{!$attrs.description}",
                     "variant": "body"
                   }
-                },
-                {
-                  "definition": "tile/text",
-                  "attributes": {
-                    "text": "Booking: {!$attrs.bookingUrl}",
-                    "variant": "body"
-                  }
                 }
               ]
             }

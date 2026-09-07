@@ -136,6 +136,7 @@ Status: In progress
 - Created the `hotelCard` HXL widget bundle.
 - Defined a flat schema for card attributes.
 - Mapped hotel fields to card content.
+- Removed placeholder booking URL display from the card to avoid Agentforce trusted URL redaction noise until real trusted destinations are available.
 - Validated the `hotelCard` UiWidgetBundle with a Salesforce dry-run deployment.
 - Deployed the `hotelCard` UiWidgetBundle to the `hxl-dev` org.
 
@@ -194,6 +195,7 @@ Status: In progress
 - Deployed the Claude callback URL to the `hxl-dev` org.
 - Added a Trusted URL entry for `https://images.unsplash.com` so public hotel images can render in HXL over MCP.
 - Document notes for extending to Agentforce, ChatGPT, Claude, Slack, and other surfaces.
+- End-user Salesforce testing requires assigning access to the activated Agentforce employee agent. Profile-level Agent Access works, but a permission set is the preferred repeatable assignment path for users.
 
 ### 9. Validation
 
@@ -210,3 +212,4 @@ Status: Not started
 - HXL widget schemas should stay flat, while MCP result data can be nested.
 - The implementation should avoid client-specific naming where Salesforce MCP abstractions are reusable.
 - Public image domains used by HXL widgets must be added as Trusted URLs in Salesforce for MCP rendering.
+- Agentforce can redact untrusted external URLs from action output, so only display booking links after the destination domain is trusted or the URL is Salesforce-hosted.
