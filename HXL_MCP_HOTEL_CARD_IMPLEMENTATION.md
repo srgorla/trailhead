@@ -193,6 +193,8 @@ Status: In progress
 - Connected Postman to the Salesforce MCP server and verified `HotelSearchAction`.
 - Added Claude callback URL metadata for the reusable MCP client app.
 - Deployed the Claude callback URL to the `hxl-dev` org.
+- Added Cursor OAuth callback URLs to the reusable MCP client app for Cursor web/cloud and desktop MCP authentication.
+- Added project-level Cursor MCP configuration in `.cursor/mcp.json` using `SF_HOTEL_MCP_CLIENT_ID` environment variable interpolation.
 - Added a Trusted URL entry for `https://images.unsplash.com` so public hotel images can render in HXL over MCP.
 - Document notes for extending to Agentforce, ChatGPT, Claude, Slack, and other surfaces.
 - End-user Salesforce testing requires assigning access to the activated Agentforce employee agent. Profile-level Agent Access works, but a permission set is the preferred repeatable assignment path for users.
@@ -213,3 +215,4 @@ Status: Not started
 - The implementation should avoid client-specific naming where Salesforce MCP abstractions are reusable.
 - Public image domains used by HXL widgets must be added as Trusted URLs in Salesforce for MCP rendering.
 - Agentforce can redact untrusted external URLs from action output, so only display booking links after the destination domain is trusted or the URL is Salesforce-hosted.
+- Cursor supports remote MCP servers through project-level `.cursor/mcp.json`; use static OAuth with the Salesforce External Client App consumer key supplied via `SF_HOTEL_MCP_CLIENT_ID`.
