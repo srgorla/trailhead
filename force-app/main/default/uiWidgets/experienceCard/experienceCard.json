@@ -1,0 +1,164 @@
+{
+  "type": "lightning__agentforceWidget",
+  "contentBody": {
+    "widgetBody": {
+      "definition": "tile/widget",
+      "children": [
+        {
+          "definition": "tile/column",
+          "attributes": {
+            "gap": "sm"
+          },
+          "children": [
+            {
+              "definition": "tile/text",
+              "attributes": {
+                "text": "Coral Cloud Resorts",
+                "variant": "h1"
+              }
+            },
+            {
+              "definition": "tile/text",
+              "attributes": {
+                "text": "{!$attrs.message}",
+                "variant": "body"
+              }
+            },
+            {
+              "definition": "tile/container",
+              "meta": {
+                "forEach": "{!$attrs.experiences}",
+                "forItem": "$experience"
+              },
+              "children": [
+                {
+                  "definition": "tile/column",
+                  "attributes": {
+                    "gap": "sm"
+                  },
+                  "children": [
+                    {
+                      "definition": "tile/column",
+                      "attributes": {
+                        "gap": "sm"
+                      },
+                      "children": [
+                        {
+                          "definition": "tile/image",
+                          "meta": {
+                            "if": "{!$experience.hasImage}"
+                          },
+                          "attributes": {
+                            "src": "{!$experience.imageUrl}",
+                            "alt": "{!$experience.name}"
+                          }
+                        },
+                        {
+                          "definition": "tile/text",
+                          "attributes": {
+                            "text": "{!$experience.imageMessage}",
+                            "variant": "body"
+                          }
+                        },
+                        {
+                          "definition": "tile/text",
+                          "attributes": {
+                            "text": "{!$experience.name}",
+                            "variant": "h2"
+                          }
+                        },
+                        {
+                          "definition": "tile/text",
+                          "attributes": {
+                            "text": "{!$experience.location}",
+                            "variant": "body"
+                          }
+                        },
+                        {
+                          "definition": "tile/text",
+                          "attributes": {
+                            "text": "{!$experience.category} \u00b7 Activity level: {!$experience.activityLevel}",
+                            "variant": "body"
+                          }
+                        },
+                        {
+                          "definition": "tile/text",
+                          "attributes": {
+                            "text": "{!$experience.description}",
+                            "variant": "body"
+                          }
+                        },
+                        {
+                          "definition": "tile/text",
+                          "attributes": {
+                            "text": "{!$experience.durationText}",
+                            "variant": "body"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "definition": "tile/column",
+                      "attributes": {
+                        "gap": "sm"
+                      },
+                      "children": [
+                        {
+                          "definition": "tile/text",
+                          "attributes": {
+                            "text": "{!$experience.priceText}",
+                            "variant": "body"
+                          }
+                        },
+                        {
+                          "definition": "tile/text",
+                          "attributes": {
+                            "text": "{!$experience.ratingText}",
+                            "variant": "body"
+                          }
+                        },
+                        {
+                          "definition": "tile/text",
+                          "attributes": {
+                            "text": "{!$experience.reviewSummary}",
+                            "variant": "body"
+                          }
+                        },
+                        {
+                          "definition": "tile/text",
+                          "attributes": {
+                            "text": "{!$experience.availabilityText}",
+                            "variant": "body"
+                          }
+                        },
+                        {
+                          "definition": "tile/column",
+                          "attributes": {
+                            "gap": "sm"
+                          },
+                          "children": [
+                            {
+                              "definition": "tile/text",
+                              "attributes": {
+                                "text": "{!$session.displayText}",
+                                "variant": "body"
+                              }
+                            }
+                          ],
+                          "meta": {
+                            "forEach": "{!$experience.sessions}",
+                            "forItem": "$session"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

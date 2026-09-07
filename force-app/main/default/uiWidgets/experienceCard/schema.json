@@ -1,0 +1,23 @@
+{
+  "title": "Coral Cloud Experiences",
+  "description": "Experience search results with sessions and booking context.",
+  "type": "object",
+  "properties": {
+    "attributes": {
+      "lightning:type": "lightning__objectType",
+      "properties": {
+        "message": {
+          "title": "Search message",
+          "lightning:type": "lightning__textType"
+        },
+        "experiences": {
+          "title": "Experiences",
+          "lightning:type": "lightning__listType",
+          "items": {
+            "lightning:type": "@apexClassType/c__ExperienceSearchResult$Experience"
+          }
+        }
+      }
+    }
+  }
+}

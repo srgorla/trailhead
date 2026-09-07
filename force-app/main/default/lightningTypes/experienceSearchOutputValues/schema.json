@@ -1,0 +1,29 @@
+{
+  "type": "object",
+  "lightning:type": "lightning__objectType",
+  "unevaluatedProperties": false,
+  "lightning:tags": ["mcp"],
+  "title": "Experience Search Output Values",
+  "properties": {
+    "message": {
+      "title": "Search message",
+      "lightning:type": "lightning__textType"
+    },
+    "experiences": {
+      "title": "Experiences",
+      "lightning:type": "lightning__listType"
+    },
+    "isSuccess": {
+      "lightning:type": "lightning__booleanType",
+      "title": "Is success"
+    },
+    "status": {
+      "lightning:type": "lightning__textType",
+      "title": "Status"
+    },
+    "hasMoreExperiences": {
+      "lightning:type": "lightning__booleanType",
+      "title": "Has more experiences"
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "renderer": {
+    "componentOverrides": {
+      "$": {
+        "definition": "@widget/c/experienceCard",
+        "attributes": {
+          "message": "{!$attrs.outputValues.message}",
+          "experiences": "{!$attrs.outputValues.experiences}"
+        }
+      }
+    }
+  }
+}

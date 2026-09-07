@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "lightning:type": "lightning__objectType",
+  "unevaluatedProperties": false,
+  "lightning:tags": ["mcp"],
+  "title": "Experience Search MCP Result",
+  "properties": {
+    "actionName": {
+      "lightning:type": "lightning__textType",
+      "title": "Action name"
+    },
+    "isSuccess": {
+      "lightning:type": "lightning__booleanType",
+      "title": "Is success"
+    },
+    "outputValues": {
+      "lightning:type": "c__experienceSearchOutputValues",
+      "title": "Output values"
+    }
+  }
+}

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+  <types><members>ExperienceSearchAction</members><members
+    >ExperienceSearchResult</members><members
+    >ExperienceSearchActionTest</members><name>ApexClass</name></types>
+  <types><members>experienceCard</members><name>UiWidgetBundle</name></types>
+  <types><members>experienceSearchOutputValues</members><members
+    >experienceSearchMcpResult</members><members
+    >experienceSearchResult</members><name>LightningTypeBundle</name></types>
+  <types><members>CoralCloudExperienceImages</members><name
+    >CspTrustedSite</name></types>
+  <types><members>CoralCloudExperienceSearch</members><name
+    >PermissionSet</name></types>
+  <version>67.0</version>
+</Package>
