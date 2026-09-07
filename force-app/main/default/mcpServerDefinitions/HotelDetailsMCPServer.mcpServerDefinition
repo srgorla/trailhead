@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<McpServerDefinition xmlns="http://soap.sforce.com/2006/04/metadata">
+  <description>Exposes hotel lookup tools and HXL hotel card rendering for MCP clients and agent surfaces.</description>
+  <masterLabel>Hotel Details MCP Server</masterLabel>
+  <resources>
+    <description>Displays hotel information returned by the Search Hotels MCP tool.</description>
+    <resourceName>hotelDetails</resourceName>
+    <resourceTitle>Hotel Details</resourceTitle>
+    <resourceUri>ui://widget/lightningType/c__hotelInfoResult</resourceUri>
+  </resources>
+  <tools>
+    <apiDefinition>
+      <apiIdentifier>aa:apex-HotelSearchAction</apiIdentifier>
+      <apiSource>API_CATALOG</apiSource>
+      <operation>HotelSearchAction</operation>
+    </apiDefinition>
+    <descriptionOverride>Returns hotel information for HXL card rendering.</descriptionOverride>
+    <destructive>false</destructive>
+    <idempotent>false</idempotent>
+    <openWorld>false</openWorld>
+    <readOnly>false</readOnly>
+    <returnDirect>false</returnDirect>
+    <toolName>HotelSearchActionapex_HotelSearchAction</toolName>
+    <toolTitle>HotelSearchAction</toolTitle>
+    <uiResource>hotelDetails</uiResource>
+  </tools>
+</McpServerDefinition>

@@ -1,0 +1,24 @@
+{
+  "renderer": {
+    "componentOverrides": {
+      "$": {
+        "definition": "@widget/c/hotelCard",
+        "attributes": {
+          "hotelId": "{!$attrs.outputValues.hotelInfo.hotelId}",
+          "name": "{!$attrs.outputValues.hotelInfo.name}",
+          "city": "{!$attrs.outputValues.hotelInfo.city}",
+          "stateOrRegion": "{!$attrs.outputValues.hotelInfo.stateOrRegion}",
+          "country": "{!$attrs.outputValues.hotelInfo.country}",
+          "rating": "{!$attrs.outputValues.hotelInfo.rating}",
+          "pricePerNight": "{!$attrs.outputValues.hotelInfo.pricePerNight}",
+          "currencyCode": "{!$attrs.outputValues.hotelInfo.currencyCode}",
+          "checkInTime": "{!$attrs.outputValues.hotelInfo.checkInTime}",
+          "checkOutTime": "{!$attrs.outputValues.hotelInfo.checkOutTime}",
+          "imageUrl": "{!$attrs.outputValues.hotelInfo.imageUrl}",
+          "bookingUrl": "{!$attrs.outputValues.hotelInfo.bookingUrl}",
+          "description": "{!$attrs.outputValues.hotelInfo.description}"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ExtlClntAppGlobalOauthSettings xmlns="http://soap.sforce.com/2006/04/metadata">
+  <callbackUrl>https://oauth.pstmn.io/v1/callback
+https://claude.ai/api/mcp/auth_callback
+https://www.cursor.com/agents/mcp/oauth/callback
+http://localhost:8787/callback
+cursor://anysphere.cursor-mcp/oauth/callback
+http://localhost:33418
+https://vscode.dev/redirect</callbackUrl>
+  <externalClientApplication>HotelMcpClient</externalClientApplication>
+  <idTokenConfig>
+    <idTokenAudience>SalesforceAudience</idTokenAudience>
+    <idTokenIncludeStandardClaims>true</idTokenIncludeStandardClaims>
+    <idTokenValidityInMinutes>0</idTokenValidityInMinutes>
+  </idTokenConfig>
+  <isConsumerSecretOptional>true</isConsumerSecretOptional>
+  <isIntrospectAllTokens>false</isIntrospectAllTokens>
+  <isNamedUserJwtEnabled>true</isNamedUserJwtEnabled>
+  <isPkceRequired>true</isPkceRequired>
+  <isSecretRequiredForRefreshToken>false</isSecretRequiredForRefreshToken>
+  <label>Hotel MCP Client Global OAuth</label>
+  <shouldRotateConsumerKey>false</shouldRotateConsumerKey>
+  <shouldRotateConsumerSecret>false</shouldRotateConsumerSecret>
+</ExtlClntAppGlobalOauthSettings>

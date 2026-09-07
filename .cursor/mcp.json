@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "salesforce-hotels": {
+      "url": "https://api.salesforce.com/platform/mcp/v1/custom/HotelDetailsMCPServer",
+      "auth": {
+        "CLIENT_ID": "${env:SF_HOTEL_MCP_CLIENT_ID}"
+      }
+    }
+  }
+}
