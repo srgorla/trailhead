@@ -1,0 +1,15 @@
+{
+  "unevaluatedProperties": false,
+  "properties": {
+    "searchResult": {
+      "title": "Experience Search Results",
+      "description": "Structured experience results and status rendered as HXL cards.",
+      "lightning:type": "c__experienceSearchResult",
+      "lightning:isPII": false,
+      "copilotAction:isDisplayable": true,
+      "copilotAction:isUsedByPlanner": true,
+      "copilotAction:useHydratedPrompt": false
+    }
+  },
+  "lightning:type": "lightning__objectType"
+}

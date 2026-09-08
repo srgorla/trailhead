@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Bot xmlns="http://soap.sforce.com/2006/04/metadata">
+    <agentDSLEnabled>true</agentDSLEnabled>
+    <agentType>AgentforceEmployeeAgent</agentType>
+    <botMlDomain>
+        <label>Coral Cloud</label>
+        <name>Coral_Cloud</name>
+    </botMlDomain>
+    <botSource>None</botSource>
+    <description
+  >Helps Coral Cloud Resorts employees find experiences, prices, guest ratings and session availability with HXL cards.</description>
+    <label>Coral Cloud</label>
+    <logPrivateConversationData>false</logPrivateConversationData>
+    <richContentEnabled>true</richContentEnabled>
+    <sessionTimeout>0</sessionTimeout>
+    <type>InternalCopilot</type>
+</Bot>

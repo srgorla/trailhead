@@ -1,0 +1,42 @@
+{
+  "required": [],
+  "unevaluatedProperties": false,
+  "properties": {
+    "searchPhrase": {
+      "title": "Search phrase",
+      "description": "Optional literal experience name substring. Omit to browse.",
+      "lightning:type": "lightning__textType",
+      "lightning:isPII": false,
+      "copilotAction:isUserInput": false
+    },
+    "category": {
+      "title": "Category",
+      "description": "Optional exact experience category.",
+      "lightning:type": "lightning__textType",
+      "lightning:isPII": false,
+      "copilotAction:isUserInput": false
+    },
+    "startDate": {
+      "title": "Start date",
+      "description": "Optional first date in America/Chicago; defaults to today.",
+      "lightning:type": "lightning__dateType",
+      "lightning:isPII": false,
+      "copilotAction:isUserInput": false
+    },
+    "endDate": {
+      "title": "End date",
+      "description": "Optional last date, at most 30 days after the first date.",
+      "lightning:type": "lightning__dateType",
+      "lightning:isPII": false,
+      "copilotAction:isUserInput": false
+    },
+    "guestCount": {
+      "title": "Guest count",
+      "description": "Optional integer from 1 to 100; defaults to 1.",
+      "lightning:type": "lightning__numberType",
+      "lightning:isPII": false,
+      "copilotAction:isUserInput": false
+    }
+  },
+  "lightning:type": "lightning__objectType"
+}

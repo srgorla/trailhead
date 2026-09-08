@@ -1,0 +1,44 @@
+{
+  "required": [],
+  "unevaluatedProperties": false,
+  "properties": {
+    "searchPhrase": {
+      "title": "Search phrase",
+      "description": "Optional literal name substring, at most 100 characters. Omit for browsing.",
+      "lightning:type": "lightning__textType",
+      "lightning:isPII": false,
+      "copilotAction:isUserInput": false
+    },
+    "category": {
+      "title": "Category",
+      "description": "Optional exact experience category. Omit if not specified.",
+      "lightning:type": "lightning__textType",
+      "lightning:isPII": false,
+      "copilotAction:isUserInput": false
+    },
+    "startDate": {
+      "title": "Start date",
+      "description": "Optional first session date in Central Time. Omit for today. Must be within the next 365 days.",
+      "lightning:type": "lightning__dateType",
+      "lightning:isPII": false,
+      "copilotAction:isUserInput": false
+    },
+    "endDate": {
+      "title": "End date",
+      "description": "Optional last session date inclusive, no more than 30 days after startDate. Omit for the default.",
+      "lightning:type": "lightning__dateType",
+      "lightning:isPII": false,
+      "copilotAction:isUserInput": false
+    },
+    "guestCount": {
+      "title": "Guest count",
+      "description": "Optional number of guests, from 1 to 100. Omit for 1.",
+      "multipleOf": 1.0e-34,
+      "lightning:type": "lightning__numberType",
+      "lightning:isPII": false,
+      "copilotAction:isUserInput": false
+    }
+  },
+  "lightning:type": "lightning__objectType",
+  "lightning:textIndexed": true
+}

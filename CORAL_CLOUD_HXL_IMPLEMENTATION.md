@@ -12,7 +12,7 @@ and booking context.
 - First rendering client: Claude.
 - Session timezone: `America/Chicago` (Central Time, including daylight saving).
 - Currency: `USD`, verified with `UserInfo.getDefaultCurrency()`.
-- Status: core implementation passed dry-run deployment and Apex tests; live deployment and Claude rendering pending.
+- Status: core, MCP server, and OAuth metadata deployed. User confirmed server activation and successful Claude use. Agentforce integration in progress.
 
 ## Implementation approach
 
@@ -34,7 +34,8 @@ References: [HXL rendering configuration](https://developer.salesforce.com/docs/
 - [x] Confirm currency and resort timezone.
 - [x] Confirm HXL availability and select the MCP/agent client for rendering tests.
 - [x] Identify the sampled image domain and prepare its Trusted URL metadata.
-- [ ] Deploy the image Trusted URL and verify image loading in Claude.
+- [x] Deploy the image Trusted URL.
+- [ ] Verify image loading in Claude.
 
 ### Verified data behavior
 
@@ -141,12 +142,12 @@ being exposed; no booking URL field was found in the inspected objects.
 ## 5. Configure the MCP integration
 
 - [x] Prepare `CoralCloudExperiences` MCP server definition.
-- [ ] Validate and deploy the MCP definition after the Apex action is registered.
-- [ ] Register the Apex search tool and its HXL UI resource.
+- [x] Validate and deploy the MCP definition after the Apex action is registered.
+- [x] Register the Apex search tool and its HXL UI resource.
 - [x] Set tool annotations to reflect read-only, non-destructive search behavior.
-- [ ] Inspect existing OAuth setup in `aforce_de` and configure the required client
+- [x] Inspect existing OAuth setup in `aforce_de` and configure the required client
       registration, scopes, and callbacks.
-- [ ] Configure a Coral Cloud MCP client connection with target-org authorization.
+- [x] Configure a Coral Cloud MCP client connection with target-org authorization (Claude, user-confirmed).
 - [x] Prepare `CoralCloudExperienceSearch` read-access permission set.
 - [ ] Assign the permission set to the intended users. It includes Contact read
       access, required by the review object's master-detail relationship; the
@@ -161,7 +162,8 @@ being exposed; no booking URL field was found in the inspected objects.
 - [x] Verify cancellation effects on availability and restricted-access behavior.
 - [x] Create an experience-only deployment manifest.
 - [x] Run deployment validation and focused Apex tests against `aforce_de`.
-- [ ] Deploy the experience metadata and activate/configure the MCP server.
+- [x] Deploy the experience metadata and MCP server definition.
+- [x] Activate the MCP server in Salesforce Setup (user-confirmed).
 - [ ] Run searches through the selected client and verify images, prices, ratings,
       session details, multiple results, and empty/error states render correctly.
 - [ ] Record deployment, Apex test, and client-rendering results separately.
@@ -175,9 +177,13 @@ Core dry-run deployment: **Succeeded** on 2026-09-07.
 - Search action coverage: **283 / 305 executable lines (92.8%)**.
 - Validated: Apex classes, HXL widget, three Lightning Type bundles, image
   Trusted URL, and permission set.
-- MCP definition is prepared but has not yet been validated or activated.
-- No live metadata deployment, permission assignment, OAuth change, or Claude
-  rendering test has been completed.
+- Core live deployment succeeded: `0AfgL00000WwhVBSAZ`; all 10 Apex tests passed.
+- MCP server validation succeeded: `0AfgL00000WwiKnSAJ`.
+- MCP server live deployment succeeded: `0AfgL00000WwihNSAR`.
+- The deployed Apex action is registered in the Actions REST API with the expected inputs and outputs.
+- User confirmed MCP server activation and that Claude is working. Claude success is user-reported; no browser-based verification was performed here.
+- Permission assignment status has not been independently verified.
+- A proposed live search API call was declined at command approval and was not executed.
 
 Use `manifest/coral-cloud-experiences-core.xml` for the first deployment, followed
 by MCP server validation/registration. `manifest/coral-cloud-experiences.xml`
@@ -189,12 +195,122 @@ Validation used an isolated temporary DX project containing exactly the core
 manifest's components. Use the same isolation for deployment until that existing
 bundle issue is resolved.
 
-Next checkpoint: deploy the validated core, register and activate the MCP server,
-configure Claude OAuth, and verify the card from a real tool response. Show the
-current no-upcoming-sessions state; creating future demo sessions would be a
-separate data change.
+## Reusable MCP client authentication
+
+Use the client-neutral External Client App `CoralCloudMcpClient`, labeled
+**Coral Cloud MCP Client**, for MCP clients and agent surfaces.
+
+- OAuth metadata: `CoralCloudMcpClientOAuth` and `CoralCloudMcpClientGlobalOAuth`.
+- Deployment manifest: `manifest/coral-cloud-mcp-oauth.xml`.
+- Scopes: `MCP` and `RefreshToken`.
+- JWT-based access tokens for named users and PKCE enabled.
+- Initial callback: `https://claude.ai/api/mcp/auth_callback`.
+- Add the exact callback URLs required by future clients to the same registration.
+- The client name is independent of the first rendering client, Claude.
+- No consumer key or secret is stored in source.
+
+Client-neutral OAuth validation succeeded: `0AfgL00000WwjYbSAJ`.
+Live OAuth deployment succeeded: `0AfgL00000Ww8PPSAZ`.
+
+## MCP client setup reference
+
+The user has confirmed server activation and successful Claude use. These steps
+are retained for connecting another user:
+
+1. In `aforce_de` Setup, open **MCP Servers**, select **Coral Cloud Experiences**,
+   and activate it.
+2. Open **External Client App Manager → Coral Cloud MCP Client → Settings** and
+   copy the consumer key under **Consumer Key and Secret**.
+3. Assign **Coral Cloud Experience Search** to the Salesforce user who will
+   connect from Claude, if needed.
+4. In Claude, open **Customize → Connectors → Add custom connector**. Name it
+   **Coral Cloud Experiences** and enter this server URL:
+   `https://api.salesforce.com/platform/mcp/v1/custom/CoralCloudExperiences`.
+5. Under **Advanced settings**, paste the consumer key into **OAuth Client ID**,
+   add the connector, and connect using the `aforce_de` Salesforce account.
+6. Test: “Find yoga experiences at Coral Cloud Resorts for 2 guests.” Confirm
+   images, USD prices, ratings, and the no-upcoming-sessions state render as cards.
+
+New OAuth registrations can take up to 30 minutes to become operational.
+See [Salesforce's client setup instructions](https://developer.salesforce.com/docs/platform/hosted-mcp-servers/guide/create-external-client-app.html).
+Creating future demo sessions would be a separate data change.
+
+## Agentforce integration
+
+- [x] Inspect existing agents and action metadata in `aforce_de`.
+- [x] Add `ExperienceAgentAction`, labeled **Find Coral Cloud Experiences**.
+- [x] Return the complete existing search result in the single `searchResult`
+      output so the `experienceSearchResult` Lightning Type can render it.
+- [x] Validate the wrapper and existing search together: 12 tests passed,
+      validation `0AfgL00000Wyd0rSAB`.
+- [x] Deploy the Agentforce integration via `manifest/coral-cloud-agentforce.xml`.
+      Deployment `0AfgL00000Wy7x7SAB` succeeded with all 12 tests passing.
+- [x] Select a new employee agent: **Coral Cloud**, API name `Coral_Cloud`.
+- [x] Prepare its Agent Script authoring bundle and `Find_Coral_Cloud_Experiences` action asset.
+- [x] Validate and publish the new employee agent. Action-asset deployment
+      `0AfgL00000WyeY1SAJ` succeeded; Coral Cloud version 1 is published and active.
+      The guest-count input uses `object` with `lightning__numberType`, as required
+      by Salesforce's publish validation for the Apex action.
+- [x] Create an Agentforce action from **Apex → Invocable Method → Find Coral
+      Cloud Experiences** (`ExperienceAgentAction`).
+- [x] Configure output `searchResult`: enable **Show in conversation** and select
+      **Experience Search Result** (`c__experienceSearchResult`) in **Output Rendering**.
+- [x] Add the action to the `experience_search` topic/subagent and
+      add that topic/subagent to the selected agent.
+- [x] Assign **Coral Cloud Experience Search** and **Coral Cloud Experience Agent
+      Action** to `sgorla143@agentforce.com`; both assignments succeeded.
+- [x] Add employee-agent access to **Coral Cloud Experience Search** in Salesforce
+      and retrieve the updated permission set. `agentAccesses` enables `Coral_Cloud`;
+      existing search permissions are preserved. The Agentforce manifest includes
+      this permission set. Deploying it now requires the Coral Cloud agent to exist.
+- [x] Test routing, live action invocation, and structured output through the
+      published agent preview. `Find Yoga experiences for 2 guests` returned
+      Beach Yoga Retreat (USD 50 per guest, USD 100 total) and Sunrise Mountain
+      Yoga (USD 199 per guest, USD 398 total), with image URLs, unrated review
+      status, and no scheduled sessions in the default date range.
+      `ZZZNoSuchExperienceXYZ` returned `NO_MATCHES` and an empty experience list.
+- [ ] Verify visual HXL card rendering in the Salesforce Agentforce UI.
+
+Action inputs are unchanged: `searchPhrase`, `category`, `startDate`, `endDate`,
+and `guestCount`. They are optional and retain the search action's defaults.
+The wrapper delegates to `ExperienceSearchAction`; MCP clients continue using
+the original action and response contract.
+
+Configured topic/subagent instructions:
+
+- Handle requests to discover Coral Cloud resort experiences, prices, ratings,
+  and scheduled session availability using **Find Coral Cloud Experiences**.
+- Extract the name phrase, category, dates, and guest count supplied by the user.
+  Use a concise experience-name phrase rather than copying the whole question.
+  Leave unspecified inputs unset so the action applies its documented defaults.
+- Dates and times use America/Chicago. For an explicit date or party-size request,
+  pass those values; ask for clarification if the user's request is ambiguous.
+- Present the structured `searchResult` using its configured HXL renderer.
+- Describe no matches, no scheduled sessions, and search/access errors accurately.
+  If results are truncated, offer to narrow the name, category, or dates.
+- Prices are per guest in the returned currency; totals are estimates. Ratings
+  are out of 10. Availability does not reserve seats, and this action cannot
+  create, cancel, or confirm a booking.
+
+Reference: [Salesforce HXL for Agentforce action output](https://developer.salesforce.com/docs/platform/hxl/guide/agentforce-action-output.html).
+
+## Postman MCP client
+
+- [x] Add Postman browser and desktop OAuth callbacks to **Coral Cloud MCP Client**,
+      preserving Claude's callback and the org's existing OAuth security settings.
+      Deployment `0AfgL00000WyjFxSAJ` succeeded.
+- [x] Prepare [Postman environment](postman/CoralCloud.postman_environment.json)
+      and [connection instructions](postman/README.md). The client ID is blank;
+      enter the existing ECA Consumer Key locally in Postman.
+- [ ] Authenticate in Postman and verify tool discovery, matching and no-match
+      searches, and the returned UI resource. Visual HXL support in Postman has
+      not been verified.
 
 ## Commit policy
 
-Create meaningful commits only after explicit user approval. No commits have
-been created for this work.
+Create meaningful commits only after explicit user approval.
+
+- Approved core implementation commit: `f72bdac`.
+- User approved committing and pushing the OAuth configuration, Agentforce
+  integration, permission updates, Postman setup, and deployment documentation
+  on September 8, 2026.

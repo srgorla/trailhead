@@ -9,3 +9,5 @@
 .vscode
 
 coverage/
+# Salesforce retrieves this generated agent graph as base64 despite the .json extension.
+force-app/main/default/genAiPlannerBundles/Coral_Cloud_v1/agentGraph/Coral_Cloud_v1_graph.json
