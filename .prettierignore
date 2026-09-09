@@ -9,3 +9,6 @@
 .vscode
 
 coverage/
+
+# Preserve installed Salesforce skills, including code templates and snippets.
+.agents/skills/
