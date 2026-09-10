@@ -306,6 +306,23 @@ Reference: [Salesforce HXL for Agentforce action output](https://developer.sales
       searches, and the returned UI resource. Visual HXL support in Postman has
       not been verified.
 
+## Standard SOQL tool
+
+- [x] Add **Query Records (SOQL)** from SObject All through Salesforce Setup and
+      retrieve the updated Coral Cloud server definition.
+- Tool name: `soqlQueryplatform_sobject_all`.
+- API Catalog identifier: `psmcps:platform.sobject-all:soqlQuery`;
+  operation: `soqlQuery`.
+- The existing experience-search tool and HXL resource remain configured.
+- [x] Document a Yoga query in `postman/README.md`.
+- [x] User confirmed the tools work in Postman and Claude.
+
+## Session search and booking agent
+
+The separate **Coral Cloud Bookings** draft (`Coral_Cloud_Bookings`) adds session
+search and confirmed booking through SObject All. See
+[setup and remaining validation](CORAL_CLOUD_SESSION_BOOKING.md).
+
 ## Commit policy
 
 Create meaningful commits only after explicit user approval.

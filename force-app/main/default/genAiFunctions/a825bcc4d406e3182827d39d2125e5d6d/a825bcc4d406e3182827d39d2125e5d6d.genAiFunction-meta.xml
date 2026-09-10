@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<GenAiFunction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>soqlQuery (platform.sobject-all)</description>
+    <developerName>a825bcc4d406e3182827d39d2125e5d6d</developerName>
+    <invocationTarget>platform/sobject-all/soqlQuery</invocationTarget>
+    <invocationTargetType>platformMcpTool</invocationTargetType>
+    <isConfirmationRequired>false</isConfirmationRequired>
+    <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+    <localDeveloperName>a825bcc4d406e3182827d39d2125e5d6d</localDeveloperName>
+    <masterLabel>soqlQuery (platform.sobject-all)</masterLabel>
+</GenAiFunction>

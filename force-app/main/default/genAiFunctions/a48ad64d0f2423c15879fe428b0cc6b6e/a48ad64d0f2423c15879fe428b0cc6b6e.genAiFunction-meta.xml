@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<GenAiFunction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>getRelatedRecords (platform.sobject-all)</description>
+    <developerName>a48ad64d0f2423c15879fe428b0cc6b6e</developerName>
+    <invocationTarget>platform/sobject-all/getRelatedRecords</invocationTarget>
+    <invocationTargetType>platformMcpTool</invocationTargetType>
+    <isConfirmationRequired>false</isConfirmationRequired>
+    <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+    <localDeveloperName>a48ad64d0f2423c15879fe428b0cc6b6e</localDeveloperName>
+    <masterLabel>getRelatedRecords (platform.sobject-all)</masterLabel>
+</GenAiFunction>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<GenAiFunction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>listRecentSobjectRecords (platform.sobject-all)</description>
+    <developerName>a00af944eb41238ccbbb069db3604c7ac</developerName>
+    <invocationTarget
+  >platform/sobject-all/listRecentSobjectRecords</invocationTarget>
+    <invocationTargetType>platformMcpTool</invocationTargetType>
+    <isConfirmationRequired>false</isConfirmationRequired>
+    <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+    <localDeveloperName>a00af944eb41238ccbbb069db3604c7ac</localDeveloperName>
+    <masterLabel>listRecentSobjectRecords (platform.sobject-all)</masterLabel>
+</GenAiFunction>

@@ -55,6 +55,28 @@ rendering; that still depends on the client's renderer support.
 For authentication failures, check the MCP request's OAuth Debugger, the exact
 callback match, PKCE SHA-256, and scopes `mcp_api refresh_token`.
 
+## Verify the SOQL tool
+
+Reconnect the MCP request to refresh its tools, then select **Query Records (SOQL)**.
+The added standard tool is `soqlQueryplatform_sobject_all`:
+
+```json
+{
+  "method": "tools/call",
+  "params": {
+    "name": "soqlQueryplatform_sobject_all",
+    "arguments": {
+      "query": "SELECT Id, Name, Price__c FROM Experience__c WHERE Name LIKE '%Yoga%' LIMIT 5"
+    }
+  }
+}
+```
+
+In the tool's input editor, use only the `arguments` object. This tool returns
+record data; use the experience-search tool when you want the configured HXL card.
+SOQL access follows the authenticated user's permissions and is not restricted
+to the Coral Cloud objects by this server configuration.
+
 ## References
 
 - [Salesforce: Configure Postman](https://developer.salesforce.com/docs/platform/hosted-mcp-servers/guide/postman.html)

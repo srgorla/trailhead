@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<GenAiFunction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>createSobjectRecord (platform.sobject-all)</description>
+    <developerName>a16e8e8c7d5cb3289a600e257b1ab5bed</developerName>
+    <invocationTarget
+  >platform/sobject-all/createSobjectRecord</invocationTarget>
+    <invocationTargetType>platformMcpTool</invocationTargetType>
+    <isConfirmationRequired>false</isConfirmationRequired>
+    <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+    <localDeveloperName>a16e8e8c7d5cb3289a600e257b1ab5bed</localDeveloperName>
+    <masterLabel>createSobjectRecord (platform.sobject-all)</masterLabel>
+</GenAiFunction>

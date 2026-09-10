@@ -1,31 +1,47 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <McpServerDefinition xmlns="http://soap.sforce.com/2006/04/metadata">
-  <description
-  >Read-only Coral Cloud experience searches with HXL cards.</description>
-  <masterLabel>Coral Cloud Experiences</masterLabel>
-  <resources>
     <description
+  >Read-only Coral Cloud experience searches with HXL cards.</description>
+    <masterLabel>Coral Cloud Experiences</masterLabel>
+    <resources>
+        <description
     >Experience images, prices, ratings and session availability.</description>
-    <resourceName>experienceSearch</resourceName>
-    <resourceTitle>Coral Cloud Experiences</resourceTitle>
-    <resourceUri
+        <resourceName>experienceSearch</resourceName>
+        <resourceTitle>Coral Cloud Experiences</resourceTitle>
+        <resourceUri
     >ui://widget/lightningType/c__experienceSearchMcpResult</resourceUri>
-  </resources>
-  <tools>
-    <apiDefinition>
-      <apiIdentifier>aa:apex-ExperienceSearchAction</apiIdentifier>
-      <apiSource>API_CATALOG</apiSource>
-      <operation>ExperienceSearchAction</operation>
-    </apiDefinition>
-    <descriptionOverride
+    </resources>
+    <tools>
+        <apiDefinition>
+            <apiIdentifier>aa:apex-ExperienceSearchAction</apiIdentifier>
+            <apiSource>API_CATALOG</apiSource>
+            <operation>ExperienceSearchAction</operation>
+        </apiDefinition>
+        <descriptionOverride
     >Search Coral Cloud experiences by name, category and dates for a party size. Times use America/Chicago. Does not create bookings or reserve seats.</descriptionOverride>
-    <destructive>false</destructive>
-    <idempotent>true</idempotent>
-    <openWorld>false</openWorld>
-    <readOnly>true</readOnly>
-    <returnDirect>false</returnDirect>
-    <toolName>ExperienceSearchActionapex_ExperienceSearchAction</toolName>
-    <toolTitle>Search Coral Cloud Experiences</toolTitle>
-    <uiResource>experienceSearch</uiResource>
-  </tools>
+        <destructive>false</destructive>
+        <idempotent>true</idempotent>
+        <openWorld>false</openWorld>
+        <readOnly>true</readOnly>
+        <returnDirect>false</returnDirect>
+        <toolName>ExperienceSearchActionapex_ExperienceSearchAction</toolName>
+        <toolTitle>Search Coral Cloud Experiences</toolTitle>
+        <uiResource>experienceSearch</uiResource>
+    </tools>
+    <tools>
+        <apiDefinition>
+            <apiIdentifier>psmcps:platform.sobject-all:soqlQuery</apiIdentifier>
+            <apiSource>API_CATALOG</apiSource>
+            <operation>soqlQuery</operation>
+        </apiDefinition>
+        <descriptionOverride
+    >Executes a SOQL query to retrieve Salesforce records. Use this when you know which object and fields you need—it&apos;s the primary way to read data. SOQL syntax: `SELECT fields FROM Object WHERE conditions ORDER BY field LIMIT n`. Supports relationship queries to traverse lookups (e.g., `Contact.Account.Name`) and subqueries for child records (e.g., `(SELECT Id FROM Contacts)`). Always include a WHERE clause to filter results and a LIMIT clause to control result size. For large objects, filter on indexed fields (Id, Name, foreign keys, External IDs) to avoid timeout errors. Maximum 50,000 total records per transaction across all queries. Example: `SELECT Id, Name, Industry FROM Account WHERE Industry = &apos;Technology&apos; LIMIT 100`  **When to use SOQL vs SOSL**: Use SOQL when you know which object contains your data and need precise filtering, sorting, aggregation, or relationship traversal. SOQL supports complex WHERE clauses, JOINs via relationships, GROUP BY, and ORDER BY.</descriptionOverride>
+        <destructive>false</destructive>
+        <idempotent>true</idempotent>
+        <openWorld>true</openWorld>
+        <readOnly>true</readOnly>
+        <returnDirect>false</returnDirect>
+        <toolName>soqlQueryplatform_sobject_all</toolName>
+        <toolTitle>Query Records (SOQL)</toolTitle>
+    </tools>
 </McpServerDefinition>

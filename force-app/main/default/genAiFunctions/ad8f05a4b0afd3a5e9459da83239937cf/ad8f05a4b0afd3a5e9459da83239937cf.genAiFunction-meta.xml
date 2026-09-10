@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<GenAiFunction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>getObjectSchema (platform.sobject-all)</description>
+    <developerName>ad8f05a4b0afd3a5e9459da83239937cf</developerName>
+    <invocationTarget>platform/sobject-all/getObjectSchema</invocationTarget>
+    <invocationTargetType>platformMcpTool</invocationTargetType>
+    <isConfirmationRequired>false</isConfirmationRequired>
+    <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+    <localDeveloperName>ad8f05a4b0afd3a5e9459da83239937cf</localDeveloperName>
+    <masterLabel>getObjectSchema (platform.sobject-all)</masterLabel>
+</GenAiFunction>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<GenAiFunction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>deleteSobjectRecord (platform.sobject-all)</description>
+    <developerName>a674707b3eef734e1aa2036b12d26d92c</developerName>
+    <invocationTarget
+  >platform/sobject-all/deleteSobjectRecord</invocationTarget>
+    <invocationTargetType>platformMcpTool</invocationTargetType>
+    <isConfirmationRequired>false</isConfirmationRequired>
+    <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+    <localDeveloperName>a674707b3eef734e1aa2036b12d26d92c</localDeveloperName>
+    <masterLabel>deleteSobjectRecord (platform.sobject-all)</masterLabel>
+</GenAiFunction>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<GenAiFunction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>getUserInfo (platform.sobject-all)</description>
+    <developerName>a6ff0a133b9803db4a343ee4ca61a2978</developerName>
+    <invocationTarget>platform/sobject-all/getUserInfo</invocationTarget>
+    <invocationTargetType>platformMcpTool</invocationTargetType>
+    <isConfirmationRequired>false</isConfirmationRequired>
+    <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+    <localDeveloperName>a6ff0a133b9803db4a343ee4ca61a2978</localDeveloperName>
+    <masterLabel>getUserInfo (platform.sobject-all)</masterLabel>
+</GenAiFunction>

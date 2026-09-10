@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<GenAiFunction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>find (platform.sobject-all)</description>
+    <developerName>a13f3f0a468ff3099a7f4a4f358413ff2</developerName>
+    <invocationTarget>platform/sobject-all/find</invocationTarget>
+    <invocationTargetType>platformMcpTool</invocationTargetType>
+    <isConfirmationRequired>false</isConfirmationRequired>
+    <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+    <localDeveloperName>a13f3f0a468ff3099a7f4a4f358413ff2</localDeveloperName>
+    <masterLabel>find (platform.sobject-all)</masterLabel>
+</GenAiFunction>

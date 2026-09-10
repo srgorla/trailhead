@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<GenAiFunction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>updateSobjectRecord (platform.sobject-all)</description>
+    <developerName>a22e40f0fed70337e8be0c013aa82bc35</developerName>
+    <invocationTarget
+  >platform/sobject-all/updateSobjectRecord</invocationTarget>
+    <invocationTargetType>platformMcpTool</invocationTargetType>
+    <isConfirmationRequired>false</isConfirmationRequired>
+    <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+    <localDeveloperName>a22e40f0fed70337e8be0c013aa82bc35</localDeveloperName>
+    <masterLabel>updateSobjectRecord (platform.sobject-all)</masterLabel>
+</GenAiFunction>
