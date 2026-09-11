@@ -630,13 +630,13 @@ experience confirmation image.
 
 ### Steps and progress
 
-| Step | Deliverable and verification                                                                                                                                           | Status                                                                                                   |
-| ---- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| 1    | Document scope, MCP contract, and wiring requirements in the implementation guide.                                                                                     | Committed in `4c98053`                                                                                   |
-| 2    | Add MCP payload Lightning Type `c__bookingDetailsOutputValues` and MCP envelope wrapper `c__bookingDetailsMcpResult` with renderer mapping to `@widget/c/bookingCard`. | Committed in `ae8f4fc`                                                                                   |
-| 3    | Update `CoralCloudExperiences` MCP server definition to register the `bookingDetails` UI resource and `BookingDetailsAction` tool with `uiResource` reference.         | Committed in `9cca7e1`                                                                                   |
-| 4    | Create isolated deployment manifest `manifest/coral-cloud-booking-mcp.xml` and run validation-only deployment against `aforce_de`.                                     | Validation `0AfgL00000XKpxpSAD` succeeded (5 tests passed)                                               |
-| 5    | Deploy metadata to `aforce_de`, verify permission set assignment, and verify card rendering in Claude.                                                                 | Live deployment `0AfgL00000XKM4dSAH` succeeded; `CoralCloudBookingDetails` assigned; Claude test pending |
+| Step | Deliverable and verification                                                                                                                                           | Status                                                                                                                                                  |
+| ---- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1    | Document scope, MCP contract, and wiring requirements in the implementation guide.                                                                                     | Committed in `4c98053`                                                                                                                                  |
+| 2    | Add MCP payload Lightning Type `c__bookingDetailsOutputValues` and MCP envelope wrapper `c__bookingDetailsMcpResult` with renderer mapping to `@widget/c/bookingCard`. | Committed in `ae8f4fc`                                                                                                                                  |
+| 3    | Update `CoralCloudExperiences` MCP server definition to register the `bookingDetails` UI resource and `BookingDetailsAction` tool with `uiResource` reference.         | Committed in `9cca7e1`                                                                                                                                  |
+| 4    | Create isolated deployment manifest `manifest/coral-cloud-booking-mcp.xml` and run validation-only deployment against `aforce_de`.                                     | Validation `0AfgL00000XKpxpSAD` succeeded (5 tests passed)                                                                                              |
+| 5    | Deploy metadata to `aforce_de`, verify permission set assignment, and verify card rendering in Claude.                                                                 | Live deployment `0AfgL00000XKM4dSAH` succeeded; `CoralCloudBookingDetails` assigned; User verified correct booking card image after reconnecting Claude |
 
 ### Deliverables
 
@@ -672,7 +672,40 @@ experience confirmation image.
   3. Enter prompt:
      - To view existing booking: `"Show booking details for booking ID a00gL00001X6JkQQAV"` or `"Show booking details for booking B-00001720"`.
      - To book end-to-end: `"Book Beach Yoga Retreat for Harry Cane for 2 guests tomorrow, and show my confirmation card."`
-  4. Claude invokes `createSobjectRecord` followed by `BookingDetailsActionapex_BookingDetailsAction` and renders the rich HXL booking card with the experience confirmation image, dates, times, guest count, and price.
+  4. Expected behavior: Claude invokes `createSobjectRecord` followed by `BookingDetailsActionapex_BookingDetailsAction` and renders the configured HXL booking card. Verify the actual tool activity and image source; a generic Claude card is not confirmation that the HXL widget rendered.
+
+### Claude image mismatch review — September 11, 2026
+
+Reviewed commits `4c98053` through `e9dcf47` and retrieved the live booking MCP
+resource, envelope types, renderer, and widget. The live renderer maps
+`outputValues.bookingResult.imageUrl` directly to the single `tile/image` in
+`bookingCard`. Retrieved widget differences are generated IDs and default visual
+attributes; no collage or external-image selection logic was introduced.
+
+For screenshot booking `B-00001727` (`a00gL00001XCqaQQAT`), both SOQL and a live
+`BookingDetailsAction` invocation returned Beach Yoga Retreat, Harry Cane's
+booking for two guests, September 12, 2026, total USD 100, and the same image URL:
+`https://s3-us-west-2.amazonaws.com/dev-or-devrl-s3-bucket/sample-apps/coral-clouds/b1tituywkemxfgon7r8h.jpg`.
+The image URL returned HTTP 200 with `image/jpeg`. Visual inspection shows a beach
+with two lounge chairs, not the three yoga images in the Claude screenshot.
+
+The initial screenshot contained a collage with outside publisher labels and a
+layout different from the deployed widget. Claude subsequently reported that its
+tool search could not find `BookingDetailsActionapex_BookingDetailsAction`, even
+though the tool was present in the deployed Salesforce configuration.
+
+**Resolved:** the user disconnected and reconnected the Salesforce MCP server in
+Claude, then confirmed that the booking card displayed the single correct
+Salesforce beach image. Stale tool discovery in the existing Claude connection
+was the observed blocker. No image URL, Apex, or renderer change was needed.
+This visual verification was performed and confirmed by the user, not by an
+automated browser test. All server-side checks in this review were read-only.
+
+When tools are added or changed on this custom MCP server, refresh the Claude
+connection before testing. If a tool remains unavailable, compare the tool list
+from the same endpoint and Salesforce user in Postman before changing the card.
+The Claude booking-card rendering check is now passed; this does not establish
+completion of separate activation, concurrency, or retry tests.
 
 ## Commit policy
 
