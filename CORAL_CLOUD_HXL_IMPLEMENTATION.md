@@ -436,7 +436,9 @@ booking enforcement still need validation before activation.
 
 ## Booking confirmation image — implementation plan
 
-Status: documentation prepared for review; implementation has not started.
+Status: native SOQL rendering experiment completed; direct HXL rendering did not
+produce a card payload. The validated Apex action is approved for commit; deployment remains pending.
+The HXL widget and agent wiring have not started.
 The existing booking workflow was committed and pushed as `d2eb831`.
 
 Show the experience image in a booking details HXL card for **Coral Cloud
@@ -452,13 +454,13 @@ bookings. Use a readable fallback when the image is missing or cannot be display
 
 ### Steps and progress
 
-| Step | Deliverable and verification                                                                                                                                                                                                      | Status                               |
-| ---- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ |
-| 1    | Document scope, implementation steps, and acceptance checks.                                                                                                                                                                      | Ready for user review; not committed |
-| 2    | Verify live fields and permissions. Add a read-only booking-details Apex action and result type, using the existing Agentforce HXL output pattern. Test valid, missing, invalid, and inaccessible booking IDs and missing images. | Pending                              |
-| 3    | Add a booking Lightning Type, HXL widget, and renderer. Reuse the existing experience image styling and trusted domain where applicable. Verify layout and image fallback.                                                        | Pending                              |
-| 4    | Add the readback action to `session_booking`, update permissions and deployment manifest, and instruct the agent to render the saved booking result after successful creation.                                                    | Pending                              |
-| 5    | Deploy and test the card with existing test booking `B-00001720`, including image rendering, accurate fields, fallback, and experience-search regression checks. Record results and remaining limitations.                        | Pending                              |
+| Step | Deliverable and verification                                                                                                                                                                                                      | Status                              |
+| ---- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------- |
+| 1    | Document scope, implementation steps, and acceptance checks.                                                                                                                                                                      | Committed in `8e19682`              |
+| 2    | Verify live fields and permissions. Add a read-only booking-details Apex action and result type, using the existing Agentforce HXL output pattern. Test valid, missing, invalid, and inaccessible booking IDs and missing images. | Approved for commit; 4 tests passed |
+| 3    | Add a booking Lightning Type, HXL widget, and renderer. Reuse the existing experience image styling and trusted domain where applicable. Verify layout and image fallback.                                                        | Pending                             |
+| 4    | Add the readback action to `session_booking`, update permissions and deployment manifest, and instruct the agent to render the saved booking result after successful creation.                                                    | Pending                             |
+| 5    | Deploy and test the card with existing test booking `B-00001720`, including image rendering, accurate fields, fallback, and experience-search regression checks. Record results and remaining limitations.                        | Pending                             |
 
 SObject All continues to create bookings. The planned Apex action accepts a
 booking ID, queries accessible booking/session/experience fields in user mode,
@@ -471,14 +473,65 @@ Initial delivery targets Agentforce. Exposing a booking card through the custom
 MCP server for Claude or other clients is a separate follow-up requiring MCP tool
 and UI-resource wiring and client-specific rendering tests.
 
+### Read-only action validation — September 10, 2026
+
+Added `BookingDetailsAction`, `BookingDetailsResult`, and `BookingDetailsActionTest`.
+The action returns one structured result per input, batches booking IDs into one
+user-mode query, and performs no DML. Results include saved booking identity,
+cancellation status, experience image/name, local session times, guest count,
+`Total_Price__c`, and currency. Missing or non-HTTPS images return a fallback.
+The total is read from the existing formula field, not an immutable purchase-price
+snapshot. No Contact email is included in the card result.
+
+The live relationship query succeeded for the existing test booking. Salesforce
+validation-only deployment passed all four tests, with 84 of 87 action lines
+covered (96.6%). Tests cover ordered and duplicate requests, invalid/wrong-object
+IDs, deleted bookings, restricted-user access, canceled bookings, image fallback,
+and zero DML during readback. New classes are not deployed and no booking was
+created or modified. Multi-currency behavior and visual rendering remain untested.
+
+### Native SOQL-to-HXL experiment
+
+Tested an isolated read-only agent using the registered SObject All SOQL action,
+with no new Apex dependency. The tool advertises an input schema but no output
+schema in the inspected `tools/list` response. Its runtime result contains
+`totalSize`, `done`, and a nested `records` array.
+
+Deployed non-Apex Lightning Types for the booking record, session, and experience,
+and an HXL widget mapping the booking reference and related image URL. Bound the
+SOQL action's `records` output as `list[object]` to the custom record type with
+`is_displayable: True`. Metadata deployment and AgentScript validation passed.
+The native action must retain its registered identifier in this tested setup;
+an alias compiled but did not expose the tool to the model.
+
+Live trace verification confirmed one SELECT for existing booking `B-00001720`,
+returning two guests, total 100, Beach Yoga Retreat, and its HTTPS image URL.
+However, the enabled tool list contained only SOQL, with no `show_command` tool.
+The response contained plain text mentioning the image URL and `show_command`,
+with an empty structured `result`. This is not evidence of an HXL card rendering.
+No records were created or modified. Browser rendering was not verified.
+
+Conclusion: native SOQL supplies the required data, but the explicit CLT binding
+tested here did not provide a renderable card in live preview. This does not prove
+that all no-Apex approaches are unsupported. After review of these results, the user approved committing the validated Apex
+action as the next implementation step. The temporary probe components are separate from
+the actual booking agent. All five probe components were removed successfully
+on September 11, 2026 in dependency order; experimental source and
+sanitized evidence are retained under `/private/tmp`, outside the commit.
+
+References: [HXL action output](https://developer.salesforce.com/docs/platform/hxl/guide/agentforce-action-output.html)
+explains that HXL is not specific to Apex;
+[MCP response schema limitations](https://help.salesforce.com/s/articleView?id=ai.agent_mcp_tool_action_design.htm&language=en_US&type=5)
+describes constraints on nested/dynamic outputs and Lightning Type mapping.
+
 ### Review and commit checkpoints
 
 Complete one step at a time and update this progress table with its verification
 results. Present the changed files, checks, and any limitations for user review
 before creating each meaningful commit. Wait for explicit approval before
 committing; do not infer approval for later steps from an earlier commit approval.
-No implementation, deployment, publishing, or activation is part of this
-documentation-only step.
+Deployments and runtime verification will be recorded at their corresponding
+steps. Publishing and activation are still pending.
 
 ## Commit policy
 
