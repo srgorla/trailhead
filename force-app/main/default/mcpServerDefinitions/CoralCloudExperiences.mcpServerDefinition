@@ -69,5 +69,38 @@
         <toolName>soqlQueryplatform_sobject_all</toolName>
         <toolTitle>Query Records (SOQL)</toolTitle>
     </tools>
+    <tools>
+        <apiDefinition>
+            <apiIdentifier>psmcps:platform.sobject-all:createSobjectRecord</apiIdentifier>
+            <apiSource>API_CATALOG</apiSource>
+            <operation>createSobjectRecord</operation>
+        </apiDefinition>
+        <descriptionOverride
+    >Creates a new Salesforce record. Use this to create a Booking__c record with Contact__c, Session__c, Number_of_Guests__c, Source__c=&apos;Claude&apos; and Is_Canceled__c=false.</descriptionOverride>
+        <destructive>false</destructive>
+        <idempotent>false</idempotent>
+        <openWorld>true</openWorld>
+        <readOnly>false</readOnly>
+        <returnDirect>false</returnDirect>
+        <toolName>createSobjectRecordplatform_sobject_all</toolName>
+        <toolTitle>Create Record</toolTitle>
+    </tools>
+    <tools>
+        <apiDefinition>
+            <apiIdentifier>psmcps:platform.sobject-all:getObjectSchema</apiIdentifier>
+            <apiSource>API_CATALOG</apiSource>
+            <operation>getObjectSchema</operation>
+        </apiDefinition>
+        <descriptionOverride
+    >Discover object and field definitions before constructing queries or creating records.</descriptionOverride>
+        <destructive>false</destructive>
+        <idempotent>true</idempotent>
+        <openWorld>true</openWorld>
+        <readOnly>true</readOnly>
+        <returnDirect>false</returnDirect>
+        <toolName>getObjectSchemaplatform_sobject_all</toolName>
+        <toolTitle>Describe Salesforce Objects</toolTitle>
+    </tools>
 </McpServerDefinition>
+
 

@@ -630,13 +630,13 @@ experience confirmation image.
 
 ### Steps and progress
 
-| Step | Deliverable and verification                                                                                                                                           | Status                                                     |
-| ---- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
-| 1    | Document scope, MCP contract, and wiring requirements in the implementation guide.                                                                                     | Committed in `4c98053`                                     |
-| 2    | Add MCP payload Lightning Type `c__bookingDetailsOutputValues` and MCP envelope wrapper `c__bookingDetailsMcpResult` with renderer mapping to `@widget/c/bookingCard`. | Committed in `ae8f4fc`                                     |
-| 3    | Update `CoralCloudExperiences` MCP server definition to register the `bookingDetails` UI resource and `BookingDetailsAction` tool with `uiResource` reference.         | Committed in `9cca7e1`                                     |
-| 4    | Create isolated deployment manifest `manifest/coral-cloud-booking-mcp.xml` and run validation-only deployment against `aforce_de`.                                     | Validation `0AfgL00000XKpxpSAD` succeeded (5 tests passed) |
-| 5    | Deploy metadata to `aforce_de`, verify permission set assignment, and verify card rendering in Claude.                                                                 | Pending                                                    |
+| Step | Deliverable and verification                                                                                                                                           | Status                                                                                                   |
+| ---- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| 1    | Document scope, MCP contract, and wiring requirements in the implementation guide.                                                                                     | Committed in `4c98053`                                                                                   |
+| 2    | Add MCP payload Lightning Type `c__bookingDetailsOutputValues` and MCP envelope wrapper `c__bookingDetailsMcpResult` with renderer mapping to `@widget/c/bookingCard`. | Committed in `ae8f4fc`                                                                                   |
+| 3    | Update `CoralCloudExperiences` MCP server definition to register the `bookingDetails` UI resource and `BookingDetailsAction` tool with `uiResource` reference.         | Committed in `9cca7e1`                                                                                   |
+| 4    | Create isolated deployment manifest `manifest/coral-cloud-booking-mcp.xml` and run validation-only deployment against `aforce_de`.                                     | Validation `0AfgL00000XKpxpSAD` succeeded (5 tests passed)                                               |
+| 5    | Deploy metadata to `aforce_de`, verify permission set assignment, and verify card rendering in Claude.                                                                 | Live deployment `0AfgL00000XKM4dSAH` succeeded; `CoralCloudBookingDetails` assigned; Claude test pending |
 
 ### Deliverables
 
@@ -651,6 +651,28 @@ experience confirmation image.
    and tool `BookingDetailsActionapex_BookingDetailsAction` (`aa:apex-BookingDetailsAction`).
 5. `manifest/coral-cloud-booking-mcp.xml`:
    Deployment manifest containing the two new Lightning Type bundles and updated MCP server definition.
+
+### Live deployment and Claude verification — September 11, 2026
+
+- **Validation ID**: `0AfgL00000XKpxpSAD` (5 Apex tests passed, 0 failures).
+- **Live Deployment ID**: `0AfgL00000XKM4dSAH` (succeeded).
+- Deployed components:
+  - `bookingDetailsMcpResult` (`LightningTypeBundle`)
+  - `bookingDetailsOutputValues` (`LightningTypeBundle`)
+  - `CoralCloudExperiences` (`McpServerDefinition`)
+- **Permission Set**: Assigned `CoralCloudBookingDetails` to `sgorla143@agentforce.com`.
+- **Apex Action Verification**: Executed live readback for existing booking `B-00001720` (`a00gL00001X6JkQQAV`). Returned `isSuccess: true`, `status: 'OK'`, experience `Beach Yoga Retreat`, price `100.00 USD`, and verified image URL `https://s3-us-west-2.amazonaws.com/dev-or-devrl-s3-bucket/sample-apps/coral-clouds/b1tituywkemxfgon7r8h.jpg` with `hasImage: true`.
+- **End-to-End Booking in Claude**:
+  - `CoralCloudExperiences` previously only included read-only `soqlQuery` from `platform.sobject-all`, preventing Claude from creating bookings directly within the same connector.
+  - Added `createSobjectRecordplatform_sobject_all` (`psmcps:platform.sobject-all:createSobjectRecord`) and `getObjectSchemaplatform_sobject_all` (`psmcps:platform.sobject-all:getObjectSchema`) to `CoralCloudExperiences`.
+  - Enables Claude to perform the complete experience discovery, session search, booking creation (`Source__c = 'Claude'`), and HXL image card confirmation in a single unified conversation.
+- **Claude Verification Steps**:
+  1. In Claude (Desktop or Web), open the chat with the **Coral Cloud Experiences** MCP server enabled.
+  2. If needed, disconnect and reconnect the connector or restart Claude so it discovers the new tools (`createSobjectRecordplatform_sobject_all`, `getObjectSchemaplatform_sobject_all`, `BookingDetailsActionapex_BookingDetailsAction`) and UI resource `bookingDetails`.
+  3. Enter prompt:
+     - To view existing booking: `"Show booking details for booking ID a00gL00001X6JkQQAV"` or `"Show booking details for booking B-00001720"`.
+     - To book end-to-end: `"Book Beach Yoga Retreat for Harry Cane for 2 guests tomorrow, and show my confirmation card."`
+  4. Claude invokes `createSobjectRecord` followed by `BookingDetailsActionapex_BookingDetailsAction` and renders the rich HXL booking card with the experience confirmation image, dates, times, guest count, and price.
 
 ## Commit policy
 
