@@ -1,6 +1,6 @@
 config:
-   developer_name: "Coral_Cloud_Bookings"
-   agent_label: "Coral Cloud Bookings"
+   developer_name: "Coral_Cloud_Bookings_with_HXL_Cards"
+   agent_label: "Coral Cloud Bookings with HXL Cards"
    agent_type: "AgentforceEmployeeAgent"
    description: "Helps Coral Cloud Resorts employees find experiences, prices, guest ratings, session availability and saved booking details with HXL cards."
 
