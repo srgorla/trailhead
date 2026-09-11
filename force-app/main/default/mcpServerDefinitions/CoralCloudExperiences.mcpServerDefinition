@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <McpServerDefinition xmlns="http://soap.sforce.com/2006/04/metadata">
     <description
-  >Read-only Coral Cloud experience searches with HXL cards.</description>
+  >Read-only Coral Cloud experience searches and booking details with HXL cards.</description>
     <masterLabel>Coral Cloud Experiences</masterLabel>
     <resources>
         <description
@@ -10,6 +10,14 @@
         <resourceTitle>Coral Cloud Experiences</resourceTitle>
         <resourceUri
     >ui://widget/lightningType/c__experienceSearchMcpResult</resourceUri>
+    </resources>
+    <resources>
+        <description
+    >Saved booking details and experience confirmation image.</description>
+        <resourceName>bookingDetails</resourceName>
+        <resourceTitle>Coral Cloud Booking Details</resourceTitle>
+        <resourceUri
+    >ui://widget/lightningType/c__bookingDetailsMcpResult</resourceUri>
     </resources>
     <tools>
         <apiDefinition>
@@ -30,6 +38,23 @@
     </tools>
     <tools>
         <apiDefinition>
+            <apiIdentifier>aa:apex-BookingDetailsAction</apiIdentifier>
+            <apiSource>API_CATALOG</apiSource>
+            <operation>BookingDetailsAction</operation>
+        </apiDefinition>
+        <descriptionOverride
+    >Read an existing booking and its experience confirmation image by booking ID. Times use America/Chicago. Does not create or modify records.</descriptionOverride>
+        <destructive>false</destructive>
+        <idempotent>true</idempotent>
+        <openWorld>false</openWorld>
+        <readOnly>true</readOnly>
+        <returnDirect>false</returnDirect>
+        <toolName>BookingDetailsActionapex_BookingDetailsAction</toolName>
+        <toolTitle>Get Coral Cloud Booking Details</toolTitle>
+        <uiResource>bookingDetails</uiResource>
+    </tools>
+    <tools>
+        <apiDefinition>
             <apiIdentifier>psmcps:platform.sobject-all:soqlQuery</apiIdentifier>
             <apiSource>API_CATALOG</apiSource>
             <operation>soqlQuery</operation>
@@ -45,3 +70,4 @@
         <toolTitle>Query Records (SOQL)</toolTitle>
     </tools>
 </McpServerDefinition>
+
