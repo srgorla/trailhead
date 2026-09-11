@@ -459,13 +459,13 @@ bookings. Use a readable fallback when the image is missing or cannot be display
 
 ### Steps and progress
 
-| Step | Deliverable and verification                                                                                                                                                                                                      | Status                                           |
-| ---- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
-| 1    | Document scope, implementation steps, and acceptance checks.                                                                                                                                                                      | Committed in `8e19682`                           |
-| 2    | Verify live fields and permissions. Add a read-only booking-details Apex action and result type, using the existing Agentforce HXL output pattern. Test valid, missing, invalid, and inaccessible booking IDs and missing images. | Committed in `85b7de4`; 4 tests passed           |
-| 3    | Add a booking Lightning Type, HXL widget, and renderer. Reuse the existing experience image styling and trusted domain where applicable. Verify layout and image fallback.                                                        | Committed in `383b2cf`; visual check pending     |
-| 4    | Add the readback action to `session_booking`, update permissions and deployment manifest, and instruct the agent to render the saved booking result after successful creation.                                                    | Approved for commit; manifest and 5 tests passed |
-| 5    | Deploy and test the card with existing test booking `B-00001720`, including image rendering, accurate fields, fallback, and experience-search regression checks. Record results and remaining limitations.                        | Pending                                          |
+| Step | Deliverable and verification                                                                                                                                                                                                      | Status                                                                 |
+| ---- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| 1    | Document scope, implementation steps, and acceptance checks.                                                                                                                                                                      | Committed in `8e19682`                                                 |
+| 2    | Verify live fields and permissions. Add a read-only booking-details Apex action and result type, using the existing Agentforce HXL output pattern. Test valid, missing, invalid, and inaccessible booking IDs and missing images. | Committed in `85b7de4`; 4 tests passed                                 |
+| 3    | Add a booking Lightning Type, HXL widget, and renderer. Reuse the existing experience image styling and trusted domain where applicable. Verify layout and image fallback.                                                        | Committed in `383b2cf`; visual check pending                           |
+| 4    | Add the readback action to `session_booking`, update permissions and deployment manifest, and instruct the agent to render the saved booking result after successful creation.                                                    | Approved for commit; manifest and 5 tests passed                       |
+| 5    | Deploy and test the card with existing test booking `B-00001720`, including image rendering, accurate fields, fallback, and experience-search regression checks. Record results and remaining limitations.                        | User-confirmed working in Agentforce (`Coral_Cloud_Booking_HXL_Cards`) |
 
 SObject All continues to create bookings. The planned Apex action accepts a
 booking ID, queries accessible booking/session/experience fields in user mode,
@@ -474,9 +474,8 @@ or modify records. A readback or rendering failure must not trigger another
 booking creation; retain the successful booking reference and explain the
 display failure. Do not claim a confirmation when creation failed.
 
-Initial delivery targets Agentforce. Exposing a booking card through the custom
-MCP server for Claude or other clients is a separate follow-up requiring MCP tool
-and UI-resource wiring and client-specific rendering tests.
+Initial delivery targeted Agentforce. Exposing the booking card through the custom
+MCP server for Claude or other MCP clients is implemented in the follow-up section below.
 
 ### Read-only action validation — September 10, 2026
 
@@ -583,6 +582,75 @@ before creating each meaningful commit. Wait for explicit approval before
 committing; do not infer approval for later steps from an earlier commit approval.
 Deployments and runtime verification will be recorded at their corresponding
 steps. Publishing and activation are still pending.
+
+## Claude MCP booking confirmation card
+
+Enable Claude (and other MCP clients) connected via the `CoralCloudExperiences`
+custom MCP server to retrieve and render the rich HXL booking card with the
+experience confirmation image.
+
+### Architectural difference between Agentforce and MCP
+
+- **Agentforce** uses direct Apex class projection (`c__bookingDetailsResult`
+  mapping to `@apexClassType/c__BookingDetailsResult`) because Agentforce
+  unwraps the action output variable `bookingResult` before passing attributes
+  to the renderer.
+- **MCP (Claude)** receives the standard Actions REST API envelope from
+  Salesforce's MCP server endpoint:
+  ```json
+  {
+    "actionName": "BookingDetailsAction",
+    "isSuccess": true,
+    "outputValues": {
+      "bookingResult": {
+        "bookingId": "...",
+        "bookingReference": "...",
+        "bookingStatus": "...",
+        "experienceName": "...",
+        "imageUrl": "...",
+        "hasImage": true,
+        "imageMessage": "",
+        "sessionDate": "...",
+        "startTime": "...",
+        "endTime": "...",
+        "timeZone": "...",
+        "guestCount": 2,
+        "totalPrice": 100,
+        "currencyCode": "USD",
+        "isSuccess": true,
+        "status": "OK",
+        "message": "Saved booking details."
+      }
+    }
+  }
+  ```
+  Therefore, MCP clients require dedicated MCP-tagged Custom Lightning Types
+  wrapping `{ actionName, isSuccess, outputValues }`, with a renderer mapping
+  `{!$attrs.outputValues.bookingResult.*}` into the `@widget/c/bookingCard` HXL widget.
+
+### Steps and progress
+
+| Step | Deliverable and verification                                                                                                                                           | Status       |
+| ---- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ |
+| 1    | Document scope, MCP contract, and wiring requirements in the implementation guide.                                                                                     | Current step |
+| 2    | Add MCP payload Lightning Type `c__bookingDetailsOutputValues` and MCP envelope wrapper `c__bookingDetailsMcpResult` with renderer mapping to `@widget/c/bookingCard`. | Pending      |
+| 3    | Update `CoralCloudExperiences` MCP server definition to register the `bookingDetails` UI resource and `BookingDetailsAction` tool with `uiResource` reference.         | Pending      |
+| 4    | Create isolated deployment manifest `manifest/coral-cloud-booking-mcp.xml` and run validation-only deployment against `aforce_de`.                                     | Pending      |
+| 5    | Deploy metadata to `aforce_de`, verify permission set assignment, and verify card rendering in Claude.                                                                 | Pending      |
+
+### Deliverables
+
+1. `lightningTypes/bookingDetailsOutputValues/schema.json`:
+   Tagged `["mcp"]`, defines `bookingResult` of type `@apexClassType/c__BookingDetailsResult`.
+2. `lightningTypes/bookingDetailsMcpResult/schema.json`:
+   Tagged `["mcp"]`, defines `actionName`, `isSuccess`, and `outputValues` of type `c__bookingDetailsOutputValues`.
+3. `lightningTypes/bookingDetailsMcpResult/renderer.json`:
+   Renderer mapping `{!$attrs.outputValues.bookingResult.*}` to `@widget/c/bookingCard`.
+4. `mcpServerDefinitions/CoralCloudExperiences.mcpServerDefinition`:
+   Registers UI resource `bookingDetails` (`ui://widget/lightningType/c__bookingDetailsMcpResult`)
+   and tool `BookingDetailsActionapex_BookingDetailsAction` (`aa:apex-BookingDetailsAction`).
+5. `manifest/coral-cloud-booking-mcp.xml`:
+   Deployment manifest containing the two new Lightning Type bundles and updated MCP server definition.
 
 ## Commit policy
 
