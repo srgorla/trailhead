@@ -1,0 +1,26 @@
+{
+  "renderer": {
+    "componentOverrides": {
+      "$": {
+        "definition": "@widget/c/bookingCard",
+        "attributes": {
+          "isSuccess": "{!$attrs.outputValues.bookingResult.isSuccess}",
+          "message": "{!$attrs.outputValues.bookingResult.message}",
+          "bookingReference": "{!$attrs.outputValues.bookingResult.bookingReference}",
+          "bookingStatus": "{!$attrs.outputValues.bookingResult.bookingStatus}",
+          "experienceName": "{!$attrs.outputValues.bookingResult.experienceName}",
+          "imageUrl": "{!$attrs.outputValues.bookingResult.imageUrl}",
+          "hasImage": "{!$attrs.outputValues.bookingResult.hasImage}",
+          "imageMessage": "{!$attrs.outputValues.bookingResult.imageMessage}",
+          "sessionDate": "{!$attrs.outputValues.bookingResult.sessionDate}",
+          "startTime": "{!$attrs.outputValues.bookingResult.startTime}",
+          "endTime": "{!$attrs.outputValues.bookingResult.endTime}",
+          "timeZone": "{!$attrs.outputValues.bookingResult.timeZone}",
+          "guestCount": "{!$attrs.outputValues.bookingResult.guestCount}",
+          "totalPrice": "{!$attrs.outputValues.bookingResult.totalPrice}",
+          "currencyCode": "{!$attrs.outputValues.bookingResult.currencyCode}"
+        }
+      }
+    }
+  }
+}

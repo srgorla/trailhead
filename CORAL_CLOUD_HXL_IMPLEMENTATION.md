@@ -630,13 +630,13 @@ experience confirmation image.
 
 ### Steps and progress
 
-| Step | Deliverable and verification                                                                                                                                           | Status       |
-| ---- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ |
-| 1    | Document scope, MCP contract, and wiring requirements in the implementation guide.                                                                                     | Current step |
-| 2    | Add MCP payload Lightning Type `c__bookingDetailsOutputValues` and MCP envelope wrapper `c__bookingDetailsMcpResult` with renderer mapping to `@widget/c/bookingCard`. | Pending      |
-| 3    | Update `CoralCloudExperiences` MCP server definition to register the `bookingDetails` UI resource and `BookingDetailsAction` tool with `uiResource` reference.         | Pending      |
-| 4    | Create isolated deployment manifest `manifest/coral-cloud-booking-mcp.xml` and run validation-only deployment against `aforce_de`.                                     | Pending      |
-| 5    | Deploy metadata to `aforce_de`, verify permission set assignment, and verify card rendering in Claude.                                                                 | Pending      |
+| Step | Deliverable and verification                                                                                                                                           | Status                 |
+| ---- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------- |
+| 1    | Document scope, MCP contract, and wiring requirements in the implementation guide.                                                                                     | Committed in `4c98053` |
+| 2    | Add MCP payload Lightning Type `c__bookingDetailsOutputValues` and MCP envelope wrapper `c__bookingDetailsMcpResult` with renderer mapping to `@widget/c/bookingCard`. | Implemented for review |
+| 3    | Update `CoralCloudExperiences` MCP server definition to register the `bookingDetails` UI resource and `BookingDetailsAction` tool with `uiResource` reference.         | Pending                |
+| 4    | Create isolated deployment manifest `manifest/coral-cloud-booking-mcp.xml` and run validation-only deployment against `aforce_de`.                                     | Pending                |
+| 5    | Deploy metadata to `aforce_de`, verify permission set assignment, and verify card rendering in Claude.                                                                 | Pending                |
 
 ### Deliverables
 

@@ -1,0 +1,14 @@
+{
+  "title": "Booking Details Output Values",
+  "description": "Payload fields from the BookingDetailsAction response.",
+  "type": "object",
+  "lightning:type": "lightning__objectType",
+  "unevaluatedProperties": false,
+  "lightning:tags": ["mcp"],
+  "properties": {
+    "bookingResult": {
+      "title": "Booking Result",
+      "lightning:type": "@apexClassType/c__BookingDetailsResult"
+    }
+  }
+}
