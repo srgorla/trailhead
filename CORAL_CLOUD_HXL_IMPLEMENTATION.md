@@ -437,8 +437,9 @@ booking enforcement still need validation before activation.
 ## Booking confirmation image — implementation plan
 
 Status: native SOQL rendering experiment completed; direct HXL rendering did not
-produce a card payload. The validated Apex action is approved for commit; deployment remains pending.
-The HXL widget and agent wiring have not started.
+produce a card payload. The read-only Apex action is committed as `85b7de4`; deployment remains pending.
+The booking HXL widget and renderer are implemented and validated for review.
+Agent wiring and visual verification have not started.
 The existing booking workflow was committed and pushed as `d2eb831`.
 
 Show the experience image in a booking details HXL card for **Coral Cloud
@@ -454,13 +455,13 @@ bookings. Use a readable fallback when the image is missing or cannot be display
 
 ### Steps and progress
 
-| Step | Deliverable and verification                                                                                                                                                                                                      | Status                              |
-| ---- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------- |
-| 1    | Document scope, implementation steps, and acceptance checks.                                                                                                                                                                      | Committed in `8e19682`              |
-| 2    | Verify live fields and permissions. Add a read-only booking-details Apex action and result type, using the existing Agentforce HXL output pattern. Test valid, missing, invalid, and inaccessible booking IDs and missing images. | Approved for commit; 4 tests passed |
-| 3    | Add a booking Lightning Type, HXL widget, and renderer. Reuse the existing experience image styling and trusted domain where applicable. Verify layout and image fallback.                                                        | Pending                             |
-| 4    | Add the readback action to `session_booking`, update permissions and deployment manifest, and instruct the agent to render the saved booking result after successful creation.                                                    | Pending                             |
-| 5    | Deploy and test the card with existing test booking `B-00001720`, including image rendering, accurate fields, fallback, and experience-search regression checks. Record results and remaining limitations.                        | Pending                             |
+| Step | Deliverable and verification                                                                                                                                                                                                      | Status                                                     |
+| ---- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| 1    | Document scope, implementation steps, and acceptance checks.                                                                                                                                                                      | Committed in `8e19682`                                     |
+| 2    | Verify live fields and permissions. Add a read-only booking-details Apex action and result type, using the existing Agentforce HXL output pattern. Test valid, missing, invalid, and inaccessible booking IDs and missing images. | Committed in `85b7de4`; 4 tests passed                     |
+| 3    | Add a booking Lightning Type, HXL widget, and renderer. Reuse the existing experience image styling and trusted domain where applicable. Verify layout and image fallback.                                                        | Metadata validated; ready for review; visual check pending |
+| 4    | Add the readback action to `session_booking`, update permissions and deployment manifest, and instruct the agent to render the saved booking result after successful creation.                                                    | Pending                                                    |
+| 5    | Deploy and test the card with existing test booking `B-00001720`, including image rendering, accurate fields, fallback, and experience-search regression checks. Record results and remaining limitations.                        | Pending                                                    |
 
 SObject All continues to create bookings. The planned Apex action accepts a
 booking ID, queries accessible booking/session/experience fields in user mode,
@@ -523,6 +524,26 @@ References: [HXL action output](https://developer.salesforce.com/docs/platform/h
 explains that HXL is not specific to Apex;
 [MCP response schema limitations](https://help.salesforce.com/s/articleView?id=ai.agent_mcp_tool_action_design.htm&language=en_US&type=5)
 describes constraints on nested/dynamic outputs and Lightning Type mapping.
+
+### Booking widget and renderer validation
+
+Added `uiWidgets/bookingCard` and `lightningTypes/bookingDetailsResult`.
+The Apex-backed type maps the existing result fields directly to widget attributes.
+The card shows the image with alternative text, experience name, booking reference,
+status, date, Central-time session hours, guest count, and total with currency code.
+It does not label canceled bookings as confirmed. Failed readbacks show the result
+message without empty booking details. Missing/non-HTTPS image results display
+`Image unavailable` and omit the image element.
+
+Salesforce validation-only deployment of the widget, type, and Apex dependencies
+succeeded, with all four Apex tests passing. Local checks verified field bindings,
+booked/canceled/missing-image/error visibility, and widget child-count limits.
+No metadata was deployed and no records were changed in this step.
+
+Visual layout, image sizing, currency presentation, and rendering in Agentforce
+remain to be verified after action wiring. The native image component has no
+configured network-error fallback: a URL that passes the HTTPS check but fails to
+load still needs a client test. No additional image domain was introduced.
 
 ### Review and commit checkpoints
 

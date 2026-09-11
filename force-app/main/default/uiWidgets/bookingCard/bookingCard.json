@@ -1,0 +1,110 @@
+{
+  "type": "lightning__agentforceWidget",
+  "contentBody": {
+    "widgetBody": {
+      "definition": "tile/widget",
+      "children": [
+        {
+          "definition": "tile/column",
+          "attributes": {
+            "gap": "sm"
+          },
+          "children": [
+            {
+              "definition": "tile/text",
+              "attributes": {
+                "text": "Coral Cloud Booking",
+                "variant": "h1"
+              }
+            },
+            {
+              "definition": "tile/text",
+              "attributes": {
+                "text": "{!$attrs.message}",
+                "variant": "body"
+              }
+            },
+            {
+              "definition": "tile/column",
+              "meta": {
+                "if": "{!$attrs.isSuccess}"
+              },
+              "attributes": {
+                "gap": "sm"
+              },
+              "children": [
+                {
+                  "definition": "tile/image",
+                  "meta": {
+                    "if": "{!$attrs.hasImage}"
+                  },
+                  "attributes": {
+                    "src": "{!$attrs.imageUrl}",
+                    "alt": "Coral Cloud experience image",
+                    "size": "full"
+                  }
+                },
+                {
+                  "definition": "tile/text",
+                  "attributes": {
+                    "text": "{!$attrs.imageMessage}",
+                    "variant": "body"
+                  }
+                },
+                {
+                  "definition": "tile/text",
+                  "attributes": {
+                    "text": "{!$attrs.experienceName}",
+                    "variant": "h2"
+                  }
+                },
+                {
+                  "definition": "tile/text",
+                  "attributes": {
+                    "text": "Booking: {!$attrs.bookingReference}",
+                    "variant": "body"
+                  }
+                },
+                {
+                  "definition": "tile/text",
+                  "attributes": {
+                    "text": "Status: {!$attrs.bookingStatus}",
+                    "variant": "body"
+                  }
+                },
+                {
+                  "definition": "tile/text",
+                  "attributes": {
+                    "text": "Date: {!$attrs.sessionDate}",
+                    "variant": "body"
+                  }
+                },
+                {
+                  "definition": "tile/text",
+                  "attributes": {
+                    "text": "Time: {!$attrs.startTime}\u2013{!$attrs.endTime} ({!$attrs.timeZone})",
+                    "variant": "body"
+                  }
+                },
+                {
+                  "definition": "tile/text",
+                  "attributes": {
+                    "text": "Guests: {!$attrs.guestCount}",
+                    "variant": "body"
+                  }
+                },
+                {
+                  "definition": "tile/text",
+                  "attributes": {
+                    "text": "Total: {!$attrs.currencyCode} {!$attrs.totalPrice}",
+                    "variant": "body"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

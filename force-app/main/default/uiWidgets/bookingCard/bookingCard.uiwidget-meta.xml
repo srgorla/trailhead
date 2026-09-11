@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<UiWidgetBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+  <masterLabel>Coral Cloud Booking</masterLabel>
+  <description
+  >Saved booking reference, status, session, guests, total and experience image.</description>
+  <widgetType>JSON</widgetType>
+</UiWidgetBundle>

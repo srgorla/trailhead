@@ -1,0 +1,72 @@
+{
+  "title": "Coral Cloud Booking",
+  "description": "Saved booking details with the related experience image.",
+  "type": "object",
+  "properties": {
+    "attributes": {
+      "lightning:type": "lightning__objectType",
+      "properties": {
+        "isSuccess": {
+          "title": "isSuccess",
+          "lightning:type": "lightning__booleanType"
+        },
+        "message": {
+          "title": "message",
+          "lightning:type": "lightning__textType"
+        },
+        "bookingReference": {
+          "title": "bookingReference",
+          "lightning:type": "lightning__textType"
+        },
+        "bookingStatus": {
+          "title": "bookingStatus",
+          "lightning:type": "lightning__textType"
+        },
+        "experienceName": {
+          "title": "experienceName",
+          "lightning:type": "lightning__textType"
+        },
+        "imageUrl": {
+          "title": "imageUrl",
+          "lightning:type": "lightning__textType"
+        },
+        "hasImage": {
+          "title": "hasImage",
+          "lightning:type": "lightning__booleanType"
+        },
+        "imageMessage": {
+          "title": "imageMessage",
+          "lightning:type": "lightning__textType"
+        },
+        "sessionDate": {
+          "title": "sessionDate",
+          "lightning:type": "lightning__textType"
+        },
+        "startTime": {
+          "title": "startTime",
+          "lightning:type": "lightning__textType"
+        },
+        "endTime": {
+          "title": "endTime",
+          "lightning:type": "lightning__textType"
+        },
+        "timeZone": {
+          "title": "timeZone",
+          "lightning:type": "lightning__textType"
+        },
+        "guestCount": {
+          "title": "guestCount",
+          "lightning:type": "lightning__numberType"
+        },
+        "totalPrice": {
+          "title": "totalPrice",
+          "lightning:type": "lightning__numberType"
+        },
+        "currencyCode": {
+          "title": "currencyCode",
+          "lightning:type": "lightning__textType"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "renderer": {
+    "componentOverrides": {
+      "$": {
+        "definition": "@widget/c/bookingCard",
+        "attributes": {
+          "isSuccess": "{!$attrs.isSuccess}",
+          "message": "{!$attrs.message}",
+          "bookingReference": "{!$attrs.bookingReference}",
+          "bookingStatus": "{!$attrs.bookingStatus}",
+          "experienceName": "{!$attrs.experienceName}",
+          "imageUrl": "{!$attrs.imageUrl}",
+          "hasImage": "{!$attrs.hasImage}",
+          "imageMessage": "{!$attrs.imageMessage}",
+          "sessionDate": "{!$attrs.sessionDate}",
+          "startTime": "{!$attrs.startTime}",
+          "endTime": "{!$attrs.endTime}",
+          "timeZone": "{!$attrs.timeZone}",
+          "guestCount": "{!$attrs.guestCount}",
+          "totalPrice": "{!$attrs.totalPrice}",
+          "currencyCode": "{!$attrs.currencyCode}"
+        }
+      }
+    }
+  }
+}
