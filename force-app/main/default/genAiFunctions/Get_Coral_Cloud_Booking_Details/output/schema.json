@@ -1,0 +1,14 @@
+{
+  "unevaluatedProperties": false,
+  "properties": {
+    "bookingResult": {
+      "title": "Booking Details",
+      "description": "Saved booking details, status and experience image rendered as a booking card.",
+      "lightning:type": "c__bookingDetailsResult",
+      "copilotAction:isDisplayable": true,
+      "copilotAction:isUsedByPlanner": true,
+      "copilotAction:useHydratedPrompt": false
+    }
+  },
+  "lightning:type": "lightning__objectType"
+}

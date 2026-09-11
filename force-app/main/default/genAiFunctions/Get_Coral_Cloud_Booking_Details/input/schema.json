@@ -1,0 +1,13 @@
+{
+  "required": ["bookingId"],
+  "unevaluatedProperties": false,
+  "properties": {
+    "bookingId": {
+      "title": "Booking ID",
+      "description": "ID returned by successful booking creation or resolved from an existing booking reference.",
+      "lightning:type": "lightning__textType",
+      "copilotAction:isUserInput": false
+    }
+  },
+  "lightning:type": "lightning__objectType"
+}

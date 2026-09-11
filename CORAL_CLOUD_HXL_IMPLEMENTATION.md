@@ -349,7 +349,10 @@ SObject All registration and tool allowlisting are prerequisites. This org has
 all 11 actions registered. Keep the referenced `genAiFunctions` metadata alongside
 the draft. Deploy the booking bundle with `manifest/coral-cloud-booking.xml` after
 the existing experience-search dependencies and registry actions are available.
-The manifest deploys the draft only; it does not publish or activate the agent.
+The manifest includes the draft, booking-details Apex classes and tests, action
+metadata, booking Lightning Type and widget, and read-only booking permission set.
+It does not publish or activate the agent. Existing experience-search and native
+MCP registry dependencies must already be present.
 
 ### Subagent
 
@@ -439,7 +442,8 @@ booking enforcement still need validation before activation.
 Status: native SOQL rendering experiment completed; direct HXL rendering did not
 produce a card payload. The read-only Apex action is committed as `85b7de4`; deployment remains pending.
 The booking HXL widget and renderer are implemented and validated for review.
-Agent wiring and visual verification have not started.
+Agent wiring is implemented, dry-run validated, and approved for commit. Deployment and
+live visual verification remain pending.
 The existing booking workflow was committed and pushed as `d2eb831`.
 
 Show the experience image in a booking details HXL card for **Coral Cloud
@@ -455,13 +459,13 @@ bookings. Use a readable fallback when the image is missing or cannot be display
 
 ### Steps and progress
 
-| Step | Deliverable and verification                                                                                                                                                                                                      | Status                                                     |
-| ---- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
-| 1    | Document scope, implementation steps, and acceptance checks.                                                                                                                                                                      | Committed in `8e19682`                                     |
-| 2    | Verify live fields and permissions. Add a read-only booking-details Apex action and result type, using the existing Agentforce HXL output pattern. Test valid, missing, invalid, and inaccessible booking IDs and missing images. | Committed in `85b7de4`; 4 tests passed                     |
-| 3    | Add a booking Lightning Type, HXL widget, and renderer. Reuse the existing experience image styling and trusted domain where applicable. Verify layout and image fallback.                                                        | Metadata validated; ready for review; visual check pending |
-| 4    | Add the readback action to `session_booking`, update permissions and deployment manifest, and instruct the agent to render the saved booking result after successful creation.                                                    | Pending                                                    |
-| 5    | Deploy and test the card with existing test booking `B-00001720`, including image rendering, accurate fields, fallback, and experience-search regression checks. Record results and remaining limitations.                        | Pending                                                    |
+| Step | Deliverable and verification                                                                                                                                                                                                      | Status                                           |
+| ---- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
+| 1    | Document scope, implementation steps, and acceptance checks.                                                                                                                                                                      | Committed in `8e19682`                           |
+| 2    | Verify live fields and permissions. Add a read-only booking-details Apex action and result type, using the existing Agentforce HXL output pattern. Test valid, missing, invalid, and inaccessible booking IDs and missing images. | Committed in `85b7de4`; 4 tests passed           |
+| 3    | Add a booking Lightning Type, HXL widget, and renderer. Reuse the existing experience image styling and trusted domain where applicable. Verify layout and image fallback.                                                        | Committed in `383b2cf`; visual check pending     |
+| 4    | Add the readback action to `session_booking`, update permissions and deployment manifest, and instruct the agent to render the saved booking result after successful creation.                                                    | Approved for commit; manifest and 5 tests passed |
+| 5    | Deploy and test the card with existing test booking `B-00001720`, including image rendering, accurate fields, fallback, and experience-search regression checks. Record results and remaining limitations.                        | Pending                                          |
 
 SObject All continues to create bookings. The planned Apex action accepts a
 booking ID, queries accessible booking/session/experience fields in user mode,
@@ -544,6 +548,32 @@ Visual layout, image sizing, currency presentation, and rendering in Agentforce
 remain to be verified after action wiring. The native image component has no
 configured network-error fallback: a URL that passes the HTTPS check but fails to
 load still needs a client test. No additional image domain was introduced.
+
+### Booking action wiring and permissions
+
+Added the reusable **Get Coral Cloud Booking Details** action with required
+`bookingId` input and renderable `bookingResult` output using
+`c__bookingDetailsResult`. The booking subagent calls it for existing bookings
+and after successful creation. Router instructions now include saved booking
+references and image requests. Readback or rendering failures must not trigger
+another booking creation.
+
+`CoralCloudBookingDetails` grants Apex access plus read access to the booking,
+its parent records, and the fields needed for the card. It grants no booking
+create, edit, delete, or view-all access. No permission set was assigned during
+this implementation. Employees still need the existing experience-search and
+booking-creation permissions, record sharing, and agent access as applicable.
+
+The expanded `manifest/coral-cloud-booking.xml` passed Salesforce validation-only
+deployment with all five `BookingDetailsActionTest` tests passing. The added test
+reads an accessible booking as a minimum-access user assigned only the new
+permission set, verifies image and total, and checks that create/edit/delete
+permissions remain absent. Tests use isolated records and do not alter live data.
+
+The action schemas and AgentScript bindings match the Apex request and response.
+This step is approved for commit; deployment remains pending. Live AgentScript compilation,
+conversation routing, automatic card presentation, and browser visual checks must
+be verified after deployment in the next step.
 
 ### Review and commit checkpoints
 

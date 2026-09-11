@@ -4,5 +4,18 @@
     <members>Coral_Cloud_Booking</members>
     <name>AiAuthoringBundle</name>
   </types>
+  <types>
+    <members>BookingDetailsAction</members>
+    <members>BookingDetailsActionTest</members>
+    <members>BookingDetailsResult</members>
+    <name>ApexClass</name>
+  </types>
+  <types><members>bookingDetailsResult</members><name
+    >LightningTypeBundle</name></types>
+  <types><members>bookingCard</members><name>UiWidgetBundle</name></types>
+  <types><members>Get_Coral_Cloud_Booking_Details</members><name
+    >GenAiFunction</name></types>
+  <types><members>CoralCloudBookingDetails</members><name
+    >PermissionSet</name></types>
   <version>67.0</version>
 </Package>

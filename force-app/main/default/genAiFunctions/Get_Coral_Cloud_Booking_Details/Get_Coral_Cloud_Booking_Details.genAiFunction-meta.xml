@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<GenAiFunction xmlns="http://soap.sforce.com/2006/04/metadata">
+  <description
+  >Read saved booking details and the experience image. Does not create or modify records.</description>
+  <developerName>Get_Coral_Cloud_Booking_Details</developerName>
+  <invocationTarget>BookingDetailsAction</invocationTarget>
+  <invocationTargetType>apex</invocationTargetType>
+  <isConfirmationRequired>false</isConfirmationRequired>
+  <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+  <localDeveloperName>Get_Coral_Cloud_Booking_Details</localDeveloperName>
+  <masterLabel>Get Coral Cloud Booking Details</masterLabel>
+  <progressIndicatorMessage
+  >Reading booking details...</progressIndicatorMessage>
+</GenAiFunction>

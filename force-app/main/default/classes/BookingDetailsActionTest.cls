@@ -150,4 +150,88 @@ private class BookingDetailsActionTest {
       System.assertEquals(null, result.imageUrl);
     }
   }
+  @IsTest
+  static void readsWithBookingDetailsPermissionSet() {
+    Profile profile = [
+      SELECT Id
+      FROM Profile
+      WHERE Name LIKE 'Minimum Access%' AND UserType = 'Standard'
+      LIMIT 1
+    ];
+    User reader = new User(
+      ProfileId = profile.Id,
+      Username = 'booking-reader-' +
+        UserInfo.getOrganizationId() +
+        '@example.invalid',
+      Email = 'booking-reader@example.invalid',
+      LastName = 'Booking Card Reader',
+      Alias = 'bkreader',
+      TimeZoneSidKey = 'America/Chicago',
+      LocaleSidKey = 'en_US',
+      EmailEncodingKey = 'UTF-8',
+      LanguageLocaleKey = 'en_US'
+    );
+    insert reader;
+    PermissionSet permission = [
+      SELECT Id
+      FROM PermissionSet
+      WHERE Name = 'CoralCloudBookingDetails'
+      LIMIT 1
+    ];
+    insert new PermissionSetAssignment(
+      AssigneeId = reader.Id,
+      PermissionSetId = permission.Id
+    );
+    Id bookingId;
+    System.runAs(new User(Id = UserInfo.getUserId())) {
+      Booking__c booking = [
+        SELECT Id, Contact__c, Session__c, Session__r.Experience__c
+        FROM Booking__c
+        LIMIT 1
+      ];
+      bookingId = booking.Id;
+      List<SObject> ownedRecords = new List<SObject>{
+        new Experience__c(Id = booking.Session__r.Experience__c),
+        new Contact(Id = booking.Contact__c),
+        new Session__c(Id = booking.Session__c),
+        new Booking__c(Id = booking.Id)
+      };
+      // Transfer ownership where supported; detail records inherit parent sharing.
+      for (SObject record : ownedRecords) {
+        if (
+          record.getSObjectType()
+            .getDescribe()
+            .fields.getMap()
+            .containsKey('OwnerId')
+        ) {
+          record.put('OwnerId', reader.Id);
+          update record;
+        }
+      }
+    }
+    System.runAs(reader) {
+      Test.startTest();
+      BookingDetailsResult result = BookingDetailsAction.getBookingDetails(
+          new List<BookingDetailsAction.Request>{ request(bookingId) }
+        )[0]
+        .bookingResult;
+      Test.stopTest();
+      System.assertEquals('OK', result.status, result.message);
+      System.assertEquals(100, result.totalPrice);
+      System.assertEquals('Booking Card Test', result.experienceName);
+      System.assertEquals(true, result.hasImage);
+      System.assertEquals(
+        false,
+        Booking__c.SObjectType.getDescribe().isCreateable()
+      );
+      System.assertEquals(
+        false,
+        Booking__c.SObjectType.getDescribe().isUpdateable()
+      );
+      System.assertEquals(
+        false,
+        Booking__c.SObjectType.getDescribe().isDeletable()
+      );
+    }
+  }
 }
