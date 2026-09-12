@@ -94,7 +94,8 @@ Relationships:
 
 - All search fields are optional; an empty request browses the catalog.
 - `searchPhrase`: literal, case-insensitive name substring, at most 100 characters.
-- `category`: exact category value, case-insensitive, at most 100 characters.
+- `category`: primary experience type filter on `Experience__c.Type__c`, exact
+  value, case-insensitive, at most 100 characters. Display label: Experience type.
 - `guestCount`: defaults to 1; accepts integers from 1 to 100.
 - Dates: defaults to today through 30 days later in Central Time. Start date is
   within the next 365 days; each inclusive date window spans at most 31 days.
@@ -280,8 +281,10 @@ Configured topic/subagent instructions:
 
 - Handle requests to discover Coral Cloud resort experiences, prices, ratings,
   and scheduled session availability using **Find Coral Cloud Experiences**.
-- Extract the name phrase, category, dates, and guest count supplied by the user.
-  Use a concise experience-name phrase rather than copying the whole question.
+- Prefer the requested experience type through `category`. For adventure use
+  `Adventure Activities`; for golf use `Golf`. Leave `searchPhrase` unset for
+  type-only browsing. Use a concise name phrase only when a name or specific
+  activity is requested; combine both filters when both are supplied.
   Leave unspecified inputs unset so the action applies its documented defaults.
 - Dates and times use America/Chicago. For an explicit date or party-size request,
   pass those values; ask for clarification if the user's request is ambiguous.
@@ -341,7 +344,8 @@ can reset the MCP reference. See [MCP action Builder considerations](https://hel
 ### Source and deployment
 
 Keep `Coral_Cloud_Booking` as the booking source draft, without a published-version
-`target`. The original `Coral_Cloud` source remains the experience-search agent.
+`target`. The unused original `Coral_Cloud` authoring source bundle has been
+removed locally at the user’s request; this does not delete an org agent.
 Intermediate published v2/v3 snapshots and the duplicate v1 authoring bundle are
 omitted from this change; those versions remain in the org.
 
@@ -706,6 +710,75 @@ connection before testing. If a tool remains unavailable, compare the tool list
 from the same endpoint and Salesforce user in Postman before changing the card.
 The Claude booking-card rendering check is now passed; this does not establish
 completion of separate activation, concurrency, or retry tests.
+
+## Type-first experience discovery
+
+Status: deployed to `aforce_de` (deployment `0AfgL00000XL8kMSAT`). All 13
+search and wrapper Apex tests passed. Live action calls returned four adventure
+experiences, three golf experiences, and Beach Yoga Retreat by name; incompatible
+type/name filters returned no matches. Agentforce live traces confirmed adventure
+and golf requests used `category` without a name filter. Draft agent metadata was
+deployed; publication and client rendering are separate checks.
+
+Use the existing `category` request property as the primary **Experience type**
+input for `Experience__c.Type__c`, preserving compatibility with existing MCP and
+Agentforce callers. `searchPhrase` remains an optional name substring. Type-only
+queries now filter directly by `Type__c` without a name predicate. Both inputs
+remain optional; supplying both applies an AND filter.
+
+Examples for Claude and Agentforce:
+
+| User request                              | category             | searchPhrase             |
+| ----------------------------------------- | -------------------- | ------------------------ |
+| What adventure experiences are available? | Adventure Activities | unset                    |
+| Show golf experiences for two guests      | Golf                 | unset                    |
+| Find Beach Yoga Retreat                   | unset                | Beach Yoga Retreat       |
+| Find a named experience within a type     | Exact selected type  | Requested name substring |
+
+Input descriptions list the 14 active org types, verified September 11, 2026.
+The live catalog contains four Adventure Activities and three Golf experiences.
+Map clear shorthand to exact type values; clarify ambiguous requests instead of
+inventing a type. Type names should not also be sent as name filters. The image,
+price, reviews, sessions, and booking card output contracts remain unchanged.
+
+Updated the Apex input labels/descriptions, native Agentforce action schema,
+experience-search instructions in `Coral_Cloud_Booking_HXL_Cards`, and custom MCP search-tool
+description. Added an Apex regression test covering adventure/golf records whose
+names omit the type, whitespace/case handling, optional name search, combined
+filters, and an unknown type. Existing literal-name and query-limit tests remain.
+
+Reconnect Claude and test adventure, golf, and explicit-name prompts, checking
+actual tool inputs and card results. Changes remain subject to review before commit.
+
+## Automatic MCP booking confirmation
+
+Status: deployed to `aforce_de`, deployment `0AfgL00000XMgX6SAL`, with one MCP
+server definition deployed and zero component errors. No Apex or booking data
+was changed for this step.
+
+After a successful `Booking__c` creation, MCP tool instructions require the client
+to call `BookingDetailsActionapex_BookingDetailsAction` with the returned record
+ID in `inputs[0].bookingId` and display its configured `bookingDetails` HXL card.
+The user does not need to ask separately for a confirmation or photo. The rule is
+in both the create and booking-details tool descriptions and applies to every
+client using this custom MCP server. `Source__c` must reflect a supported value
+for the actual client rather than always using Claude.
+
+Use only the returned `bookingResult.imageUrl`. For clients without HXL support,
+show saved booking details and the exact image link. If the details lookup fails,
+report the successful creation separately and retry only the read; never create
+a duplicate booking to recover a missing card. Failed or uncertain creation must
+not be represented as a confirmed booking.
+
+These are client orchestration instructions, not a server-side chained operation:
+clients must honor tool descriptions and support HXL to render the card. Refresh
+cached tool discovery (disconnect/reconnect in Claude) after deployment.
+
+Verification: review the deployed tool descriptions, then make an authorized
+booking without asking for a card. Confirm one successful create, a details call
+using that returned ID, and a card with the exact returned image. No new booking
+is created merely to test these instruction changes. End-to-end client behavior
+remains pending user verification.
 
 ## Commit policy
 

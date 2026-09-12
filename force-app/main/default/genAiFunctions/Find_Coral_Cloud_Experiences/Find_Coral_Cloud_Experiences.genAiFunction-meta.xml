@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <GenAiFunction xmlns="http://soap.sforce.com/2006/04/metadata">
   <description
-  >Find Coral Cloud experiences with prices, ratings and session availability. Does not create bookings or reserve seats.</description>
+  >Browse Coral Cloud experiences by type with optional name, prices, ratings and session availability. Does not create bookings or reserve seats.</description>
   <developerName>Find_Coral_Cloud_Experiences</developerName>
   <invocationTarget>ExperienceAgentAction</invocationTarget>
   <invocationTargetType>apex</invocationTargetType>

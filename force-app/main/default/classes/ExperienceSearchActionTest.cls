@@ -317,4 +317,48 @@ private class ExperienceSearchActionTest {
       System.assertEquals(0, result.experiences.size());
     }
   }
+  @IsTest
+  static void browsesByTypeWithoutNameAndSupportsOptionalNames() {
+    insert new List<Experience__c>{
+      new Experience__c(
+        Name = 'Canopy Zipline',
+        Type__c = 'Adventure Activities',
+        Price__c = 75
+      ),
+      new Experience__c(
+        Name = 'Cliffside Climbing',
+        Type__c = 'Adventure Activities',
+        Price__c = 90
+      ),
+      new Experience__c(
+        Name = 'Sunset Putting',
+        Type__c = 'Golf',
+        Price__c = 30
+      )
+    };
+    ExperienceSearchAction.Request adventure = request(null, 2);
+    adventure.category = 'Adventure Activities';
+    ExperienceSearchResult result = search(adventure);
+    System.assertEquals('OK', result.status);
+    System.assertEquals(2, result.experiences.size());
+    System.assertEquals('Canopy Zipline', result.experiences[0].name);
+    System.assertEquals(150, result.experiences[0].estimatedTotal);
+    for (ExperienceSearchResult.Experience item : result.experiences)
+      System.assertEquals('Adventure Activities', item.category);
+    ExperienceSearchAction.Request golf = request('', 1);
+    golf.category = ' golf ';
+    result = search(golf);
+    System.assertEquals(1, result.experiences.size());
+    System.assertEquals('Sunset Putting', result.experiences[0].name);
+    adventure.searchPhrase = 'Cliffside';
+    System.assertEquals(1, search(adventure).experiences.size());
+    adventure.searchPhrase = 'Sunset';
+    System.assertEquals('NO_MATCHES', search(adventure).status);
+    System.assertEquals(
+      'Sunset Putting',
+      search(request('Sunset Putting', 1)).experiences[0].name
+    );
+    golf.category = 'No Such Type';
+    System.assertEquals('NO_MATCHES', search(golf).status);
+  }
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <McpServerDefinition xmlns="http://soap.sforce.com/2006/04/metadata">
     <description
-  >Read-only Coral Cloud experience searches and booking details with HXL cards.</description>
+  >Search Coral Cloud experiences, create bookings, and automatically display saved booking confirmations with HXL cards.</description>
     <masterLabel>Coral Cloud Experiences</masterLabel>
     <resources>
         <description
@@ -26,7 +26,7 @@
             <operation>ExperienceSearchAction</operation>
         </apiDefinition>
         <descriptionOverride
-    >Search Coral Cloud experiences by name, category and dates for a party size. Times use America/Chicago. Does not create bookings or reserve seats.</descriptionOverride>
+    >Browse Coral Cloud experiences primarily by Type__c using the category input. For adventure use category=Adventure Activities; for golf use category=Golf. Leave searchPhrase unset for type-only browsing. Use searchPhrase only for a requested experience name or specific activity; both filters can be combined. Read the input schema for supported types. Dates and party size are optional. Times use America/Chicago. Does not create bookings or reserve seats.</descriptionOverride>
         <destructive>false</destructive>
         <idempotent>true</idempotent>
         <openWorld>false</openWorld>
@@ -43,7 +43,7 @@
             <operation>BookingDetailsAction</operation>
         </apiDefinition>
         <descriptionOverride
-    >Read an existing booking and its experience confirmation image by booking ID. Times use America/Chicago. Does not create or modify records.</descriptionOverride>
+    >Read an existing booking and its experience confirmation image by Salesforce booking record ID. Required follow-up after every successful Booking__c creation: call this tool automatically with inputs=[{bookingId: the returned record ID}], without waiting for a separate request to show confirmation. Display the configured bookingDetails HXL UI resource using the returned bookingResult. Use only its returned imageUrl; never search for or substitute images. If the client cannot render HXL, show the returned booking details and exact image link. If retrieval fails, report that the booking was created but confirmation details could not be loaded; retry only this read, never create another booking. Times use America/Chicago. Does not create or modify records.</descriptionOverride>
         <destructive>false</destructive>
         <idempotent>true</idempotent>
         <openWorld>false</openWorld>
@@ -71,12 +71,13 @@
     </tools>
     <tools>
         <apiDefinition>
-            <apiIdentifier>psmcps:platform.sobject-all:createSobjectRecord</apiIdentifier>
+            <apiIdentifier
+      >psmcps:platform.sobject-all:createSobjectRecord</apiIdentifier>
             <apiSource>API_CATALOG</apiSource>
             <operation>createSobjectRecord</operation>
         </apiDefinition>
         <descriptionOverride
-    >Creates a new Salesforce record. Use this to create a Booking__c record with Contact__c, Session__c, Number_of_Guests__c, Source__c=&apos;Claude&apos; and Is_Canceled__c=false.</descriptionOverride>
+    >Creates a new Salesforce record. For an authorized booking, create Booking__c with Contact__c, Session__c, Number_of_Guests__c and Is_Canceled__c=false. Use a valid Source__c value for the actual client, verified with the object schema; do not assume every client is Claude. After successful Booking__c creation, automatically call BookingDetailsActionapex_BookingDetailsAction with inputs=[{bookingId: the returned Salesforce record ID}] and display its configured bookingDetails HXL card, including the returned experience image, without asking the user whether to show it. Use only the returned imageUrl; do not search for substitute images. If HXL is unsupported, show the returned details and exact image link. If the follow-up read or rendering fails, do not create the booking again. If creation fails or returns no confirmed record ID, do not claim success or fabricate a confirmation.</descriptionOverride>
         <destructive>false</destructive>
         <idempotent>false</idempotent>
         <openWorld>true</openWorld>
@@ -87,7 +88,8 @@
     </tools>
     <tools>
         <apiDefinition>
-            <apiIdentifier>psmcps:platform.sobject-all:getObjectSchema</apiIdentifier>
+            <apiIdentifier
+      >psmcps:platform.sobject-all:getObjectSchema</apiIdentifier>
             <apiSource>API_CATALOG</apiSource>
             <operation>getObjectSchema</operation>
         </apiDefinition>
@@ -102,5 +104,3 @@
         <toolTitle>Describe Salesforce Objects</toolTitle>
     </tools>
 </McpServerDefinition>
-
-

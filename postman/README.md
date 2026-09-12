@@ -39,13 +39,21 @@ export them into these repository files.
 
 Select **Search Coral Cloud Experiences** from the discovered tools. Its API name
 is `ExperienceSearchActionapex_ExperienceSearchAction`. Use the discovered input
-schema to enter `searchPhrase` = `Yoga` and `guestCount` = `2`; leave other optional
-inputs unset. If Postman displays an input array wrapper, enter one request in it.
+schema to enter `category` = `Adventure Activities` and `guestCount` = `2`;
+leave `searchPhrase` unset. The input is labeled **Experience type** and filters
+`Experience__c.Type__c`. If Postman displays an input array wrapper, enter one
+request in it.
 
-Expect Beach Yoga Retreat and Sunrise Mountain Yoga, image URLs, USD prices and
-two-guest totals, review status, and session availability. Current sample sessions
-are in the past, so the default date range can return no scheduled sessions.
-Repeat with `searchPhrase` = `ZZZNoSuchExperienceXYZ` to verify `NO_MATCHES`.
+Expect only Adventure Activities experiences, including names that do not contain
+"adventure". Repeat with `category` = `Golf`. The September 11, 2026 catalog check
+found four adventure and three golf experiences; live counts can change.
+
+For an optional name search, use `searchPhrase` = `Beach Yoga Retreat` with
+`category` unset. If both inputs are supplied, both must match. Repeat with
+`searchPhrase` = `ZZZNoSuchExperienceXYZ` to verify `NO_MATCHES`. Session results
+depend on dates and availability.
+
+After deployment, reconnect Claude to refresh the updated search-tool descriptions.
 
 Inspect the tool's UI resource association and returned structured data.
 The resource is `ui://widget/lightningType/c__experienceSearchMcpResult`.

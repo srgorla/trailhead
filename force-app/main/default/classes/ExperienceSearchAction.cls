@@ -9,15 +9,15 @@ global with sharing class ExperienceSearchAction {
 
   global class Request {
     @InvocableVariable(
-      label='Search phrase'
-      description='Optional literal phrase in the experience name. Omit to browse.'
-    )
-    global String searchPhrase;
-    @InvocableVariable(
-      label='Category'
-      description='Optional exact Experience Type picklist value.'
+      label='Experience type'
+      description='Primary optional filter on Experience__c.Type__c. Use an exact type: Adventure Activities; Beaches & Snorkeling; Cultural Tours & Workshops; Dining Experiences; Family & Kids\' Activities; Fitness & Exercise; Golf; Nature & Eco Tours; Nightlife & Entertainment; Relaxation & Quiet Zones; Spa & Wellness; Swimming Pools; Tennis & Pickleball; Water Sports. Map adventure to Adventure Activities and golf to Golf. Leave searchPhrase unset for type browsing.'
     )
     global String category;
+    @InvocableVariable(
+      label='Experience name (optional)'
+      description='Optional literal experience-name substring, only when a name or specific activity is requested. Do not put a type such as adventure or golf here when browsing by type. Omit for type browsing.'
+    )
+    global String searchPhrase;
     @InvocableVariable(
       label='Start date'
       description='First session date in Central Time. Defaults to today.'
@@ -47,7 +47,7 @@ global with sharing class ExperienceSearchAction {
 
   @InvocableMethod(
     label='Search Coral Cloud Experiences'
-    description='Search experiences with prices, ratings and sessions in Central Time. Read-only; does not reserve seats. Returns up to 5 experiences and 3 sessions each.'
+    description='Browse experiences by Type__c using category, with optional name searchPhrase, prices, ratings and sessions in Central Time. Read-only; does not reserve seats. Returns up to 5 experiences and 3 sessions each.'
     category='Coral Cloud'
   )
   global static List<ExperienceSearchResult> searchExperiences(
@@ -97,19 +97,25 @@ global with sharing class ExperienceSearchAction {
         firstDate = input.startDate;
       if (lastDate == null || input.endDate > lastDate)
         lastDate = input.endDate;
-      binds.put(
-        'phrase' + i,
-        '%' +
-          input.phrase.replace('\\', '\\\\')
-            .replace('%', '\\%')
-            .replace('_', '\\_') +
-          '%'
-      );
-      String clause = 'Name LIKE :phrase' + i;
+      List<String> filters = new List<String>();
       if (input.category != '') {
         binds.put('category' + i, input.category);
-        clause += ' AND Type__c = :category' + i;
+        filters.add('Type__c = :category' + i);
       }
+      if (input.phrase != '') {
+        binds.put(
+          'phrase' + i,
+          '%' +
+            input.phrase.replace('\\', '\\\\')
+              .replace('%', '\\%')
+              .replace('_', '\\_') +
+            '%'
+        );
+        filters.add('Name LIKE :phrase' + i);
+      }
+      String clause = filters.isEmpty()
+        ? 'Id != null'
+        : String.join(filters, ' AND ');
       clauses.add('(' + clause + ')');
     }
     if (clauses.isEmpty())
@@ -209,7 +215,7 @@ global with sharing class ExperienceSearchAction {
           ? 'NO_MATCHES'
           : 'OK';
         results[i].message = results[i].experiences.isEmpty()
-          ? 'No matching experiences found. Try another name or category.'
+          ? 'No matching experiences found. Try another experience type or name.'
           : 'Sessions use America/Chicago (Central Time). Availability is a snapshot; no seats are reserved.';
         if (results[i].hasMoreExperiences)
           results[i]
@@ -220,7 +226,7 @@ global with sharing class ExperienceSearchAction {
         results,
         inputs,
         'SEARCH_TOO_BROAD',
-        'Too many records to search safely. Narrow the name, category or date range.'
+        'Too many records to search safely. Narrow the experience type, name or date range.'
       );
     } catch (QueryException e) {
       failValid(

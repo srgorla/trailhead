@@ -28,8 +28,10 @@ subagent experience_search:
    description: "Find Coral Cloud experiences and present HXL cards with prices, ratings and available sessions."
    reasoning:
       instructions: |
-         Call find_experiences for every new experience search or change to search criteria. Use the user's supplied phrase, category, dates and guest count.
-         searchPhrase is a short literal substring of the experience name, such as Yoga. Do not pass the entire question. Leave it unset for broad browsing.
+         Call find_experiences for every new experience search or change to search criteria. Use the user's supplied experience type, optional name, dates and guest count.
+         Use category as the primary type filter on Experience__c.Type__c. For adventure use Adventure Activities; for golf use Golf. For type-only requests leave searchPhrase unset, even if the user says adventure experiences or golf experiences.
+         Supported types: Adventure Activities; Beaches & Snorkeling; Cultural Tours & Workshops; Dining Experiences; Family & Kids' Activities; Fitness & Exercise; Golf; Nature & Eco Tours; Nightlife & Entertainment; Relaxation & Quiet Zones; Spa & Wellness; Swimming Pools; Tennis & Pickleball; Water Sports. Map clear shorthand to the exact value; clarify ambiguous type requests rather than inventing a type.
+         Use searchPhrase only for an optional experience name or specific activity, such as Beach Yoga Retreat or Yoga. Do not pass the entire question. If both type and name are supplied, apply both filters. Leave both unset for all experiences.
          Leave unspecified inputs unset. The action defaults guestCount to 1 and dates to today through 30 days later. Never invent a date, category or guest count.
          If a requested date or party size is ambiguous, clarify it. Dates and times are in America/Chicago, including daylight saving time.
          Use the structured searchResult output and its configured renderer to show the experience cards. Call show_command to display the find_experiences searchResult output.
@@ -40,23 +42,23 @@ subagent experience_search:
          book_selected_experience: @utils.transition to @subagent.session_booking
             description: "Find or book a session for the selected experience."
          find_experiences: @actions.find_experiences
-            with searchPhrase = ...
             with category = ...
+            with searchPhrase = ...
             with startDate = ...
             with endDate = ...
             with guestCount = ...
    actions:
       find_experiences:
-         description: "Search resort experiences by name, category, dates and party size. Returns HXL-ready results without reserving seats."
+         description: "Browse resort experiences by Type__c, optional name, dates and party size. Returns HXL-ready results without reserving seats."
          inputs:
-            searchPhrase: string
-               description: "Optional literal name substring, at most 100 characters. Omit for browsing."
-               label: "Search phrase"
+            category: string
+               description: "Primary optional filter on Experience__c.Type__c. Use an exact type: Adventure Activities; Beaches & Snorkeling; Cultural Tours & Workshops; Dining Experiences; Family & Kids' Activities; Fitness & Exercise; Golf; Nature & Eco Tours; Nightlife & Entertainment; Relaxation & Quiet Zones; Spa & Wellness; Swimming Pools; Tennis & Pickleball; Water Sports. Map adventure to Adventure Activities and golf to Golf. Leave searchPhrase unset for type browsing."
+               label: "Experience type"
                is_required: False
                is_user_input: False
-            category: string
-               description: "Optional exact experience category. Omit if not specified."
-               label: "Category"
+            searchPhrase: string
+               description: "Optional literal experience-name substring, only when a name or specific activity is requested. Do not put a type such as adventure or golf here when browsing by type. Omit for type browsing."
+               label: "Experience name (optional)"
                is_required: False
                is_user_input: False
             startDate: date

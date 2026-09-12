@@ -2,16 +2,16 @@
   "required": [],
   "unevaluatedProperties": false,
   "properties": {
-    "searchPhrase": {
-      "title": "Search phrase",
-      "description": "Optional literal experience name substring. Omit to browse.",
+    "category": {
+      "title": "Experience type",
+      "description": "Primary optional filter on Experience__c.Type__c. Use an exact type: Adventure Activities; Beaches & Snorkeling; Cultural Tours & Workshops; Dining Experiences; Family & Kids' Activities; Fitness & Exercise; Golf; Nature & Eco Tours; Nightlife & Entertainment; Relaxation & Quiet Zones; Spa & Wellness; Swimming Pools; Tennis & Pickleball; Water Sports. Map adventure to Adventure Activities and golf to Golf. Leave searchPhrase unset for type browsing.",
       "lightning:type": "lightning__textType",
       "lightning:isPII": false,
       "copilotAction:isUserInput": false
     },
-    "category": {
-      "title": "Category",
-      "description": "Optional exact experience category.",
+    "searchPhrase": {
+      "title": "Experience name (optional)",
+      "description": "Optional literal experience-name substring, only when a name or specific activity is requested. Do not put a type such as adventure or golf here when browsing by type. Omit for type browsing.",
       "lightning:type": "lightning__textType",
       "lightning:isPII": false,
       "copilotAction:isUserInput": false

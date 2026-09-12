@@ -10,7 +10,7 @@ global with sharing class ExperienceAgentAction {
 
   @InvocableMethod(
     label='Find Coral Cloud Experiences'
-    description='Find Coral Cloud resort experiences, prices, ratings and session availability. Returns one structured HXL card result. Does not create bookings or reserve seats.'
+    description='Browse Coral Cloud experiences by type (category), with optional name (searchPhrase), prices, ratings and session availability. Returns one structured HXL card result. Does not create bookings or reserve seats.'
     category='Coral Cloud'
   )
   global static List<Response> findExperiences(
