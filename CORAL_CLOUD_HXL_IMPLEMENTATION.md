@@ -780,6 +780,38 @@ using that returned ID, and a card with the exact returned image. No new booking
 is created merely to test these instruction changes. End-to-end client behavior
 remains pending user verification.
 
+## Booking card contact name
+
+Status: deployed to `aforce_de` after approval was renewed. Deployment
+`0AfgL00000XMntVSAT` succeeded with six components and zero component errors.
+All five `BookingDetailsActionTest` tests passed, including the contact-name
+assertion for the minimum-access booking reader. Claude visual verification
+remains pending. No agent definitions were deployed.
+
+After the user reported a missing name in Claude, a metadata read-back confirmed
+the deployed widget contains the contact-name text and the MCP renderer maps
+`outputValues.bookingResult.contactName`. The supplied action response also
+contains the contact name. A stale UI resource is suspected; rendering with a
+refreshed connector and a new conversation still requires user verification.
+
+`BookingDetailsAction` reads `Booking__c.Contact__r.Name` under existing USER_MODE
+access checks and returns `bookingResult.contactName`. The shared booking widget
+shows **Booked for: contact name** directly below the experience photo. Both MCP
+and Agentforce renderer mappings pass that field to the widget. A missing Contact
+uses “Not provided.” Existing action tests now assert a distinct contact name,
+including the minimum-access booking reader case.
+
+Deploy only the three booking Apex classes (including the test), `bookingCard`,
+and the `bookingDetailsMcpResult` and `bookingDetailsResult` Lightning types. Run
+`BookingDetailsActionTest`, then read an existing booking in Claude and verify its
+photo and contact name. No new booking is necessary for verification.
+
+Do not include `AiAuthoringBundle`, `Bot`, `BotVersion`, or planner metadata in
+this card deployment. Before any future Agentforce authoring deployment, retrieve
+and verify the existing agent identity and version; resolve the reported duplicate
+agent creation before deploying an authoring bundle. This step changes shared
+rendering only and must not create another agent.
+
 ## Commit policy
 
 Create meaningful commits only after explicit user approval.

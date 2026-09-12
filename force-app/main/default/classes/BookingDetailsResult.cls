@@ -26,6 +26,10 @@ global class BookingDetailsResult {
   global String bookingStatus;
 
   @AuraEnabled
+  @InvocableVariable(label='contactName')
+  global String contactName;
+
+  @AuraEnabled
   @InvocableVariable(label='experienceName')
   global String experienceName;
 

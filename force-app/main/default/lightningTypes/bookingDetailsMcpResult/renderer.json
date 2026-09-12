@@ -18,7 +18,8 @@
           "timeZone": "{!$attrs.outputValues.bookingResult.timeZone}",
           "guestCount": "{!$attrs.outputValues.bookingResult.guestCount}",
           "totalPrice": "{!$attrs.outputValues.bookingResult.totalPrice}",
-          "currencyCode": "{!$attrs.outputValues.bookingResult.currencyCode}"
+          "currencyCode": "{!$attrs.outputValues.bookingResult.currencyCode}",
+          "contactName": "{!$attrs.outputValues.bookingResult.contactName}"
         }
       }
     }

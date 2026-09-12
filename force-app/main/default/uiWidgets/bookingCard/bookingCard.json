@@ -47,6 +47,13 @@
                 {
                   "definition": "tile/text",
                   "attributes": {
+                    "text": "Booked for: {!$attrs.contactName}",
+                    "variant": "body"
+                  }
+                },
+                {
+                  "definition": "tile/text",
+                  "attributes": {
                     "text": "{!$attrs.imageMessage}",
                     "variant": "body"
                   }

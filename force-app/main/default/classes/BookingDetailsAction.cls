@@ -49,7 +49,7 @@ global with sharing class BookingDetailsAction {
     if (!ids.isEmpty()) {
       try {
         String query =
-          'SELECT Id, Name, Number_of_Guests__c, Total_Price__c, Is_Canceled__c, Session__r.Date__c, Session__r.Start_Time__c, Session__r.End_Time__c, Session__r.Experience__r.Name, Session__r.Experience__r.Picture_URL__c' +
+          'SELECT Id, Name, Contact__r.Name, Number_of_Guests__c, Total_Price__c, Is_Canceled__c, Session__r.Date__c, Session__r.Start_Time__c, Session__r.End_Time__c, Session__r.Experience__r.Name, Session__r.Experience__r.Picture_URL__c' +
           (multiCurrency ? ', CurrencyIsoCode' : '') +
           ' FROM Booking__c WHERE Id IN :ids';
         records = new Map<Id, Booking__c>(
@@ -88,6 +88,9 @@ global with sharing class BookingDetailsAction {
         result.bookingId = record.Id;
         result.bookingReference = record.Name;
         result.bookingStatus = record.Is_Canceled__c ? 'Canceled' : 'Booked';
+        result.contactName = record.Contact__r == null
+          ? 'Not provided'
+          : record.Contact__r.Name;
         result.guestCount = record.Number_of_Guests__c;
         result.totalPrice = record.Total_Price__c;
         result.currencyCode = multiCurrency

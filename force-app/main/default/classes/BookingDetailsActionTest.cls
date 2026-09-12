@@ -10,7 +10,7 @@ private class BookingDetailsActionTest {
       Picture_URL__c = 'https://s3-us-west-2.amazonaws.com/example.jpg'
     );
     insert experience;
-    Contact guest = new Contact(LastName = 'Booking Card Test');
+    Contact guest = new Contact(FirstName = 'Taylor', LastName = 'Guest');
     insert guest;
     Session__c session = new Session__c(
       Experience__c = experience.Id,
@@ -54,6 +54,7 @@ private class BookingDetailsActionTest {
     System.assertEquals(2, result.guestCount);
     System.assertEquals('Booked', result.bookingStatus);
     System.assertEquals('Booking Card Test', result.experienceName);
+    System.assertEquals('Taylor Guest', result.contactName);
     System.assertEquals('2027-01-15', result.sessionDate);
     System.assertEquals('09:00', result.startTime);
     System.assertEquals('America/Chicago', result.timeZone);
@@ -219,6 +220,7 @@ private class BookingDetailsActionTest {
       System.assertEquals('OK', result.status, result.message);
       System.assertEquals(100, result.totalPrice);
       System.assertEquals('Booking Card Test', result.experienceName);
+      System.assertEquals('Taylor Guest', result.contactName);
       System.assertEquals(true, result.hasImage);
       System.assertEquals(
         false,

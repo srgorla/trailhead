@@ -65,6 +65,10 @@
         "currencyCode": {
           "title": "currencyCode",
           "lightning:type": "lightning__textType"
+        },
+        "contactName": {
+          "title": "contactName",
+          "lightning:type": "lightning__textType"
         }
       }
     }
