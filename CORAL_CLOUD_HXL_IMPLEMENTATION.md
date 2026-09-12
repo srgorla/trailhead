@@ -812,6 +812,23 @@ and verify the existing agent identity and version; resolve the reported duplica
 agent creation before deploying an authoring bundle. This step changes shared
 rendering only and must not create another agent.
 
+### Agentforce contact-name verification
+
+Retrieved the existing `Get_Coral_Cloud_Booking_Details` action and
+`bookingDetailsResult` Lightning type from `aforce_de`. The action already returns
+displayable `c__bookingDetailsResult`, whose deployed renderer maps `contactName`
+to the shared `bookingCard`. The previous targeted deployment therefore already
+supplies the contact-name field to Agentforce as well as MCP; no additional agent
+or action deployment is required for this field.
+
+The repeat card deployment `0AfgL00000XMqg5SAD` succeeded with six components and
+all five booking tests passing. No authoring bundle, bot, bot version, or planner
+metadata was included. This verification was read-only and did not create agents.
+The cause of earlier duplicate agents has not been established; do not redeploy an
+agent definition to refresh a card. Confirm rendering in the existing Agentforce
+agent using a new conversation and existing booking `B-00001738`; expected contact
+text is **Booked for: Osborn Libbe**. This visual check remains pending.
+
 ## Commit policy
 
 Create meaningful commits only after explicit user approval.
