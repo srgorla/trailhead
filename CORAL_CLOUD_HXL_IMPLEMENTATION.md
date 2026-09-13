@@ -955,6 +955,30 @@ is available. The local option is conversational, not a fabricated hyperlink.
 Instruction deployment succeeded in `0AfgL00000XRG2TSAX`. Refresh the Salesforce
 connector to test the new instructions. No agent definitions were deployed.
 
+### Clickable local Save As link
+
+Committed the working VF export and local Save As implementation first as
+`b970f28`, per user approval. Subsequent link work is uncommitted.
+
+The local server now exposes `prepare_booking_pdf_download`. It prepares the
+PDF in memory and returns a random-token `http://127.0.0.1:<port>/save/<token>`
+link. The browser displays **Choose location and save**, whose same-origin POST
+opens the native macOS Save As dialog. A GET or link preview never opens the
+dialog or writes a file. Tokens expire after ten minutes or successful save;
+cancellation permits retry. Existing files are not overwritten. At most five
+pending PDFs are kept in memory, capped at eight MiB each. The server binds only
+to loopback and validates Host and POST Origin. No file is publicly hosted or
+uploaded to Salesforce. Links work only on the Mac running Claude Desktop and
+stop working when the local server restarts.
+
+Six local tests passed for link behavior, expiry, cancellation, safe filenames,
+PDF rendering and photo allowlisting. The Salesforce MCP instructions request
+this tool when available and display its returned link below the card alongside
+the retained VF option. Instruction deployment: `0AfgL00000XRFBGSA5`, status
+`Succeeded`. No agent definitions were deployed. Restart Claude
+Desktop to discover the new local tool and refresh the Salesforce connector's
+instructions. User verification of the complete link-to-dialog flow is pending.
+
 ## Commit policy
 
 Create meaningful commits only after explicit user approval.
