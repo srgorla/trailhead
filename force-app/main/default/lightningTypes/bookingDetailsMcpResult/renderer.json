@@ -19,7 +19,8 @@
           "guestCount": "{!$attrs.outputValues.bookingResult.guestCount}",
           "totalPrice": "{!$attrs.outputValues.bookingResult.totalPrice}",
           "currencyCode": "{!$attrs.outputValues.bookingResult.currencyCode}",
-          "contactName": "{!$attrs.outputValues.bookingResult.contactName}"
+          "contactName": "{!$attrs.outputValues.bookingResult.contactName}",
+          "downloadUrl": "{!$attrs.outputValues.bookingResult.downloadUrl}"
         }
       }
     }

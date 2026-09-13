@@ -26,6 +26,10 @@ global class BookingDetailsResult {
   global String bookingStatus;
 
   @AuraEnabled
+  @InvocableVariable(label='downloadUrl')
+  global String downloadUrl;
+
+  @AuraEnabled
   @InvocableVariable(label='contactName')
   global String contactName;
 

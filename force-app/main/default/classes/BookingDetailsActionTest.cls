@@ -50,6 +50,12 @@ private class BookingDetailsActionTest {
     BookingDetailsResult result = responses[0].bookingResult;
     System.assertEquals('OK', result.status);
     System.assertEquals(booking.Name, result.bookingReference);
+    System.assertEquals(
+      URL.getOrgDomainUrl().toExternalForm() +
+        '/apex/BookingCardDownload?id=' +
+        booking.Id,
+      result.downloadUrl
+    );
     System.assertEquals(100, result.totalPrice);
     System.assertEquals(2, result.guestCount);
     System.assertEquals('Booked', result.bookingStatus);

@@ -69,6 +69,10 @@
         "contactName": {
           "title": "contactName",
           "lightning:type": "lightning__textType"
+        },
+        "downloadUrl": {
+          "title": "downloadUrl",
+          "lightning:type": "lightning__urlType"
         }
       }
     }

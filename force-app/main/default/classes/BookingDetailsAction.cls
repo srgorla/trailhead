@@ -87,6 +87,10 @@ global with sharing class BookingDetailsAction {
         result.message = 'Saved booking details.';
         result.bookingId = record.Id;
         result.bookingReference = record.Name;
+        result.downloadUrl =
+          URL.getOrgDomainUrl().toExternalForm() +
+          '/apex/BookingCardDownload?id=' +
+          record.Id;
         result.bookingStatus = record.Is_Canceled__c ? 'Canceled' : 'Booked';
         result.contactName = record.Contact__r == null
           ? 'Not provided'

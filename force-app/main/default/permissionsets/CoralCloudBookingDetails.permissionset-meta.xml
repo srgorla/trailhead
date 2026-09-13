@@ -4,6 +4,10 @@
     >true</enabled></classAccesses>
 <classAccesses><apexClass>BookingDetailsResult</apexClass><enabled
     >true</enabled></classAccesses>
+<classAccesses><apexClass>BookingCardDownloadController</apexClass><enabled
+    >true</enabled></classAccesses>
+<pageAccesses><apexPage>BookingCardDownload</apexPage><enabled
+    >true</enabled></pageAccesses>
 <description
   >Read saved booking cards and related experience images. Does not grant booking creation or modification. Assign alongside existing experience search permissions for the full agent.</description>
 <fieldPermissions><editable>false</editable><field

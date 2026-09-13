@@ -108,6 +108,16 @@
                   }
                 }
               ]
+            },
+            {
+              "definition": "tile/link",
+              "meta": {
+                "if": "{!NOT(ISBLANK($attrs.downloadUrl))}"
+              },
+              "attributes": {
+                "href": "{!$attrs.downloadUrl}",
+                "text": "Download booking card (PDF)"
+              }
             }
           ]
         }

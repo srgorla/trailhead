@@ -1,0 +1,73 @@
+<apex:page
+  controller="BookingCardDownloadController"
+  showHeader="false"
+  sidebar="false"
+  standardStylesheets="false"
+  docType="html-5.0"
+  cache="false"
+>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="referrer" content="no-referrer" />
+  <title>Download booking card</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 24px;
+      background: #f1f5f5;
+      color: #163638;
+      font:
+        16px Arial,
+        sans-serif;
+    }
+    main {
+      max-width: 800px;
+      margin: auto;
+    }
+    canvas {
+      width: 100%;
+      height: auto;
+      display: block;
+      margin-top: 20px;
+      border-radius: 16px;
+    }
+    button {
+      background: #006b70;
+      color: white;
+      border: 0;
+      padding: 14px 22px;
+      border-radius: 8px;
+      font: inherit;
+      cursor: pointer;
+    }
+    button:disabled {
+      opacity: 0.5;
+      cursor: wait;
+    }
+    #export-data {
+      display: none;
+    }
+  </style>
+  <main>
+    <h1>Download booking card</h1>
+    <p>
+      Save the experience photo and booking details together as a PDF image.
+    </p>
+    <p id="export-status" role="status">Preparing your booking card…</p>
+    <button id="download-card" type="button" disabled="disabled">
+      Download PDF
+    </button>
+    <canvas
+      id="booking-canvas"
+      role="img"
+      aria-label="Booking confirmation preview"
+    ></canvas>
+    <div id="export-data">
+      <span id="booking-payload"><apex:outputText value="{!payload}" /></span>
+      <span id="booking-photo"><apex:outputText value="{!photo}" /></span>
+      <span id="booking-error"
+        ><apex:outputText value="{!errorMessage}"
+      /></span>
+    </div>
+  </main>
+  <apex:includeScript value="{!$Resource.bookingCardExport}" />
+</apex:page>

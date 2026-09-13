@@ -829,6 +829,132 @@ agent definition to refresh a card. Confirm rendering in the existing Agentforce
 agent using a new conversation and existing booking `B-00001738`; expected contact
 text is **Booked for: Osborn Libbe**. This visual check remains pending.
 
+## Download the complete booking card from MCP
+
+The MCP booking card now includes **Download booking card (PDF)**. The action
+returns `downloadUrl` pointing to the authenticated `BookingCardDownload`
+Visualforce page with the booking ID. The link opens a new tab; users may need to
+sign in to Salesforce. The page re-reads current saved details under USER_MODE,
+previews the complete confirmation, and lets the user save a PDF with the photo,
+contact name, experience, booking reference/status, session times, guests and
+price. This is a styled export of current booking data, not a screenshot of the
+Claude widget or an immutable historical receipt.
+
+`BookingCardDownloadController` fetches only JPG/PDF files in the approved Coral
+Cloud S3 catalog directory. The host does not return CORS permission for browser
+canvas export, so Apex embeds the fetched image as data for the page. Redirects,
+unapproved paths, failed responses and images above the configured two-megabyte
+limit are rejected. Missing catalog images get an explicit unavailable label;
+failed photo fetching stops export instead of silently omitting the image. The
+page uses escaped text output, no-store caching, and browser canvas rendering.
+No external rendering service, public file distribution or booking writes are
+introduced. The export permission is included in `CoralCloudBookingDetails`.
+
+Changes include the booking result/action and test, export controller/test,
+Visualforce page, JavaScript static resource, remote-site setting, permission set,
+MCP renderer, widget and tool description. Only the MCP renderer passes the new
+link attribute; no Agentforce agent definition is changed or deployed.
+
+MCP download instructions deployed successfully in `0AfgL00000XPjyESAT`.
+
+Validation: deployment `0AfgL00000XPlwnSAD` succeeded, and all ten Apex tests
+passed. Six isolated JavaScript tests passed via
+`node --test scripts/tests/booking-card-export.test.cjs`, checking photo/details,
+PDF download handling, failures, canceled state, wrapping and filenames. These
+JavaScript tests simulate canvas/DOM APIs; they do not establish browser raster
+output quality. Browser discovery returned no connected browser, so visual PDF
+verification remains pending.
+
+User verification: refresh the Claude connector, show existing booking
+`B-00001738`, select **Download booking card (PDF)**, sign in if requested, and
+click **Download PDF**. Confirm the saved file contains the entire confirmation,
+including Osborn Libbe and the experience photo. Do not create another booking
+for this check. Review before committing.
+
+PDF revision deployed successfully in `0AfgL00000XPnAbSAL` (four components, no agent definitions). The browser embeds the complete card image in a single-page PDF,
+preserving its aspect ratio. The filename uses the human-readable booking reference, for example
+`B-00001738.pdf`, as requested. It does not use the Salesforce record ID. The PDF contains
+a rasterized card; its text is not selectable. The download visibility condition
+now explicitly evaluates `NOT(ISBLANK($attrs.downloadUrl))` instead of treating a
+URL string as a Boolean. This fixes a definite template-type error consistent
+with the reported rendering failure; a fresh Claude render remains to be checked.
+Six JavaScript tests pass, including PDF byte offsets, page size, filename, and
+the Boolean condition regression check. No Apex changes are required by this
+PDF revision, so the ten passing Apex tests from the export deployment remain
+applicable. Browser download and PDF visual verification remain pending.
+
+### Export page startup fix
+
+The user observed a disabled download button and a null `textContent` exception.
+The script now waits for `DOMContentLoaded` when loaded before page markup.
+Seven JavaScript tests pass, including a regression test that verifies no DOM
+lookup occurs before the ready event. Only the static resource was redeployed
+in `0AfgL00000XPkJDSA1`. Browser verification of the completed PDF remains pending.
+
+## Local Claude Desktop PDF export
+
+`tools/booking-export` is a separate local stdio MCP server, configured as
+`coral-cloud-local-export` in Claude Desktop on this Mac. It exposes
+`export_booking_pdf` with a `booking` argument accepting a Salesforce record ID
+or a booking reference such as `B-00001738`.
+
+It uses Salesforce CLI authentication for `aforce_de`, resolves references with
+a bounded query, calls the existing read-only booking-details action, fetches
+only the exact approved Coral Cloud catalog image, and writes a PDF into
+`~/Downloads/Coral Cloud Bookings`. The filename is the booking reference.
+It never creates or updates Salesforce records, stores a Salesforce File, or
+publishes a public link. The CLI identity may differ from the remote Claude
+connector identity. An existing CLI login is required; the CLI handles refresh.
+Existing local PDFs are not overwritten. This saves directly on the Mac; it is
+not an in-chat attachment and is not available to Claude web/mobile.
+
+Setup on another machine: install Node and Salesforce CLI, authenticate the
+intended org, run `npm ci --ignore-scripts` in `tools/booking-export`, and add a
+Claude Desktop MCP entry invoking `node` with the absolute path to `server.mjs`.
+Set `SF_TARGET_ORG`, `SF_BIN`, and a PATH containing Node and Salesforce CLI.
+Optional `CORAL_EXPORT_DIR` changes the local output directory. Do not put
+Salesforce tokens in the configuration. Restart Claude Desktop after setup.
+The current Mac's existing configuration was backed up and preserved.
+
+Validation: three local tests passed. A real stdio MCP client invoked
+`export_booking_pdf` for `B-00001738` and generated a one-page PDF with one image,
+Osborn Libbe, Ocean Kayak Fitness Expedition, and USD 300. Text extraction and a
+rendered-page visual inspection passed. The sample is in a temporary test
+folder, leaving the normal Downloads destination free for the user's test.
+Claude Desktop discovery and invocation still require user verification after
+restart. Test prompt: “Use coral-cloud-local-export to export booking
+B-00001738 as a PDF with its photo. Save it locally and tell me the saved path.
+Do not create or modify a booking.”
+
+Keep all Visualforce download links and components in place until the user
+confirms this local workaround works. Remove them only as the final agreed
+cleanup step. No Salesforce deployment or commit was made for this local setup.
+
+### Local export Save As dialog
+
+The local `export_booking_pdf` tool now defaults `chooseLocation` to true. On
+macOS it opens the native Save As dialog with the booking reference as the PDF
+filename. Cancel writes nothing; existing files are still not overwritten.
+`chooseLocation=false` retains the original Downloads-folder behavior. Four
+local tests pass, including argument handling, cancellation, and PDF extension
+validation. The actual dialog still needs a user test after restarting Claude.
+The user confirmed the preceding fixed-folder export works.
+
+This dialog is triggered by invoking the local MCP tool, not by a link inside
+the Salesforce HXL card. A card link invoking the separate local connector is
+not implemented. Visualforce remains unchanged pending final cleanup approval.
+
+### Explicit download options after booking
+
+Live readback of B-00001743 confirmed a valid downloadUrl. Retrieved MCP renderer
+and widget also contain the mapping and PDF link. The screenshot omission is not
+explained by missing server-side data; client rendering/discovery remains to be
+verified. MCP instructions now require an explicit VF Markdown link below the
+card after successful reads and an offer to use the local Save As tool when it
+is available. The local option is conversational, not a fabricated hyperlink.
+Instruction deployment succeeded in `0AfgL00000XRG2TSAX`. Refresh the Salesforce
+connector to test the new instructions. No agent definitions were deployed.
+
 ## Commit policy
 
 Create meaningful commits only after explicit user approval.
