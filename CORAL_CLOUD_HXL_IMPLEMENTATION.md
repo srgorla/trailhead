@@ -979,6 +979,27 @@ the retained VF option. Instruction deployment: `0AfgL00000XRFBGSA5`, status
 Desktop to discover the new local tool and refresh the Salesforce connector's
 instructions. User verification of the complete link-to-dialog flow is pending.
 
+## Agentforce download URL redaction fix
+
+The user observed `URL_Redacted` in an Agentforce PDF link. Salesforce documents
+this substitution as Trusted URL allowlist enforcement and removed the default
+`*.salesforce.com` wildcard on February 28, 2026:
+https://help.salesforce.com/s/articleView?id=005135034&language=en_US&type=1
+
+Read-only inspection of the org's active `CspTrustedSite` records confirmed the
+exact download domain was absent. Added `CoralCloudBookingDownloads` for
+`https://orgfarm-6f61b5a2b9-dev-ed.develop.my.salesforce.com`, with no wildcard and
+no additional CSP resource directives enabled. Trusted URL entries apply org-wide.
+Also added the missing `downloadUrl` attribute to the Agentforce
+`bookingDetailsResult` renderer so the shared widget receives its PDF link.
+
+Deployment `0AfgL00000XRSObSAP` succeeded with exactly two components and zero
+errors. No Apex, booking records, or agent definitions changed. Existing VF and
+local MCP export options remain intact. Test in a new conversation with the
+existing Agentforce agent by displaying an existing booking card and selecting
+its PDF download link. User verification of URL redaction removal is pending;
+no commit yet.
+
 ## Commit policy
 
 Create meaningful commits only after explicit user approval.
