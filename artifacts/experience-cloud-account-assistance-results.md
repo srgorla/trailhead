@@ -1,6 +1,6 @@
 # Experience Cloud Account Assistance Sharing Results
 
-**Sandbox:** `aforce_de`  
+**Sandbox:** `aforce_de`
 **Branch:** `feature/experience-cloud-record-sharing`
 
 ## Configuration deployed
