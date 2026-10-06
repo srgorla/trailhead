@@ -47,3 +47,6 @@ $RECYCLE.BIN/
 **/.venv/
 **/venv/
 force-app/main/default/uiBundles/financialinstitutionfinder/.env.local
+
+# Local JWT test signing keys
+/.local-secrets/
