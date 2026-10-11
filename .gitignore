@@ -42,6 +42,9 @@ $RECYCLE.BIN/
 # Local environment variables
 .env
 
+# Local Salesforce Headless 360 MCP credentials
+/.env.headless-360
+
 # Python Salesforce Functions
 **/__pycache__/
 **/.venv/
@@ -50,3 +53,6 @@ force-app/main/default/uiBundles/financialinstitutionfinder/.env.local
 
 # Local JWT test signing keys
 /.local-secrets/
+
+# Local Google OIDC credentials
+/.env.google-oidc
