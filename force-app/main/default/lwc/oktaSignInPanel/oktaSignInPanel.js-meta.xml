@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>67.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Okta Sign-In Preview</masterLabel>
+    <description
+  >Official Okta widget screen with authentication disabled. No tenant details required.</description>
+    <targets>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightningCommunity__Default">
+            <property
+        name="heading"
+        type="String"
+        label="Welcome heading"
+        default="Welcome to your customer portal"
+      />
+            <property
+        name="brandColor"
+        type="String"
+        label="Brand color (six-digit hex)"
+        default="#4c6e9e"
+      />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

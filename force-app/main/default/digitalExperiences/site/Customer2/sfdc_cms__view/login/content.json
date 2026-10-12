@@ -11,6 +11,7 @@
                 "backgroundImageConfig": "",
                 "backgroundImageOverlay": "rgba(0,0,0,0)",
                 "componentSpacerSize": "",
+                "dxpStyle": {},
                 "layoutDirectionDesktop": "row",
                 "layoutDirectionMobile": "column",
                 "layoutDirectionTablet": "column",
@@ -25,36 +26,11 @@
                   "children": [
                     {
                       "attributes": {
-                        "alignment": "left",
-                        "imageInfo": "",
-                        "imageInfoMobile": "",
-                        "logoWidth": 250
+                        "heading": "Welcome to your customer portal",
+                        "brandColor": "#4c6e9e"
                       },
-                      "definition": "dxp_content_layout:siteLogo",
-                      "id": "83ab8fd3-39a8-4975-8b71-eb014df7f41e",
-                      "type": "component"
-                    },
-                    {
-                      "attributes": {
-                        "forgotPasswordLabel": "Forgot your password?",
-                        "forgotPasswordUrl": "/ForgotPassword",
-                        "loginButtonLabel": "Log In",
-                        "passwordLabel": "Password",
-                        "selfRegisterLabel": "Not a member?",
-                        "selfRegisterUrl": "/SelfRegister",
-                        "startUrl": "",
-                        "usernameLabel": "Username"
-                      },
-                      "definition": "community_login:loginForm",
+                      "definition": "c:oktaSignInPanel",
                       "id": "d342ea96-1b5d-47f0-b722-4e6ad297b85b",
-                      "type": "component"
-                    },
-                    {
-                      "attributes": {
-                        "employeeLoginLinkLabel": "Are you an employee? Log in"
-                      },
-                      "definition": "community_login:employeeLoginLink",
-                      "id": "6c361c28-42ea-4a37-a90e-a0ceb5581013",
                       "type": "component"
                     }
                   ],
@@ -79,8 +55,9 @@
             {
               "attributes": {
                 "customHeadTags": "",
-                "description": "",
-                "pageTitle": "Login",
+                "description": "Customer portal sign-in preview. Authentication is not connected.",
+                "dxpStyle": {},
+                "pageTitle": "Customer portal | Sign in",
                 "recordId": "{!recordId}"
               },
               "definition": "community_builder:seoAssistant",

@@ -1,0 +1,131 @@
+:host {
+  display: block;
+  --portal-panel: #24334d;
+  --portal-text: #ffffff;
+  --portal-muted: #d6dfed;
+  --portal-ink: #24334d;
+  --portal-surface: #ffffff;
+  --portal-notice: #edf3fa;
+}
+
+.portal {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(350px, 0.85fr);
+  min-height: 680px;
+  overflow: hidden;
+  border-radius: 20px;
+  background: var(--portal-panel);
+  font-family: var(--slds-g-font-family, Arial, sans-serif);
+}
+
+.portal-intro {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(32px, 6vw, 80px);
+  color: var(--portal-text);
+  background: radial-gradient(
+    ellipse at top left,
+    var(--portal-accent),
+    transparent 70%
+  );
+}
+
+.eyebrow {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+}
+
+h1 {
+  max-width: 520px;
+  margin: 28px 0 20px;
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+}
+
+.intro-copy {
+  max-width: 380px;
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--portal-muted);
+}
+
+.intro-note {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 56px;
+  font-size: 13px;
+  color: var(--portal-muted);
+}
+
+.note-dot {
+  width: 7px;
+  height: 7px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--portal-muted);
+}
+
+.signin-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 40px 24px;
+  background: var(--portal-surface);
+  color: var(--portal-ink);
+}
+
+.preview-notice {
+  width: min(100%, 400px);
+  align-self: center;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+  border-radius: 10px;
+  background: var(--portal-notice);
+}
+
+.preview-label {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  font-weight: 700;
+}
+
+.preview-notice p {
+  margin-top: 6px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.signin-caption {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 12px;
+}
+
+@media (max-width: 760px) {
+  .portal {
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 0;
+    border-radius: 12px;
+  }
+
+  .portal-intro {
+    padding: 32px 24px;
+  }
+
+  h1 {
+    margin: 18px 0 14px;
+  }
+
+  .intro-note {
+    margin-top: 24px;
+  }
+
+  .signin-panel {
+    padding: 28px 16px;
+  }
+}

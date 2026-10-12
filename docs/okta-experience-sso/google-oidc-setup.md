@@ -35,7 +35,7 @@ No user identity fields or access assignments were changed. Asked the user which
 
 Handler validation 0AfgL00000a3KwjSAE passed. Deployment 0AfgL00000a3L4nSAE passed with four tests, zero failures, and 28/28 handler executable lines covered (100%). Tests cover normalized Federation ID matching, notification-email preservation, unverified/unknown/inactive/non-Gmail rejection, wrong existing links, and verified/malformed raw user-info claims. Actual Google callback/login claims still need an end-to-end test.
 
-Analyzer: Salesforce Code Analyzer PMD found 0 severity-1 and 0 severity-2 violations, 7 moderate and 11 low findings. Full output is saved in google-handler-analysis.json; findings include global modifiers and documentation/style recommendations. The global registration-handler signature follows Salesforce's Auth.RegistrationHandler convention.
+Analyzer: Salesforce Code Analyzer PMD found 0 severity-1 and 0 severity-2 violations, 7 moderate and 11 low findings. The temporary raw scan output was removed during cleanup; findings included global modifiers and documentation/style recommendations. The global registration-handler signature follows Salesforce's Auth.RegistrationHandler convention.
 
 User approved keeping all user identity fields unchanged and granting both site memberships to the matching existing users. Assigned Customer_Site_Access and Merchant_Site_Access to the active users with Federation IDs sgorla@gmail.com and mutyalaswetha@gmail.com. Four assignments verified. No user has Federation ID sgorla724@gmail.com, so that Google identity remains unmatched. Sites are still unpublished; membership does not complete SSO configuration.
 
