@@ -1,0 +1,132 @@
+<!-- Replace old Okta blocks with BOTH includes. Preserve site styles. -->
+<!-- prettier-ignore -->
+<x-oasis-script hidden="true">
+(function () {
+  if (window.oktaLwrBridgeInstalled) return;
+  window.oktaLwrBridgeInstalled = true;
+  var instances = new Map();
+
+  function guardDocumentParent() {
+    // Apply only if Oasis throws for Document parent access.
+    // A Document has no parent; no Node/Element prototypes are changed.
+    try {
+      document.parentNode;
+    } catch (error) {
+      if (!(error instanceof TypeError)) throw error;
+      Object.defineProperties(document, {
+        parentNode: {
+          configurable: true,
+          get: function () {
+            return null;
+          }
+        },
+        parentElement: {
+          configurable: true,
+          get: function () {
+            return null;
+          }
+        }
+      });
+    }
+  }
+
+  function send(mount, id, type, message) {
+    mount.dispatchEvent(
+      new CustomEvent("okta-widget-response", {
+        detail: JSON.stringify({ id: id, type: type, message: message })
+      })
+    );
+  }
+
+  function remove(id) {
+    var entry = instances.get(id);
+    if (!entry) return;
+    instances.delete(id);
+    entry.observer.disconnect();
+    if (entry.widget) entry.widget.remove();
+    entry.container.remove();
+  }
+
+  document.addEventListener("okta-widget-request", function (event) {
+    var request;
+    try {
+      request = JSON.parse(event.detail);
+    } catch (error) {
+      return;
+    }
+    if (!request || !/^[a-f0-9-]{36}$/.test(request.id)) return;
+    if (request.action === "remove") {
+      remove(request.id);
+      return;
+    }
+    if (request.action !== "render") return;
+    // Both privileged blocks share the Oasis execution context.
+    if (typeof window.OktaSignIn !== "function") return;
+    var mount = document.querySelector(
+      '[data-okta-mount="' + request.id + '"]'
+    );
+    if (!mount) return;
+    if (instances.has(request.id)) {
+      send(mount, request.id, "accepted");
+      return;
+    }
+    var container = document.createElement("div");
+    mount.appendChild(container);
+    var entry = {
+      container: container,
+      widget: null,
+      observer: null,
+      ready: false
+    };
+    function screenReady() {
+      if (instances.get(request.id) !== entry) return;
+      if (!container.querySelector("input, button, form")) return;
+      if (request.preview) {
+        container
+          .querySelectorAll("input, button, select, textarea")
+          .forEach(function (control) {
+            control.disabled = true;
+            control.setAttribute("aria-disabled", "true");
+          });
+        container.querySelectorAll("a").forEach(function (link) {
+          link.removeAttribute("href");
+          link.setAttribute("tabindex", "-1");
+        });
+      }
+      if (!entry.ready) {
+        entry.ready = true;
+        send(mount, request.id, "ready");
+      }
+    }
+    entry.observer = new MutationObserver(screenReady);
+    instances.set(request.id, entry);
+    entry.observer.observe(container, { childList: true, subtree: true });
+    send(mount, request.id, "accepted");
+    try {
+      guardDocumentParent();
+      entry.widget = new window.OktaSignIn(request.config);
+      entry.widget.on("afterRender", screenReady);
+      var result = request.preview
+        ? entry.widget.renderEl({ el: container })
+        : entry.widget.showSignInAndRedirect({ el: container });
+      Promise.resolve(result).catch(function (error) {
+        if (instances.get(request.id) !== entry) return;
+        remove(request.id);
+        send(mount, request.id, "error", String(error.message || error));
+      });
+    } catch (error) {
+      remove(request.id);
+      send(mount, request.id, "error", String(error.message || error));
+    }
+  });
+  window.addEventListener("pagehide", function () {
+    Array.from(instances.keys()).forEach(remove);
+  });
+})();
+</x-oasis-script>
+
+<x-oasis-script
+  src="https://global.oktacdn.com/okta-signin-widget/7.50.0/js/okta-sign-in.min.js"
+  integrity="sha384-jX2HA60PztQ56OuBrJOmUy9Z3SoZxDmpMVQeKR/Dk8xrfOEzDWQ0amcYtYtTqhsq"
+  crossorigin="anonymous"
+></x-oasis-script>

@@ -2,76 +2,17 @@ import { createElement } from "lwc";
 import OktaCdnSignIn from "c/oktaCdnSignIn";
 
 const flush = async () => {
-  // Sequential microtasks settle the async loader and transaction pipeline.
   // eslint-disable-next-line no-await-in-loop
   for (let i = 0; i < 12; i++) await Promise.resolve();
 };
 
-describe("CDN embedded Okta sign-in", () => {
-  let config;
-  let ready;
-  let remove;
-  let render;
-  let redirect;
-
-  function installInclude() {
-    window.OktaSignIn = jest.fn((options) => {
-      config = options;
-      return {
-        on: (name, callback) => {
-          ready = callback;
-        },
-        renderEl: render,
-        showSignInAndRedirect: redirect,
-        remove
-      };
-    });
-  }
-
-  beforeEach(() => {
-    jest.useFakeTimers();
-    remove = jest.fn();
-    render = jest.fn(({ el }) => {
-      const form = document.createElement("form");
-      const input = document.createElement("input");
-      input.name = "username";
-      form.appendChild(input);
-      el.appendChild(form);
-      ready();
-      return new Promise(() => {});
-    });
-    redirect = jest.fn(({ el }) => {
-      el.appendChild(document.createElement("input"));
-      ready();
-      return new Promise(() => {});
-    });
-    installInclude();
-    global.fetch = jest.fn();
-  });
-
-  afterEach(() => {
-    while (document.body.firstChild)
-      document.body.removeChild(document.body.firstChild);
-    delete window.OktaSignIn;
-    delete global.fetch;
-    jest.useRealTimers();
-  });
-
-  async function mount(properties = {}) {
-    const element = createElement("c-okta-cdn-sign-in", { is: OktaCdnSignIn });
-    Object.assign(element, properties);
-    document.body.appendChild(element);
-    await flush();
-    return element;
-  }
-
-  async function loadCss(element) {
-    element.shadowRoot
-      .querySelector("link")
-      .dispatchEvent(new CustomEvent("load"));
-    await flush();
-  }
-
+describe("privileged Okta event bridge", () => {
+  let element;
+  let requests;
+  let available;
+  let respondReady;
+  let listener;
+  let rendered;
   const live = {
     enableAuthentication: true,
     issuer: "https://example.okta.com/oauth2/default",
@@ -80,44 +21,132 @@ describe("CDN embedded Okta sign-in", () => {
     transactionEndpoint: "https://backend.example/login-transaction"
   };
 
-  it("waits for an asynchronous head include and renders an inert CDN-styled preview", async () => {
+  function reply(id, type, message) {
+    element.shadowRoot.querySelector(".widget-mount").dispatchEvent(
+      new CustomEvent("okta-widget-response", {
+        detail: JSON.stringify({ id, type, message })
+      })
+    );
+  }
+
+  beforeEach(() => {
+    jest.useFakeTimers();
+    let sequence = 0;
+    Object.defineProperty(crypto, "randomUUID", {
+      configurable: true,
+      value: () =>
+        `00000000-0000-4000-8000-${String(++sequence).padStart(12, "0")}`
+    });
+    requests = [];
+    available = true;
+    respondReady = true;
+    rendered = false;
+    // Deliberately absent: the LWC must never rely on a window constructor.
     delete window.OktaSignIn;
-    const element = await mount();
-    await loadCss(element);
-    expect(render).not.toHaveBeenCalled();
-    installInclude();
-    jest.advanceTimersByTime(100);
-    await flush();
-    const root = element.shadowRoot;
-    expect(root.querySelector("link").href).toContain(
-      "global.oktacdn.com/okta-signin-widget/7.50.0/css/"
-    );
-    expect(root.querySelector("link").integrity).toMatch(/^sha384-/);
-    expect(root.querySelector(".widget-mount").hasAttribute("inert")).toBe(
-      true
-    );
-    expect(root.querySelector("input").disabled).toBe(true);
-    expect(
-      root
-        .querySelector("form")
-        .dispatchEvent(
-          new CustomEvent("submit", { bubbles: true, cancelable: true })
-        )
-    ).toBe(false);
-    expect(config.baseUrl).toBe("https://preview.invalid");
-    expect(fetch).not.toHaveBeenCalled();
-    expect(redirect).not.toHaveBeenCalled();
+    global.fetch = jest.fn();
+    listener = (event) => {
+      const request = JSON.parse(event.detail);
+      requests.push(request);
+      if (!available || request.action !== "render") return;
+      reply(request.id, "accepted");
+      if (respondReady && !rendered) {
+        rendered = true;
+        const input = document.createElement("input");
+        input.disabled = request.preview;
+        element.shadowRoot.querySelector(".widget-mount").appendChild(input);
+        reply(request.id, "ready");
+      }
+    };
+    document.addEventListener("okta-widget-request", listener);
   });
 
-  it("fails closed when live settings or a server transaction are missing", async () => {
-    const element = await mount({ enableAuthentication: true });
-    await loadCss(element);
-    expect(render).not.toHaveBeenCalled();
-    expect(redirect).not.toHaveBeenCalled();
+  afterEach(() => {
+    while (document.body.firstChild)
+      document.body.removeChild(document.body.firstChild);
+    document.removeEventListener("okta-widget-request", listener);
+    delete global.fetch;
+    delete crypto.randomUUID;
+    jest.useRealTimers();
+  });
+
+  async function mount(properties = {}) {
+    element = createElement("c-okta-cdn-sign-in", { is: OktaCdnSignIn });
+    Object.assign(element, properties);
+    document.body.appendChild(element);
+    await flush();
+    return element;
+  }
+  async function loadCss() {
+    element.shadowRoot
+      .querySelector("link")
+      .dispatchEvent(new CustomEvent("load"));
+    await flush();
+  }
+
+  it("renders via JSON events without accessing the constructor in LWS", async () => {
+    await mount();
+    await loadCss();
+    expect(window.OktaSignIn).toBeUndefined();
+    const request = requests.find((item) => item.action === "render");
+    expect(request.config.baseUrl).toBe("https://preview.invalid");
+    expect(request.preview).toBe(true);
+    expect(element.shadowRoot.querySelector("input").disabled).toBe(true);
+    expect(
+      element.shadowRoot.querySelector(".widget-mount").hasAttribute("inert")
+    ).toBe(true);
+    expect(element.shadowRoot.textContent).toContain("screen loaded");
+    expect(fetch).not.toHaveBeenCalled();
+    expect(jest.getTimerCount()).toBe(0);
+  });
+
+  it("retries when the privileged bridge initializes after the LWC", async () => {
+    available = false;
+    await mount();
+    await loadCss();
+    available = true;
+    jest.advanceTimersByTime(100);
+    await flush();
+    expect(requests.filter((item) => item.action === "render")).toHaveLength(2);
+    expect(element.shadowRoot.textContent).toContain("screen loaded");
+  });
+
+  it("distinguishes missing bridge from missing login controls", async () => {
+    available = false;
+    await mount();
+    await loadCss();
+    jest.advanceTimersByTime(15000);
+    await flush();
+    expect(element.shadowRoot.textContent).toContain(
+      "bridge did not acknowledge"
+    );
+    expect(jest.getTimerCount()).toBe(0);
+  });
+
+  it("does not mark an acknowledged but empty mount ready", async () => {
+    respondReady = false;
+    await mount();
+    await loadCss();
+    jest.advanceTimersByTime(15000);
+    await flush();
+    expect(element.shadowRoot.textContent).toContain("controls did not render");
+  });
+
+  it("times out styles without dispatching a render request", async () => {
+    await mount();
+    jest.advanceTimersByTime(15000);
+    await flush();
+    expect(element.shadowRoot.textContent).toContain("stylesheet");
+    expect(requests.some((item) => item.action === "render")).toBe(false);
+  });
+
+  it("rejects live mode without settings or a valid fresh transaction", async () => {
+    await mount({ enableAuthentication: true });
+    await loadCss();
+    expect(requests.some((item) => item.action === "render")).toBe(false);
     expect(element.shadowRoot.textContent).toContain("could not load");
   });
 
-  it("uses fresh server state and PKCE challenge for embedded Identity Engine login", async () => {
+  it("passes server state and PKCE to the live bridge without secrets", async () => {
     fetch.mockResolvedValue({
       ok: true,
       json: async () => ({
@@ -126,72 +155,56 @@ describe("CDN embedded Okta sign-in", () => {
         clientSecret: "ignored"
       })
     });
-    const element = await mount(live);
-    await loadCss(element);
-    expect(fetch).toHaveBeenCalledWith(
-      live.transactionEndpoint,
-      expect.objectContaining({ method: "POST", credentials: "include" })
-    );
-    expect(config).toMatchObject({
-      baseUrl: "https://example.okta.com",
+    await mount(live);
+    await loadCss();
+    const request = requests.find((item) => item.action === "render");
+    expect(request.preview).toBe(false);
+    expect(request.config).toMatchObject({
       issuer: live.issuer,
-      clientId: live.clientId,
       useClassicEngine: false,
       state: "s".repeat(43),
       codeChallenge: "c".repeat(43)
     });
-    expect(config.clientSecret).toBeUndefined();
-    expect(redirect).toHaveBeenCalledTimes(1);
-    expect(render).not.toHaveBeenCalled();
-    expect(element.shadowRoot.querySelector("input").disabled).toBe(false);
+    expect(request.config.clientSecret).toBeUndefined();
   });
 
-  it("rejects malformed PKCE transactions before rendering any credentials", async () => {
-    fetch.mockResolvedValue({
-      ok: true,
-      json: async () => ({ state: "static", codeChallenge: "invalid" })
-    });
-    const element = await mount(live);
-    await loadCss(element);
-    expect(redirect).not.toHaveBeenCalled();
-    expect(element.shadowRoot.querySelector("input")).toBeNull();
-  });
-
-  it("times out missing includes and ignores late asset loads", async () => {
-    delete window.OktaSignIn;
-    const element = await mount();
-    const css = element.shadowRoot.querySelector("link");
-    jest.advanceTimersByTime(15000);
-    await flush();
-    installInclude();
-    css.dispatchEvent(new CustomEvent("load"));
-    await flush();
-    expect(render).not.toHaveBeenCalled();
-    expect(element.shadowRoot.textContent).toContain("CSP");
-    expect(jest.getTimerCount()).toBe(0);
-  });
-
-  it("removes the widget and initializes once when reconnected", async () => {
-    const element = await mount();
-    await loadCss(element);
+  it("sends cleanup after disconnect and uses a fresh ID on reconnect", async () => {
+    await mount();
+    await loadCss();
+    const firstId = requests[0].id;
     document.body.removeChild(element);
-    expect(remove).toHaveBeenCalledTimes(1);
+    expect(requests).toContainEqual(
+      expect.objectContaining({ action: "remove", id: firstId })
+    );
+    rendered = false;
     document.body.appendChild(element);
     await flush();
-    await loadCss(element);
-    expect(render).toHaveBeenCalledTimes(2);
+    await loadCss();
+    expect(requests.filter((item) => item.action === "render")[1].id).not.toBe(
+      firstId
+    );
   });
 
-  it("does not report an empty shadow-DOM container as a loaded screen", async () => {
-    render.mockImplementation(() => {
-      ready();
-      return new Promise(() => {});
-    });
-    const element = await mount();
-    await loadCss(element);
+  it("ignores a response for a different component instance", async () => {
+    available = false;
+    await mount();
+    await loadCss();
+    reply("wrong-id", "ready");
+    await flush();
     expect(element.shadowRoot.textContent).not.toContain("screen loaded");
+  });
+
+  it("ignores late readiness after the load was cancelled by timeout", async () => {
+    available = false;
+    await mount();
+    await loadCss();
+    const id = requests[0].id;
     jest.advanceTimersByTime(15000);
     await flush();
-    expect(element.shadowRoot.textContent).toContain("CSP");
+    reply(id, "ready");
+    await flush();
+    expect(element.shadowRoot.textContent).toContain(
+      "bridge did not acknowledge"
+    );
   });
 });

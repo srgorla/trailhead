@@ -16,11 +16,39 @@ export default class OktaCdnSignIn extends LightningElement {
   status = "Loading sign-in screen…";
   initialized = false;
   generation = 0;
-  widget;
+  mountId;
   mount;
   timeout;
   poll;
   abort;
+  loadingStage = "styles";
+  bridgeAccepted = false;
+  bridgeActive = false;
+
+  handleBridgeResponse = (event) => {
+    let response;
+    try {
+      response = JSON.parse(event.detail);
+    } catch {
+      return;
+    }
+    if (!this.isConnected || !this.bridgeActive || response.id !== this.mountId)
+      return;
+    if (response.type === "accepted") {
+      this.bridgeAccepted = true;
+      clearTimeout(this.poll);
+      this.loadingStage = "render";
+    } else if (response.type === "ready") {
+      this.bridgeAccepted = true;
+      clearTimeout(this.poll);
+      clearTimeout(this.timeout);
+      this.status = this.isPreview
+        ? "Sign-in screen loaded. Authentication is disabled."
+        : "";
+    } else if (response.type === "error") {
+      this.fail(this.generation, `Okta bridge failed: ${response.message}`);
+    }
+  };
 
   get isPreview() {
     return !this.enableAuthentication;
@@ -34,7 +62,14 @@ export default class OktaCdnSignIn extends LightningElement {
   renderedCallback() {
     if (this.initialized) return;
     this.initialized = true;
+    this.bridgeActive = true;
     this.mount = this.template.querySelector(".widget-mount");
+    this.mountId = crypto.randomUUID();
+    this.mount.setAttribute("data-okta-mount", this.mountId);
+    this.mount.addEventListener(
+      "okta-widget-response",
+      this.handleBridgeResponse
+    );
     if (this.isPreview) {
       this.mount.setAttribute("inert", "");
       BLOCKED_EVENTS.forEach((name) =>
@@ -47,7 +82,11 @@ export default class OktaCdnSignIn extends LightningElement {
       () =>
         this.fail(
           generation,
-          "Okta assets did not load. Check the CDN include and the site's CSP settings."
+          this.loadingStage === "render"
+            ? "Okta loaded, but its login controls did not render. Check the Console for an Oasis or widget error."
+            : this.loadingStage === "styles"
+              ? "Okta stylesheet did not finish loading. Check the CSS request and style-src allowlist."
+              : "Okta bridge did not acknowledge the component. Check both head-markup includes and the Console."
         ),
       15000
     );
@@ -67,11 +106,9 @@ export default class OktaCdnSignIn extends LightningElement {
       });
       // A head-level CSS link cannot style the widget inside native shadow DOM.
       this.mount.appendChild(css);
-      const [Constructor] = await Promise.all([
-        this.waitForInclude(generation),
-        stylesReady
-      ]);
+      await stylesReady;
       if (!this.isCurrent(generation)) return;
+      this.loadingStage = "bridge";
       let config = {
         baseUrl: "https://preview.invalid",
         useClassicEngine: true,
@@ -91,40 +128,7 @@ export default class OktaCdnSignIn extends LightningElement {
         config.useClassicEngine = false;
         if (!this.isCurrent(generation)) return;
       }
-      const container = document.createElement("div");
-      this.mount.appendChild(container);
-      this.widget = new Constructor(config);
-      this.widget.on("afterRender", () => {
-        if (!this.isCurrent(generation)) return;
-        // An unprivileged constructor can emit this event for an empty shadow mount.
-        // Keep the readiness timeout active until the actual screen exists.
-        if (!container.querySelector("input, button, form")) return;
-        clearTimeout(this.timeout);
-        if (this.isPreview) {
-          this.mount
-            .querySelectorAll("input, button, select, textarea")
-            .forEach((control) => {
-              control.disabled = true;
-              control.setAttribute("aria-disabled", "true");
-            });
-          this.mount.querySelectorAll("a").forEach((link) => {
-            link.removeAttribute("href");
-            link.setAttribute("tabindex", "-1");
-          });
-        }
-        this.status = this.isPreview
-          ? "Sign-in screen loaded. Authentication is disabled."
-          : "";
-      });
-      const result = this.isPreview
-        ? this.widget.renderEl({ el: container })
-        : this.widget.showSignInAndRedirect({ el: container });
-      result.catch(() =>
-        this.fail(
-          generation,
-          "Sign-in could not start. Check the Okta application and login transaction configuration."
-        )
-      );
+      this.requestRender(generation, config);
     } catch {
       this.fail(
         generation,
@@ -133,20 +137,30 @@ export default class OktaCdnSignIn extends LightningElement {
     }
   }
 
-  waitForInclude(generation) {
-    return new Promise((resolve) => {
-      const check = () => {
-        if (!this.isCurrent(generation)) return;
-        if (typeof window.OktaSignIn === "function") {
-          resolve(window.OktaSignIn);
-        } else {
-          // Privileged head includes execute asynchronously, including after LWC render.
-          // eslint-disable-next-line @lwc/lwc/no-async-operation
-          this.poll = setTimeout(check, 100);
-        }
-      };
-      check();
-    });
+  sendBridge(action, config) {
+    if (!this.mountId) return;
+    document.dispatchEvent(
+      new CustomEvent("okta-widget-request", {
+        bubbles: true,
+        composed: true,
+        detail: JSON.stringify({
+          id: this.mountId,
+          action,
+          preview: this.isPreview,
+          config
+        })
+      })
+    );
+  }
+
+  requestRender(generation, config) {
+    if (!this.isCurrent(generation) || this.bridgeAccepted) return;
+    this.sendBridge("render", config);
+    // Retry until acknowledged: privileged includes run asynchronously.
+    if (this.isCurrent(generation) && !this.bridgeAccepted) {
+      // eslint-disable-next-line @lwc/lwc/no-async-operation
+      this.poll = setTimeout(() => this.requestRender(generation, config), 100);
+    }
   }
 
   async getTransaction(generation) {
@@ -228,22 +242,29 @@ export default class OktaCdnSignIn extends LightningElement {
   }
 
   cleanup() {
+    this.bridgeActive = false;
     clearTimeout(this.timeout);
     clearTimeout(this.poll);
     this.abort?.abort();
-    this.widget?.remove();
-    this.widget = undefined;
+    this.sendBridge("remove");
     this.mount?.replaceChildren();
   }
 
   disconnectedCallback() {
     ++this.generation;
     this.cleanup();
+    this.mount?.removeEventListener(
+      "okta-widget-response",
+      this.handleBridgeResponse
+    );
     BLOCKED_EVENTS.forEach((name) =>
       this.mount?.removeEventListener(name, this.blockInteraction, true)
     );
     this.mount = undefined;
     this.initialized = false;
+    this.mountId = undefined;
+    this.bridgeAccepted = false;
+    this.loadingStage = "styles";
     this.status = "Loading sign-in screen…";
   }
 }

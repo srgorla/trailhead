@@ -1,90 +1,68 @@
 # Standalone embedded Okta component for LWR
 
-`oktaCdnSignIn` is a new Experience Builder component, **Okta Embedded Sign-In (CDN)**. It uses official Okta Sign-In Widget **7.50.0** JavaScript and CSS from Okta's CDN, with pinned SHA-384 integrity hashes. It does not import a static resource or use `platformResourceLoader`. The existing `oktaSignInPanel` remains a separate static-resource preview.
+`oktaCdnSignIn` is the Builder component **Okta Embedded Sign-In (CDN)**. It uses pinned official Okta Sign-In Widget **7.50.0** CDN JavaScript/CSS and SHA-384 integrity checks. It has no static-resource dependency. The user confirmed the published `/oktalab/login` preview renders the real username/password screen with authentication disabled after configuring Relaxed CSP. Deployment and site configuration are managed manually.
 
-No site page is changed by this implementation. Place the new component on the site's existing **Login** page and remove the previous login component(s) when you are ready. A second custom route is unnecessary for centralized login. Keep the Login page public, configure it as the site's login page in Login & Registration, and publish. Authenticated pages should redirect there with `startURL`.
+## Required component and head-markup update
 
-## Include the JavaScript on each LWR site
+The previous implementation polled `window.OktaSignIn` inside the LWC. Published testing showed that the constructor was visible in the page Console but unavailable inside the Lightning Web Security sandbox. The replacement sends JSON requests through DOM events. A privileged head script instantiates, renders, and removes Okta; no constructor, callback, or DOM reference crosses into the LWC's JavaScript sandbox.
 
-In Experience Builder **Settings → Advanced → Edit Head Markup**, append this include, preserving the existing markup:
+1. Deploy the component bundle yourself:
 
-```html
-<x-oasis-script
-  src="https://global.oktacdn.com/okta-signin-widget/7.50.0/js/okta-sign-in.min.js"
-  integrity="sha384-jX2HA60PztQ56OuBrJOmUy9Z3SoZxDmpMVQeKR/Dk8xrfOEzDWQ0amcYtYtTqhsq"
-  crossorigin="anonymous"
-  exported-global-names="OktaSignIn"
-></x-oasis-script>
-```
+   ```sh
+   sf project deploy start \
+     --source-dir force-app/main/default/lwc/oktaCdnSignIn \
+     --target-org aforce_de \
+     --wait 10
+   ```
 
-LWR's privileged script include executes asynchronously and exports the constructor to the outer window. The component waits up to 15 seconds for it. Use the LWR tag rather than changing a `loadScript` URL to a CDN URL.
+2. In **Experience Builder → Settings → Advanced → Edit Head Markup**, preserve the site's title and stylesheet links. Replace all previous Okta script/guard blocks with **both blocks** from [head-markup.html](../../scripts/okta-widget/cdn/head-markup.html). Copy the file contents directly; this file is not deployed by the LWC command.
+3. The first block contains the inline event bridge. The second loads Okta from its CDN into the same privileged context. The constructor is intentionally no longer exported to the outer window. No HTTPS hosting location is required for the bridge.
+4. Keep **Relaxed CSP: Permit Access to Inline Scripts and Allowed Hosts**, Lightning Web Security **On**, and an active script allowlist entry for `https://global.oktacdn.com`. The earlier mode that blocked inline execution cannot run the bridge. Check Console if the inline block is blocked after publication.
+5. In Setup → Trusted URLs, allow the CDN for **style-src**, **font-src**, and **img-src**. Widget localization assets may require **connect-src**; that also permits DevTools source maps. This implementation doesn't require **frame-src** or **media-src** for the CDN.
+6. Place the component on the existing public **Login** page, leave **Enable authentication** off, then **Save and Publish**. Remove other login components if you want only the Okta preview.
+7. Test `/oktalab/login` in a fresh incognito window. Expected: real Okta username/password controls, disabled, with “Sign-in screen loaded. Authentication is disabled.”
 
-The privileged execution context matters: Okta also performs global document queries during rendering. A normal script evaluated outside that context can create an empty widget container inside native shadow DOM. Do not replace this include with a plain script tag or load a second Okta constructor on the same page.
+The component creates its CSS include link inside the owned widget mount so it reaches the native shadow DOM. Do not add a duplicate widget stylesheet to head markup.
 
-The component creates a CSS **include link**, with integrity checking, inside its owned widget mount:
+Salesforce documents [privileged scripts and inline code in LWR](https://developer.salesforce.com/docs/platform/exp-cloud-lwr/guide/advanced-privileged-script.html). Okta documents the [CDN assets and widget APIs](https://github.com/okta/okta-signin-widget#using-the-okta-cdn).
 
-```html
-<link
-  rel="stylesheet"
-  href="https://global.oktacdn.com/okta-signin-widget/7.50.0/css/okta-sign-in.min.css"
-  integrity="sha384-9U8L1RVnBthmKe5J3KIxrd6gWekqP7ChxtFciQXAK7XjkEmSo1cQssIbUxPp5h9s"
-  crossorigin="anonymous"
-/>
-```
+## Lifecycle and the observed Oasis error
 
-This placement lets the stylesheet reach the widget inside native shadow DOM. A head-level stylesheet alone cannot do that. Fonts and images also resolve from the pinned CDN asset directory.
+The component retries its render request until the bridge acknowledges it. The bridge handles requests idempotently, waits for actual controls rather than trusting an empty `afterRender` event, and sends ready/error responses directly to the matching mount. Disconnect and timeout requests remove the widget and observer, including after the component leaves the document.
 
-In Builder's Security & Privacy settings, select **Relaxed CSP** and allowlist `https://global.oktacdn.com` for script loading. Allow that host for styles, fonts, images, and any widget localization asset requests as required by the generated CSP. Keep Lightning security enabled. Publishing the component alone does not configure these site-specific settings.
+Published testing also exposed `Illegal invocation` at `HTMLDocument.parentNode` in Oasis. The bridge includes a narrow conditional compatibility guard: only when reading `document.parentNode` throws a TypeError, it shadows the Document's parent properties with their correct `null` values. It does not change Node, Element, or Slot prototypes. This guard runs inside the privileged rendering context. Its logic passes a simulated invalid-getter test. The user subsequently confirmed the complete preview renders; that observation does not isolate which change resolved the earlier error.
 
-Salesforce documents this LWR-specific include mechanism in [Integrate Third-Party Libraries Using the Privileged Script Tag](https://developer.salesforce.com/docs/platform/exp-cloud-lwr/guide/advanced-privileged-script.html). Okta documents the matching includes and widget APIs in the [Sign-In Widget repository](https://github.com/okta/okta-signin-widget#using-the-okta-cdn).
+The obsolete standalone guard blocks/files have been removed. Do not re-add them. `head-markup.html` is the single source for the inline bridge and CDN include; it does not need hosting or a separate deployment. The DOM harness tests the inline code directly from that file.
 
-## Preview now
+## Preview and embedded authentication
 
-Leave **Enable authentication** off. No tenant settings are needed. The official widget renders a username/password screen through its Classic presentation path, with a non-routable placeholder domain. Controls are disabled and interactions blocked before rendering. This preview setting does not imply that the eventual tenant uses Classic Engine.
+Preview uses the actual widget's Classic presentation path with `https://preview.invalid`, English strings, disabled controls, an inert mount, and interaction guards. It does not require an Okta tenant and does not imply that the production tenant uses Classic Engine.
 
-## Embedded authentication later
+For live Identity Engine login, set these Builder properties and enable authentication only after the server integration exists:
 
-Enable authentication only after implementing the server integration below. Set:
+| Property             | Purpose                                          |
+| -------------------- | ------------------------------------------------ |
+| Issuer               | Your HTTPS Okta issuer                           |
+| Client ID            | Public web-application client ID                 |
+| Callback URL         | Registered HTTPS server callback                 |
+| Transaction endpoint | HTTPS endpoint that creates fresh state and PKCE |
 
-| Builder property                  | Value                                                                           |
-| --------------------------------- | ------------------------------------------------------------------------------- |
-| Okta issuer URL                   | Your Identity Engine issuer, such as `https://your-org.okta.com/oauth2/default` |
-| Okta web application client ID    | Public client ID; never a client secret                                         |
-| Server callback URL               | Your server's registered OIDC callback                                          |
-| Server login transaction endpoint | HTTPS endpoint that creates a fresh transaction                                 |
+The transaction endpoint receives a credentialed JSON POST with `issuer`, `clientId`, `redirectUri`, and `startURL`. Return `state` (32–512 base64url characters) and `codeChallenge` (43 base64url characters, S256). Generate cryptographically random state and a verifier on the server, retain them in a short-lived session, and return only state and the challenge. Never configure a static state, challenge, verifier, or client secret in Builder.
 
-The live branch uses `showSignInAndRedirect` for an embedded **web application** with a server callback. That method is supported by current Okta documentation; it is not an obsolete version-6-only API. It redirects after the embedded interaction where the OIDC flow requires it. Preview uses `renderEl` solely to display the screen without a configured tenant.
+The server must independently allowlist issuer/client/callback, protect the endpoint against CSRF, and validate the return path for the intended site. Cross-origin endpoints need explicit credentialed CORS, suitable cookies, and a CSP connect allowlist. Missing configuration or malformed transactions fail before the bridge renders live credential controls.
 
-The transaction endpoint receives a credentialed JSON POST:
+Live mode uses `showSignInAndRedirect` for a web application with a server callback. The server must validate/consume state, redeem the code with the retained verifier and server-only credentials, validate tokens, and establish a supported Salesforce session handoff. An Okta browser token alone does not create an Experience Cloud session. Do not send a custom transaction's code directly to Salesforce's Auth Provider callback; Salesforce must initiate and track its own federation transaction.
 
-```json
-{
-  "issuer": "https://your-org.okta.com/oauth2/default",
-  "clientId": "YOUR_CLIENT_ID",
-  "redirectUri": "https://your-server.example/oidc/callback",
-  "startURL": "/merchant/orders"
-}
-```
+The frontend and transaction contract are provided. The server transaction endpoint, callback, and Salesforce session integration are not implemented and still require tenant details and an agreed identity architecture.
 
-It must respond with a new transaction:
+## Verification and limits
 
-```json
-{
-  "state": "SERVER_GENERATED_RANDOM_BASE64URL_VALUE_AT_LEAST_32_CHARS",
-  "codeChallenge": "43_CHARACTER_BASE64URL_SHA256_PKCE_CHALLENGE___"
-}
-```
+- Ten LWC unit tests pass with no `window.OktaSignIn` constructor installed in the component context.
+- The actual official 7.50.0 widget renders username/password controls through the head bridge in a DOM harness. Preview disabling, duplicate requests, simulated invalid Document access, cleanup, and absence of auth requests pass.
+- Lint passes. The user performed deployment/site configuration; no server integration was implemented.
+- The DOM harness uses the existing vendor ZIP as a **test fixture only**. The runtime component still loads assets from the CDN.
+- The user's published-site screenshot confirms username/password rendering and the loaded preview status, with no red Console errors visible. Real authentication, Salesforce session creation, and a broader browser/layout check remain unverified.
 
-Values above are illustrative placeholders, not usable transaction values. The server must generate random state and a PKCE verifier, retain them in a short-lived session, and return only state and the S256 challenge. The component validates their format. Never hard-code state or a challenge in Builder. The server must validate the configured issuer/client/callback against its own allowlist rather than trusting the posted values, protect the endpoint against CSRF, and validate the return path against the intended Experience site. Cross-origin endpoints require explicit credentialed CORS, suitable cookies, and a site CSP connect allowlist. Prefer a same-origin integration where possible.
+If the updated component says **bridge did not acknowledge**, check that both new head blocks ran and that the inline bridge isn't CSP-blocked. If it says **controls did not render**, the bridge acknowledged but Okta failed to produce a screen. If it reports **bridge failed**, capture that error and its Console stack. Missing stylesheet loads have their own timeout message.
 
-The server callback must validate and consume state, redeem the authorization code with the retained verifier and server-only credentials, validate the tokens, and implement a supported **Salesforce session handoff** before returning to the saved page. An Okta token stored in the browser does not create an Experience Cloud session. A custom callback cannot simply send its Okta code to Salesforce's Auth Provider callback: Salesforce must have initiated and tracked its own federation transaction. Design and test that handoff with your Salesforce identity configuration.
-
-This change supplies the standalone frontend and the transaction contract. It does **not** supply the server endpoint, callback, or Salesforce federation configuration, which require your tenant details and integration architecture. Enabling the switch without that backend fails closed rather than accepting credentials in a disconnected preview.
-
-## Validation
-
-Deployed the component alone to `aforce_de`: deployment `0AfgL00000aDdzhSAC` succeeded. Salesforce compilation, lint, and seven unit tests passed. No Experience site configuration or page was changed or published.
-
-Unit tests cover asynchronous include readiness, disabled preview controls, asset failure, cleanup, and the live transaction configuration. They mock the Okta constructor; they do not establish a real Okta or Salesforce session. Final acceptance requires testing in a published LWR site with its includes/CSP configured, then an actual tenant and callback for live login.
-
-For version upgrades, update the head include, component CDN version, and both integrity hashes together. Do not use a floating `latest` CDN URL.
+For upgrades, update the head include, component CDN version, and JavaScript/CSS integrity hashes together. Avoid floating `latest` CDN URLs.
