@@ -1,0 +1,22 @@
+:host {
+  display: block;
+}
+.signin {
+  max-width: 480px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+h1 {
+  text-align: center;
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+}
+.notice {
+  background: #eef4fb;
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+p[role="status"] {
+  text-align: center;
+  margin: 1rem 0;
+}

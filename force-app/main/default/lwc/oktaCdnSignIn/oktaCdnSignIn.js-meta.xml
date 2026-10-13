@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+  <apiVersion>67.0</apiVersion>
+  <isExposed>true</isExposed>
+  <masterLabel>Okta Embedded Sign-In (CDN)</masterLabel>
+  <description
+  >Embedded Okta widget using LWR CDN includes. Preview by default; live mode requires a server login transaction and callback.</description>
+  <targets>
+    <target>lightningCommunity__Page</target>
+    <target>lightningCommunity__Default</target>
+  </targets>
+  <targetConfigs>
+    <targetConfig targets="lightningCommunity__Default">
+      <property
+        name="heading"
+        type="String"
+        label="Heading"
+        default="Sign in"
+      />
+      <property
+        name="brandColor"
+        type="String"
+        label="Brand color (six-digit hex)"
+        default="#4c6e9e"
+      />
+      <property
+        name="enableAuthentication"
+        type="Boolean"
+        label="Enable authentication (requires server integration)"
+        default="false"
+      />
+      <property name="issuer" type="String" label="Okta issuer URL" />
+      <property
+        name="clientId"
+        type="String"
+        label="Okta web application client ID"
+      />
+      <property name="redirectUri" type="String" label="Server callback URL" />
+      <property
+        name="transactionEndpoint"
+        type="String"
+        label="Server login transaction endpoint"
+      />
+    </targetConfig>
+  </targetConfigs>
+</LightningComponentBundle>

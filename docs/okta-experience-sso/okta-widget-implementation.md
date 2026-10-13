@@ -89,3 +89,7 @@ Deployment `0AfgL00000a61RJSAY` succeeded. Publication `08PgL00001IaFHaUAN` comp
 | `/customer/login?startURL=%2Fcustomer%2Fnews%2Ftest` | 200; same shared Okta panel                                                                                                |
 
 These checks confirm centralized guest routing without a Google redirect. The News test paths use placeholder destinations and do not validate record availability after authentication. The disabled widget and live browser rendering limitations described above still apply.
+
+## CDN-based standalone alternative
+
+For the newer reusable component that loads Okta through LWR CDN includes, see [Standalone embedded Okta component for LWR](okta-cdn-widget.md). This document describes the existing static-resource preview.

@@ -1,0 +1,10 @@
+<template>
+  <section class="signin" aria-label="Okta sign-in">
+    <h1>{heading}</h1>
+    <template lwc:if={isPreview}>
+      <p class="notice">Sign-in preview. Authentication is not connected.</p>
+    </template>
+    <p role="status" aria-live="polite">{status}</p>
+    <div class="widget-mount" lwc:dom="manual"></div>
+  </section>
+</template>
