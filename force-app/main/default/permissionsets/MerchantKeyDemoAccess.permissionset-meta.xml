@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+<description
+  >Create and read accessible ciphertext demo records; no global record access.</description>
+<fieldPermissions><editable>true</editable><field
+    >Merchant_Key_Demo__c.Encrypted_Payload__c</field><readable
+    >true</readable></fieldPermissions>
+<label>Merchant Key Demo Access</label>
+<objectPermissions><allowCreate>true</allowCreate><allowDelete
+    >false</allowDelete><allowEdit>false</allowEdit><allowRead
+    >true</allowRead><modifyAllRecords>false</modifyAllRecords><object
+    >Merchant_Key_Demo__c</object><viewAllRecords
+    >false</viewAllRecords></objectPermissions>
+</PermissionSet>

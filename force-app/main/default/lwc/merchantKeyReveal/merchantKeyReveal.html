@@ -1,0 +1,71 @@
+<template>
+  <lightning-card
+    title="Merchant API key — browser decryption POC"
+    icon-name="utility:lock"
+  >
+    <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+      <p>
+        Use demo secrets only. Save your decryption key separately; Salesforce
+        stores only ciphertext.
+      </p>
+      <lightning-input
+        label="Decryption key (Base64, 32 random bytes)"
+        value={keyValue}
+        onchange={handleKey}
+        disabled={busy}
+        autocomplete="off"
+      ></lightning-input>
+      <lightning-button
+        label="Generate demo decryption key"
+        onclick={generate}
+        disabled={busy}
+      ></lightning-button>
+      <lightning-input
+        type="password"
+        label="Demo API key to encrypt"
+        value={draftSecret}
+        onchange={handleSecret}
+        disabled={busy}
+        max-length="1024"
+        autocomplete="off"
+      ></lightning-input>
+      <lightning-button
+        label="Encrypt in browser and save ciphertext"
+        onclick={save}
+        disabled={saveDisabled}
+      ></lightning-button>
+      <lightning-input
+        label="Saved ciphertext record ID"
+        value={activeRecordId}
+        onchange={handleRecord}
+        disabled={busy}
+      ></lightning-input>
+      <div class="slds-m-top_medium">
+        <lightning-button
+          variant="brand"
+          label="Reveal API key"
+          onclick={reveal}
+          disabled={revealDisabled}
+        ></lightning-button>
+        <lightning-button
+          class="slds-m-left_small"
+          label="Hide and clear inputs"
+          onclick={lock}
+        ></lightning-button>
+      </div>
+      <template lwc:if={revealedSecret}>
+        <div class="slds-box slds-m-top_medium" aria-live="polite">
+          <p>Revealed API key</p>
+          <lightning-formatted-text
+            value={revealedSecret}
+          ></lightning-formatted-text>
+        </div>
+      </template>
+      <p class="slds-m-top_small" role="status">{status}</p>
+      <details class="slds-m-top_medium">
+        <summary>Stored encrypted payload</summary>
+        <lightning-formatted-text value={payload}></lightning-formatted-text>
+      </details>
+    </div>
+  </lightning-card>
+</template>
