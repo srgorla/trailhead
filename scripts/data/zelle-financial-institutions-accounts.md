@@ -2,6 +2,12 @@
 
 Source page: https://enroll.zellepay.com/
 
+Current audit: [full cross-check and corrected counts](zelle-crosscheck-2026-10-29.md).
+Use the full CSV under `snapshots/2026-10-29/crosscheck/` for review. It preserves
+same-name entries with different source IDs or URLs; do not use Name alone as an upsert key.
+
+Follow-up: [1st Summit Bank verification and updated counts](zelle-snapshot-verification-2026-10-29.md).
+
 Latest audit: [October 29, 2026 snapshot comparison](zelle-snapshot-comparison-2026-10-29.md).
 The original CSV is preserved as the previous baseline; the fresh snapshot and change lists
 are under `snapshots/2026-10-29/`.

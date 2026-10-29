@@ -1,5 +1,9 @@
 # Zelle directory snapshot comparison — October 29, 2026
 
+**Full cross-check:** see [the authoritative cross-check report](zelle-crosscheck-2026-10-29.md) for 2,580 unique names / 2,589 distinct entries and the scraper correction. This report preserves the earlier response.
+
+**Superseded directory counts:** a subsequent fetch includes 1st Summit Bank and two additional listings. See the [verification and correction](zelle-snapshot-verification-2026-10-29.md): 2,580 listings, 65 added names, 34 removed names, net +31 versus August. The figures below describe the earlier saved response only.
+
 ## Scope and evidence
 
 Read-only audit of Salesforce org `react-enroll-zelle` and the public Zelle institution directory. No Salesforce Accounts were inserted, updated, or deleted.
@@ -68,7 +72,7 @@ Logo URLs changed from `/logos/zellepay/...` to `/sites/default/files/logos/zell
 ## Reproduce from saved evidence
 
 ```bash
-node scripts/data/scrape-zelle-institutions.mjs scripts/data/snapshots/2026-10-29/zelle-directory.html scripts/data/snapshots/2026-10-29/zelle-financial-institutions-accounts.csv
+node scripts/data/scrape-zelle-institutions.mjs scripts/data/snapshots/2026-10-29/zelle-directory.html scripts/data/snapshots/2026-10-29/zelle-financial-institutions-accounts.csv --dedupe-by-name
 python3 scripts/data/compare-zelle-snapshots.py
 ```
 

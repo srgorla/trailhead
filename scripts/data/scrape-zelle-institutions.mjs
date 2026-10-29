@@ -2,6 +2,7 @@ import { readFile, writeFile } from 'node:fs/promises';
 
 const SOURCE_URL = 'https://enroll.zellepay.com/';
 const OUTPUT_PATH = process.argv[3] || new URL('./zelle-financial-institutions-accounts.csv', import.meta.url);
+const LEGACY_NAME_DEDUPLICATION = process.argv.includes('--dedupe-by-name');
 
 function decodeHtml(value) {
   return value
@@ -70,7 +71,7 @@ async function fetchHtml() {
 // Optional input/output paths let audits parse an archived response without
 // overwriting the previous snapshot or downloading the page again.
 const html = process.argv[2] ? await readFile(process.argv[2], 'utf8') : await fetchHtml();
-const rowsByName = new Map();
+const rowsByIdentity = new Map();
 const itemPattern =
   /<li class="partner-list-letter-block__partner-name"[^>]*id="item_([^"]+)"[^>]*>\s*<a\b([^>]+)>/g;
 
@@ -82,13 +83,17 @@ for (const match of html.matchAll(itemPattern)) {
   const logoUrl = absolutizeUrl(getAttribute(anchor, 'data-banklogo'));
   const firstLetter = getAttribute(anchor, 'data-firstletter');
 
-  if (!name || rowsByName.has(name.toLowerCase())) {
+  // Names are not unique: preserve banks with the same name but distinct
+  // source IDs or URLs. Collapse only repeated copies of the same listing.
+  const identity = LEGACY_NAME_DEDUPLICATION ? name.toLowerCase() :
+    JSON.stringify([name.toLowerCase(), sourceId, enrollmentUrl, logoUrl]);
+  if (!name || rowsByIdentity.has(identity)) {
     continue;
   }
 
   const keywordParts = [name, 'Zelle', sourceId, firstLetter].filter(Boolean);
 
-  rowsByName.set(name.toLowerCase(), {
+  rowsByIdentity.set(identity, {
     Name: name,
     Public_Display_Name__c: name,
     Public_Search_Keywords__c: keywordParts.join(' '),
@@ -102,7 +107,7 @@ for (const match of html.matchAll(itemPattern)) {
   });
 }
 
-const rows = [...rowsByName.values()].sort((left, right) =>
+const rows = [...rowsByIdentity.values()].sort((left, right) =>
   left.Public_Display_Name__c.localeCompare(right.Public_Display_Name__c, 'en', { sensitivity: 'base' })
 );
 

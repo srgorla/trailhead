@@ -1,0 +1,71 @@
+{
+  "previous_unique_names": 2549,
+  "latest_unique_names": 2580,
+  "latest_distinct_entries": 2589,
+  "latest_raw_entries": 2590,
+  "added_names": 65,
+  "absent_names": 34,
+  "net_name_change": 31,
+  "retained_names": 2515,
+  "same_name_groups": 9,
+  "additional_same_name_entries": 9,
+  "exact_duplicate_entries": 1,
+  "source_id_collisions": {
+    "2FB": [
+      "CorePlus Federal Credit Union",
+      "Waypoint Credit Union"
+    ]
+  },
+  "org_accounts": 2563,
+  "org_creation_dates": {
+    "2026-04-23": 14,
+    "2026-08-23": 2549
+  },
+  "org_baseline_names_missing": 0,
+  "org_extra_names": 14,
+  "org_added_ids_since_earlier_export": 0,
+  "org_removed_ids_since_earlier_export": 0,
+  "baseline_review_status_counts": {
+    "retained name/source ID": 2503,
+    "retained name; source ID changed": 12,
+    "absent name; review required": 34
+  },
+  "field_change_counts": {
+    "Logo_URL__c": 2515,
+    "Name": 1,
+    "Public_Display_Name__c": 1,
+    "Public_Search_Keywords__c": 12,
+    "Enrollment_URL__c": 18,
+    "Website": 18
+  },
+  "responses": [
+    {
+      "response": "standard.html",
+      "raw_entries": 2590,
+      "distinct_entries": 2589,
+      "unique_names": 2580
+    },
+    {
+      "response": "nocache.html",
+      "raw_entries": 2590,
+      "distinct_entries": 2589,
+      "unique_names": 2580
+    },
+    {
+      "response": "browser-user-agent.html",
+      "raw_entries": 2590,
+      "distinct_entries": 2589,
+      "unique_names": 2580
+    }
+  ],
+  "checks_passed": [
+    "August baseline is byte-for-byte identical to commit b9d9f76 and the preserved original CSV",
+    "All original audit and follow-up verification evidence hashes are intact",
+    "All fields of all 2,589 output rows match an independent HTML parser",
+    "Standard, cache-bypassed, and browser-user-agent responses contain identical listing data",
+    "All unique-name additions/removals reconcile; 1st Summit Bank is retained",
+    "Earlier 2,577-name and follow-up 2,580-name CSVs match their archived HTML under the previous deduplication rule",
+    "Complete fresh org export matches every selected field and Account ID in the earlier export",
+    "All 2,549 baseline names remain in the org; date counts reconcile to 2,563 Accounts"
+  ]
+}

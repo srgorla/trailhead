@@ -1,0 +1,38 @@
+{
+  "previous_listings": 2549,
+  "earlier_fetch_listings": 2577,
+  "verification_listings": 2580,
+  "added_names_vs_previous": 65,
+  "removed_names_vs_previous": 34,
+  "net_increase_vs_previous": 31,
+  "added_since_earlier_fetch": [
+    "1st summit bank",
+    "first commerce bank - nj",
+    "first community credit union"
+  ],
+  "removed_since_earlier_fetch": [],
+  "summit_previous": {
+    "Name": "1ST SUMMIT BANK",
+    "Public_Display_Name__c": "1ST SUMMIT BANK",
+    "Public_Search_Keywords__c": "1ST SUMMIT BANK Zelle 36I #",
+    "Publicly_Listed__c": "true",
+    "Supports_Enrollment__c": "true",
+    "Enrollment_URL__c": "https://www.1stsummit.bank/home/zelle/",
+    "Institution_Status__c": "Active",
+    "Logo_URL__c": "https://enroll.zellepay.com/logos/zellepay/36I.png",
+    "Logo_ContentVersionId__c": "",
+    "Website": "https://www.1stsummit.bank/home/zelle/"
+  },
+  "summit_verified": {
+    "Name": "1st Summit Bank",
+    "Public_Display_Name__c": "1st Summit Bank",
+    "Public_Search_Keywords__c": "1st Summit Bank Zelle JSV #",
+    "Publicly_Listed__c": "true",
+    "Supports_Enrollment__c": "true",
+    "Enrollment_URL__c": "https://www.1stsummit.bank/home/personal/ebanking/digital-payments/zelle-payments/",
+    "Institution_Status__c": "Active",
+    "Logo_URL__c": "https://enroll.zellepay.com/sites/default/files/logos/zellepay/JSV.png",
+    "Logo_ContentVersionId__c": "",
+    "Website": "https://www.1stsummit.bank/home/personal/ebanking/digital-payments/zelle-payments/"
+  }
+}

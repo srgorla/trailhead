@@ -83,6 +83,14 @@ manifest = {p.name: hashlib.sha256(p.read_bytes()).hexdigest()
 (OUT / 'sha256.json').write_text(json.dumps(manifest, indent=2)+'\n')
 lines = [
     '# Zelle directory snapshot comparison — October 29, 2026', '',
+    *(['**Full cross-check:** see [the authoritative cross-check report](zelle-crosscheck-2026-10-29.md) '
+       'for 2,580 unique names / 2,589 distinct entries and the scraper correction. This report preserves the earlier response.', '']
+      if (ROOT / 'zelle-crosscheck-2026-10-29.md').exists() else []),
+    *(['**Superseded directory counts:** a subsequent fetch includes 1st Summit Bank and two additional listings. '
+       'See the [verification and correction](zelle-snapshot-verification-2026-10-29.md): '
+       '2,580 listings, 65 added names, 34 removed names, net +31 versus August. '
+       'The figures below describe the earlier saved response only.', '']
+      if (ROOT / 'zelle-snapshot-verification-2026-10-29.md').exists() else []),
     '## Scope and evidence', '',
     'Read-only audit of Salesforce org `react-enroll-zelle` and the public Zelle institution directory. '
     'No Salesforce Accounts were inserted, updated, or deleted.', '',
@@ -133,7 +141,7 @@ lines = [
     '- [Machine-readable summary](snapshots/2026-10-29/comparison-summary.json)',
     '- [Evidence hashes](snapshots/2026-10-29/sha256.json)', '',
     '## Reproduce from saved evidence', '', '```bash',
-    'node scripts/data/scrape-zelle-institutions.mjs scripts/data/snapshots/2026-10-29/zelle-directory.html scripts/data/snapshots/2026-10-29/zelle-financial-institutions-accounts.csv',
+    'node scripts/data/scrape-zelle-institutions.mjs scripts/data/snapshots/2026-10-29/zelle-directory.html scripts/data/snapshots/2026-10-29/zelle-financial-institutions-accounts.csv --dedupe-by-name',
     'python3 scripts/data/compare-zelle-snapshots.py', '```', '',
     'The complete org export uses: `SELECT Id, Name, CreatedDate, Public_Display_Name__c, '
     'Publicly_Listed__c, Enrollment_URL__c, Institution_Status__c, Logo_URL__c, Website '
