@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata"><fullName
+  >Resource_Key__c</fullName><description
+  >Resource Key for the merchant browser encryption POC.</description><inlineHelpText
+  >Managed by the merchant vault service. Provision membership through an administrator.</inlineHelpText><label
+  >Resource Key</label><externalId>true</externalId><length>36</length><unique
+  >true</unique><type>Text</type></CustomField>

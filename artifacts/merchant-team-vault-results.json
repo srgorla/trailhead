@@ -1,0 +1,52 @@
+{
+  "target": "aforce_de",
+  "deploymentId": "0AfgL00000aUEwrSAG",
+  "status": "Succeeded",
+  "components": 29,
+  "apexTests": {
+    "run": 12,
+    "failures": 0,
+    "coverage": [
+      {
+        "class": "MerchantTeamVaultStore",
+        "covered": 223,
+        "total": 234
+      },
+      {
+        "class": "MerchantTeamVaultController",
+        "covered": 9,
+        "total": 9
+      }
+    ]
+  },
+  "lwcTests": {
+    "passed": 6
+  },
+  "analyzer": {
+    "total": 51,
+    "sev1": 0,
+    "sev2": 0,
+    "sev3": 43,
+    "sev4": 8,
+    "sev5": 0
+  },
+  "liveBrowserVerification": "pending: no browser connection available",
+  "provisioningAdminDeployment": {
+    "id": "0AfgL00000aTpvGSAS",
+    "status": "Succeeded"
+  },
+  "provisionedTeam": [
+    {
+      "user": "Jack Roger",
+      "memberId": "a0AgL00000C35M1UAJ",
+      "canGrant": true
+    },
+    {
+      "user": "Harry Cane",
+      "memberId": "a0AgL00000C35KPUAZ",
+      "canGrant": false
+    }
+  ],
+  "merchant": "Burlington Textiles Corp of America",
+  "permissionAssignmentsVerified": true
+}

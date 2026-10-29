@@ -1,0 +1,139 @@
+<template>
+  <lightning-card
+    title="Merchant team vault — personal keys"
+    icon-name="utility:lock"
+  >
+    <div class="slds-p-around_medium">
+      <p>Merchant: {merchantName}</p>
+      <p>
+        Each teammate unlocks a personal key. Only encrypted backups, ciphertext
+        and recipient grants are stored in Salesforce. Use demo secrets.
+      </p>
+      <lightning-button
+        label="Refresh team and secrets"
+        onclick={refresh}
+        disabled={busy}
+      ></lightning-button>
+      <lightning-input
+        type="password"
+        label="My encryption passphrase (at least 16 characters)"
+        value={passphrase}
+        onchange={setPassphrase}
+        disabled={busy}
+        autocomplete="off"
+      ></lightning-input>
+      <div class="slds-m-top_small">
+        <lightning-button
+          label="Enroll my personal key"
+          onclick={enroll}
+          disabled={enrollDisabled}
+        ></lightning-button>
+        <lightning-button
+          class="slds-m-left_small"
+          label="Unlock my key"
+          onclick={unlock}
+          disabled={unlockDisabled}
+        ></lightning-button>
+        <lightning-button
+          class="slds-m-left_small"
+          label="Lock vault"
+          onclick={lock}
+        ></lightning-button>
+      </div>
+      <p class="slds-m-top_small">
+        My public-key fingerprint:
+        <lightning-formatted-text
+          value={ownFingerprint}
+        ></lightning-formatted-text>
+      </p>
+      <lightning-input
+        label="Secret label (not confidential)"
+        value={label}
+        onchange={setLabel}
+        disabled={busy}
+        max-length="80"
+      ></lightning-input>
+      <lightning-input
+        type="password"
+        label="Demo API secret"
+        value={draft}
+        onchange={setDraft}
+        disabled={busy}
+        max-length="1024"
+        autocomplete="off"
+      ></lightning-input>
+      <lightning-button
+        label="Encrypt and save team secret"
+        onclick={createSecret}
+        disabled={createDisabled}
+      ></lightning-button>
+      <lightning-combobox
+        label="Secrets granted to me"
+        value={secretId}
+        options={secrets}
+        onchange={selectSecret}
+        disabled={busy}
+      ></lightning-combobox>
+      <lightning-button
+        variant="brand"
+        label="Reveal using my key"
+        onclick={reveal}
+        disabled={revealDisabled}
+      ></lightning-button>
+      <lightning-button
+        class="slds-m-left_small"
+        label="Hide secret"
+        onclick={hide}
+      ></lightning-button>
+      <template lwc:if={plaintext}>
+        <div class="slds-box slds-m-top_medium" aria-live="polite">
+          <p>Revealed API secret</p>
+          <lightning-formatted-text
+            value={plaintext}
+          ></lightning-formatted-text>
+        </div>
+      </template>
+      <template lwc:if={canGrant}>
+        <div class="slds-m-top_large">
+          <h3 class="slds-text-heading_small">Teammate access</h3>
+          <lightning-combobox
+            label="Enrolled teammate in my merchant"
+            value={recipientId}
+            options={teammates}
+            onchange={selectRecipient}
+            disabled={busy}
+          ></lightning-combobox>
+          <p>
+            Recipient fingerprint:
+            <lightning-formatted-text
+              value={recipientFingerprint}
+            ></lightning-formatted-text>
+          </p>
+          <p>
+            Compare this fingerprint with your teammate through a trusted
+            channel before granting.
+          </p>
+          <lightning-input
+            type="checkbox"
+            label="I verified this teammate’s key fingerprint"
+            checked={fingerprintVerified}
+            onchange={verifyFingerprint}
+            disabled={busy}
+          ></lightning-input>
+          <lightning-button
+            label="Grant teammate access"
+            onclick={grant}
+            disabled={grantDisabled}
+          ></lightning-button>
+          <lightning-button
+            class="slds-m-left_small"
+            label="Revoke teammate retrieval"
+            onclick={revoke}
+            disabled={revokeDisabled}
+          ></lightning-button>
+        </div>
+      </template>
+      <p class="slds-m-top_medium" role="status">{status}</p>
+    </div>
+  </lightning-card>
+</template>

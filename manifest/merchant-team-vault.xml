@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata"><types><members
+    >MerchantTeamVaultController</members><members
+    >MerchantTeamVaultStore</members><members
+    >MerchantTeamVaultControllerTest</members><members
+    >MerchantVaultTestDataFactory</members><name>ApexClass</name></types><types
+  ><members>Merchant_Vault_Member__c</members><members
+    >Merchant_Vault_Secret__c</members><members
+    >Merchant_Vault_Grant__c</members><name>CustomObject</name></types><types
+  ><members>Merchant_Team_Vault</members><name
+    >CustomPermission</name></types><types><members
+    >MerchantTeamVaultAccess</members><name>PermissionSet</name></types><types
+  ><members>merchantTeamCrypto</members><members
+    >merchantTeamVault</members><members>merchantKeyReveal</members><name
+    >LightningComponentBundle</name></types><version>66.0</version></Package>

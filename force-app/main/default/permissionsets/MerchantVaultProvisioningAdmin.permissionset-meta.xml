@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata"><description
+  >Internal administrator provisioning of vault membership only. Never assign to merchant users.</description><fieldPermissions
+  ><editable>true</editable><field
+    >Merchant_Vault_Member__c.Active__c</field><readable
+    >true</readable></fieldPermissions><fieldPermissions><editable
+    >true</editable><field
+    >Merchant_Vault_Member__c.Can_Grant__c</field><readable
+    >true</readable></fieldPermissions><fieldPermissions><editable
+    >true</editable><field
+    >Merchant_Vault_Member__c.Encrypted_Private_Key__c</field><readable
+    >true</readable></fieldPermissions><fieldPermissions><editable
+    >true</editable><field
+    >Merchant_Vault_Member__c.Key_Fingerprint__c</field><readable
+    >true</readable></fieldPermissions><fieldPermissions><editable
+    >true</editable><field
+    >Merchant_Vault_Member__c.Member_User__c</field><readable
+    >true</readable></fieldPermissions><fieldPermissions><editable
+    >true</editable><field>Merchant_Vault_Member__c.Merchant__c</field><readable
+    >true</readable></fieldPermissions><fieldPermissions><editable
+    >true</editable><field
+    >Merchant_Vault_Member__c.Public_Key__c</field><readable
+    >true</readable></fieldPermissions><fieldPermissions><editable
+    >true</editable><field>Merchant_Vault_Member__c.User_Key__c</field><readable
+    >true</readable></fieldPermissions><label
+  >Merchant Vault Provisioning Admin</label><objectPermissions><allowCreate
+    >true</allowCreate><allowDelete>false</allowDelete><allowEdit
+    >true</allowEdit><allowRead>true</allowRead><modifyAllRecords
+    >false</modifyAllRecords><object
+    >Merchant_Vault_Member__c</object><viewAllRecords
+    >false</viewAllRecords></objectPermissions></PermissionSet>
