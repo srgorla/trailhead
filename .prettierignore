@@ -9,3 +9,6 @@
 .vscode
 
 coverage/
+
+# Preserve archived source/export bytes and their evidence hashes.
+scripts/data/snapshots/

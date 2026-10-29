@@ -2,6 +2,10 @@
 
 Source page: https://enroll.zellepay.com/
 
+Latest audit: [October 29, 2026 snapshot comparison](zelle-snapshot-comparison-2026-10-29.md).
+The original CSV is preserved as the previous baseline; the fresh snapshot and change lists
+are under `snapshots/2026-10-29/`.
+
 Generated file:
 
 - `zelle-financial-institutions-accounts.csv`

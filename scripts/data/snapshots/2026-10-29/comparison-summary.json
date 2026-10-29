@@ -1,0 +1,32 @@
+{
+  "snapshot_date": "2026-10-29",
+  "source_url": "https://enroll.zellepay.com/",
+  "org_alias": "react-enroll-zelle",
+  "previous_listings": 2549,
+  "current_listings": 2577,
+  "added_names": 63,
+  "removed_names": 35,
+  "net_change": 28,
+  "retained_names": 2514,
+  "retained_names_with_field_changes": 2514,
+  "changed_fields": {
+    "Logo_URL__c": 2514,
+    "Enrollment_URL__c": 25,
+    "Website": 25,
+    "Public_Search_Keywords__c": 19,
+    "Name": 6,
+    "Public_Display_Name__c": 6
+  },
+  "possible_rename_pairs": 7,
+  "org_accounts": 2563,
+  "org_creation_dates": {
+    "2026-04-23": 14,
+    "2026-08-23": 2549
+  },
+  "previous_names_missing_from_org": 0,
+  "org_names_outside_previous_snapshot": 14,
+  "current_names_missing_from_org": 63,
+  "current_duplicate_source_ids": {
+    "2FB": 2
+  }
+}

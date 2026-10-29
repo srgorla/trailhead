@@ -1,7 +1,7 @@
-import { writeFile } from 'node:fs/promises';
+import { readFile, writeFile } from 'node:fs/promises';
 
 const SOURCE_URL = 'https://enroll.zellepay.com/';
-const OUTPUT_PATH = new URL('./zelle-financial-institutions-accounts.csv', import.meta.url);
+const OUTPUT_PATH = process.argv[3] || new URL('./zelle-financial-institutions-accounts.csv', import.meta.url);
 
 function decodeHtml(value) {
   return value
@@ -53,17 +53,23 @@ function toCsv(rows) {
   return `${lines.join('\n')}\n`;
 }
 
-const response = await fetch(SOURCE_URL, {
-  headers: {
-    'user-agent': 'trailhead-salesforce-test-data-prep/1.0'
-  }
-});
+async function fetchHtml() {
+  const response = await fetch(SOURCE_URL, {
+    headers: {
+      'user-agent': 'trailhead-salesforce-test-data-prep/1.0'
+    }
+  });
 
-if (!response.ok) {
-  throw new Error(`Failed to fetch ${SOURCE_URL}: ${response.status} ${response.statusText}`);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch ${SOURCE_URL}: ${response.status} ${response.statusText}`);
+  }
+
+  return response.text();
 }
 
-const html = await response.text();
+// Optional input/output paths let audits parse an archived response without
+// overwriting the previous snapshot or downloading the page again.
+const html = process.argv[2] ? await readFile(process.argv[2], 'utf8') : await fetchHtml();
 const rowsByName = new Map();
 const itemPattern =
   /<li class="partner-list-letter-block__partner-name"[^>]*id="item_([^"]+)"[^>]*>\s*<a\b([^>]+)>/g;
@@ -106,4 +112,4 @@ if (rows.length === 0) {
 
 await writeFile(OUTPUT_PATH, toCsv(rows), 'utf8');
 
-console.log(`Wrote ${rows.length} rows to ${OUTPUT_PATH.pathname}`);
+console.log(`Wrote ${rows.length} rows to ${OUTPUT_PATH.pathname || OUTPUT_PATH}`);
