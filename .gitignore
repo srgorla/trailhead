@@ -49,3 +49,7 @@ $RECYCLE.BIN/
 **/__pycache__/
 **/.venv/
 **/venv/
+.env.google-oidc
+.env.headless-360
+.local-secrets/jwt-ip-test/jwt-ip-test.key
+.local-secrets/mcp-check/unpackaged.zip

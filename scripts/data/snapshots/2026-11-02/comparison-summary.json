@@ -1,0 +1,42 @@
+{
+  "snapshot_date": "2026-11-02",
+  "timezone": "America/Chicago",
+  "source_url": "https://enroll.zellepay.com/",
+  "previous_snapshot_date": "2026-10-30",
+  "previous_entries": 2589,
+  "current_entries": 2585,
+  "previous_unique_names": 2580,
+  "current_unique_names": 2576,
+  "added_entries": 1,
+  "absent_entries": 5,
+  "changed_entries": 0,
+  "unchanged_entries": 2584,
+  "added_names": [
+    "Morton Community Bank"
+  ],
+  "absent_names": [
+    "AdelFi Credit Union",
+    "Dogwood State Bank",
+    "First Bank of Manhattan",
+    "TelComm Credit Union",
+    "Winston-Salem FCU"
+  ],
+  "net_change": -4,
+  "response_checks": [
+    {
+      "response": "zelle-directory.html",
+      "raw_entries": 2585,
+      "distinct_entries": 2585,
+      "all_fields_match": true
+    },
+    {
+      "response": "verification.html",
+      "raw_entries": 2585,
+      "distinct_entries": 2585,
+      "all_fields_match": true
+    }
+  ],
+  "previous_csv_hash_verified": true,
+  "verified_at": "2026-11-02T19:44:08.620152-06:00",
+  "salesforce_records_modified": false
+}
