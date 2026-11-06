@@ -1,0 +1,27 @@
+HTTP/1.1 200 OK
+Date: Fri, 30 Oct 2026 13:54:29 GMT
+Content-Type: text/html; charset=utf-8
+Transfer-Encoding: chunked
+Connection: keep-alive
+Server: cloudflare
+Cache-Control: max-age=1800, must-revalidate, public
+x-drupal-dynamic-cache: HIT
+content-language: en
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+expires: Sun, 19 Nov 1978 05:00:00 GMT
+vary: Cookie,X-Consumer-ID,Accept-Encoding
+x-generator: Drupal 11 (https://www.drupal.org)
+x-consumer-id: eac87a0f-a459-4662-9caf-8ed21cdbfff8
+content-security-policy: script-src 'unsafe-inline' 'unsafe-eval' 'self' https://www.googletagmanager.com https://www.google-analytics.com https://www.googletagmanager.com https://js-agent.newrelic.com https://bam-cell.nr-data.net data: https://connect.facebook.net; object-src 'none'; style-src 'self' 'unsafe-inline' https://translate.googleapis.com https://www.gstatic.com; media-src 'self'; frame-src 'self' https://www.googletagmanager.com; frame-ancestors 'none'; font-src 'self' https://cdn.getspeechify.com https://www.clearplay.com https://fonts.gstatic.com https://assets.quadpay.com https://static3.avast.com; connect-src 'self' https://www.google-analytics.com https://stats.g.doubleclick.net https://js-agent.newrelic.com https://bam-cell.nr-data.net https://track.uc.cn http://uc.gre https://www.bing.com https://bam.nr-data.net https://bam.nr-data.net
+x-xss-protection: 1; mode=block
+x-drupal-cache: MISS
+last-modified: Fri, 30 Oct 2026 13:54:28 GMT
+cf-cache-status: MISS
+x-request-id: v-6cef809c-d469-11f1-8ef7-bf146ca36f86
+x-ah-environment: prod
+via: varnish
+x-cache: MISS
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+CF-RAY: a52ae9816b617d78-ORD
+

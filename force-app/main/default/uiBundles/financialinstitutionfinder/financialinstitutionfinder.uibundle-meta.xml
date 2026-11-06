@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<UIBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <masterLabel>Financial Institution Finder</masterLabel>
+    <description
+  >Public external React app for searching financial institutions.</description>
+    <isActive>true</isActive>
+    <version>1</version>
+    <target>Experience</target>
+</UIBundle>

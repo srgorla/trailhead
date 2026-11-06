@@ -10,5 +10,7 @@
 
 coverage/
 
+# Preserve archived source/export bytes and their evidence hashes.
+scripts/data/snapshots/
 # Preserve installed Salesforce skills, including code templates and snippets.
 .agents/skills/

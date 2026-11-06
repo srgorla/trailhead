@@ -1,0 +1,35 @@
+{
+  "snapshot_date": "2026-10-30",
+  "timezone": "America/Chicago",
+  "source_url": "https://enroll.zellepay.com/",
+  "previous_snapshot": "../2026-10-29/crosscheck/zelle-financial-institutions-accounts.csv",
+  "previous_entries": 2589,
+  "current_entries": 2589,
+  "previous_raw_entries": 2590,
+  "current_raw_entries": 2589,
+  "previous_unique_names": 2580,
+  "current_unique_names": 2580,
+  "added_entries": 0,
+  "missing_entries": 0,
+  "changed_entries": 0,
+  "added_names": [],
+  "absent_names": [],
+  "all_11_fields_match_yesterday": true,
+  "yesterday_csv_hash_verified": true,
+  "responses": [
+    {
+      "file": "zelle-directory.html",
+      "raw_entries": 2589,
+      "distinct_entries": 2589,
+      "all_fields_match": true
+    },
+    {
+      "file": "verification.html",
+      "raw_entries": 2589,
+      "distinct_entries": 2589,
+      "all_fields_match": true
+    }
+  ],
+  "verified_at": "2026-10-30T09:01:08.581297-05:00",
+  "salesforce_records_modified": false
+}

@@ -1,0 +1,13 @@
+{
+  "README.md": "02c2f88bea8c2eedc7c24c6a07143213258696bb286f6aa151b742e56bddce7e",
+  "absent-listings.csv": "66f7a2672692e06b7066b42703967a26b6c3d4de6f7bff32f37bbead04f9df0a",
+  "added-listings.csv": "f90307b08732a21fbbd782e24fd50900979367eb7b0df9d0789719bbfcc3bad4",
+  "changed-fields.csv": "b847e9a862a7ff6b245823f6d7a8b62b226e9084fd83ea2af0401f61cccdf907",
+  "comparison-summary.json": "ee5335f65f399152da8b9e7499f7fcf97bb82eae0087e16b1c056172fa6bd5e5",
+  "response-headers.txt": "02db5511683a78f010f294ef694ad7d0dc39f3c936b22be3c1ce34cc13624e32",
+  "verification-headers.txt": "c8732ec48f696b23d3507bd4d816325bbe9db5346e5afba548ddd88ccc0b2e2b",
+  "verification.html": "864bae14cb2858c432bc57ef0cf03ed4a312d1468969fa282e2fcbe3462d24b7",
+  "verify-and-compare.py": "465ae7101125a6056ab7489971fe443fd621bd8463a29a0e479b25018ecd2c7f",
+  "zelle-directory.html": "5cde5b3cfe4dd0ff2f7869f3fb8de170f6fce166f1c09d3bcea4e4ba02d55dfe",
+  "zelle-financial-institutions-accounts.csv": "f425742962645bf212a92d245623e848813938d8d9c3e0ce6828d801700783fb"
+}

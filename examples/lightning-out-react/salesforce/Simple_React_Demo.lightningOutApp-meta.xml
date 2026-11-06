@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<LightningOutApp xmlns="http://soap.sforce.com/2006/04/metadata">
+    <applicationName>Simple React Demo</applicationName>
+    <isEnabled>true</isEnabled>
+    <components>
+        <component>
+            <componentName>c-simple-out-page</componentName>
+        </component>
+    </components>
+    <allowedDomains>
+        <domain><hostDomain>http://localhost:5174</hostDomain></domain>
+    </allowedDomains>
+</LightningOutApp>
