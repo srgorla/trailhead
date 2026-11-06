@@ -1,0 +1,81 @@
+<template>
+  <section class="card" aria-labelledby="task-title">
+    <p class="eyebrow">SALESFORCE LWC FORM</p>
+    <h2 id="task-title">Create a contact task</h2>
+    <lightning-record-edit-form
+      object-api-name={taskObject}
+      density="comfy"
+      onload={handleLoad}
+      onsubmit={handleSubmit}
+      onsuccess={handleSuccess}
+      onerror={handleError}
+    >
+      <lightning-record-picker
+        label="Contact"
+        object-api-name={contactObject}
+        placeholder="Search contacts…"
+        value={contactId}
+        required
+        disabled={fieldsDisabled}
+        onchange={handleContactChange}
+      ></lightning-record-picker>
+      <lightning-input-field
+        field-name={subjectField}
+        required
+        disabled={fieldsDisabled}
+      ></lightning-input-field>
+      <lightning-input-field
+        field-name={dueDateField}
+        disabled={fieldsDisabled}
+      ></lightning-input-field>
+      <div class="field-grid">
+        <lightning-input-field
+          field-name={priorityField}
+          value="Normal"
+          disabled={fieldsDisabled}
+        ></lightning-input-field>
+        <lightning-input-field
+          field-name={statusField}
+          value="Not Started"
+          disabled={fieldsDisabled}
+        ></lightning-input-field>
+      </div>
+      <lightning-input-field
+        field-name={descriptionField}
+        disabled={fieldsDisabled}
+      ></lightning-input-field>
+      <div class="actions">
+        <lightning-button
+          type="submit"
+          variant="brand"
+          label={saveLabel}
+          disabled={saveDisabled}
+        ></lightning-button>
+        <template lwc:if={savedTaskId}>
+          <lightning-button
+            type="button"
+            label="Create another task"
+            onclick={handleNewTask}
+          ></lightning-button>
+        </template>
+      </div>
+    </lightning-record-edit-form>
+    <template lwc:if={error}
+      ><p class="error" role="alert">{error}</p></template
+    >
+    <template lwc:if={savedTaskId}>
+      <div class="saved" role="status">
+        <p class="success">Task created: {savedTaskId}</p>
+        <p>{deliveryStatus}</p>
+        <a href={taskLink} target="_blank" rel="noopener noreferrer"
+          >Open task in Salesforce</a
+        >
+        <lightning-button
+          type="button"
+          label="Send Task ID to React"
+          onclick={publishTask}
+        ></lightning-button>
+      </div>
+    </template>
+  </section>
+</template>
