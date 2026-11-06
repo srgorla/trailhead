@@ -1,0 +1,77 @@
+{
+  "title": "Hotel Card",
+  "description": "Attributes required to render a hotel card.",
+  "type": "object",
+  "properties": {
+    "attributes": {
+      "lightning:type": "lightning__objectType",
+      "properties": {
+        "hotelId": {
+          "title": "Hotel ID",
+          "description": "Stable identifier for the hotel.",
+          "lightning:type": "lightning__textType"
+        },
+        "name": {
+          "title": "Name",
+          "description": "Hotel name.",
+          "lightning:type": "lightning__textType"
+        },
+        "city": {
+          "title": "City",
+          "description": "Hotel city.",
+          "lightning:type": "lightning__textType"
+        },
+        "stateOrRegion": {
+          "title": "State or Region",
+          "description": "Hotel state, province, or region.",
+          "lightning:type": "lightning__textType"
+        },
+        "country": {
+          "title": "Country",
+          "description": "Hotel country.",
+          "lightning:type": "lightning__textType"
+        },
+        "rating": {
+          "title": "Rating",
+          "description": "Hotel rating.",
+          "lightning:type": "lightning__numberType"
+        },
+        "pricePerNight": {
+          "title": "Price per Night",
+          "description": "Hotel nightly price.",
+          "lightning:type": "lightning__numberType"
+        },
+        "currencyCode": {
+          "title": "Currency Code",
+          "description": "ISO currency code for the nightly price.",
+          "lightning:type": "lightning__textType"
+        },
+        "checkInTime": {
+          "title": "Check-In Time",
+          "description": "Hotel check-in time.",
+          "lightning:type": "lightning__textType"
+        },
+        "checkOutTime": {
+          "title": "Check-Out Time",
+          "description": "Hotel check-out time.",
+          "lightning:type": "lightning__textType"
+        },
+        "imageUrl": {
+          "title": "Image URL",
+          "description": "Public image URL for the hotel.",
+          "lightning:type": "lightning__urlType"
+        },
+        "bookingUrl": {
+          "title": "Booking URL",
+          "description": "Optional booking or details URL.",
+          "lightning:type": "lightning__urlType"
+        },
+        "description": {
+          "title": "Description",
+          "description": "Short hotel summary.",
+          "lightning:type": "lightning__multilineTextType"
+        }
+      }
+    }
+  }
+}

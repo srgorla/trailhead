@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata"><fullName
+  >Member_User__c</fullName><description
+  >Member User for the merchant browser encryption POC.</description><inlineHelpText
+  >Managed by the merchant vault service. Provision membership through an administrator.</inlineHelpText><label
+  >Member User</label><deleteConstraint>SetNull</deleteConstraint><referenceTo
+  >User</referenceTo><relationshipName>VaultMemberships</relationshipName><type
+  >Lookup</type></CustomField>

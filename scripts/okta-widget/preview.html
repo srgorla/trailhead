@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="referrer" content="no-referrer" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'"
+    />
+    <title>Customer portal | Sign-in preview</title>
+    <link rel="stylesheet" href="css/okta-sign-in.min.css" />
+    <link rel="stylesheet" href="preview-overrides.css" />
+    <link rel="stylesheet" href="preview.css" />
+    <script src="js/okta-sign-in.no-polyfill.min.js" defer></script>
+    <script src="preview.js" defer></script>
+  </head>
+  <body>
+    <main class="portal">
+      <section class="portal-intro" aria-label="Customer portal">
+        <span class="eyebrow">CUSTOMER PORTAL</span>
+        <h1>Welcome to your customer portal</h1>
+        <p class="intro-copy">
+          One place to connect, collaborate, and get the support you need.
+        </p>
+        <div class="intro-note">
+          <span class="note-dot" aria-hidden="true"></span>Your sign-in
+          experience, powered by Okta.
+        </div>
+      </section>
+      <section class="signin-panel" aria-label="Sign-in preview">
+        <div class="preview-notice" role="note">
+          <span class="preview-label">PREVIEW</span>
+          <p>Sign-in preview. Authentication is not connected.</p>
+        </div>
+        <p
+          id="status"
+          class="okta-preview-status"
+          role="status"
+          aria-live="polite"
+        >
+          Loading sign-in preview…
+        </p>
+        <div class="okta-preview-mount" id="widget-mount" inert></div>
+        <p class="signin-caption">Sign-in is disabled for this preview.</p>
+      </section>
+    </main>
+  </body>
+</html>

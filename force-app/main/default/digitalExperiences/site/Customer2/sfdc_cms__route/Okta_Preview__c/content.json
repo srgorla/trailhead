@@ -1,0 +1,12 @@
+{
+  "type": "sfdc_cms__route",
+  "title": "Okta Preview",
+  "contentBody": {
+    "activeViewId": "Okta_Preview",
+    "configurationTags": [],
+    "pageAccess": "Public",
+    "routeType": "custom-okta-preview",
+    "urlPrefix": "okta-preview"
+  },
+  "urlName": "okta-preview"
+}

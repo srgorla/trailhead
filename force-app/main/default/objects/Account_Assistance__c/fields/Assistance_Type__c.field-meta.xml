@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Assistance_Type__c</fullName>
+    <label>Assistance Type</label>
+    <required>true</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value><fullName>Order Fulfillment</fullName><default
+        >false</default><label>Order Fulfillment</label></value>
+            <value><fullName>Inventory</fullName><default>false</default><label
+        >Inventory</label></value>
+            <value><fullName>Logistics</fullName><default>false</default><label
+        >Logistics</label></value>
+            <value><fullName>Technical Support</fullName><default
+        >false</default><label>Technical Support</label></value>
+            <value><fullName>Returns</fullName><default>false</default><label
+        >Returns</label></value>
+            <value><fullName>Other</fullName><default>false</default><label
+        >Other</label></value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

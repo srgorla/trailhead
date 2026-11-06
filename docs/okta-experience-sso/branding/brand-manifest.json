@@ -1,0 +1,42 @@
+{
+  "status": "prepared; not deployed",
+  "merchant": {
+    "primary": "#0F42F8",
+    "secondary": "#0506BD",
+    "surface": "#F4F7FF",
+    "foreground": "#FFFFFF",
+    "source": "https://www.paze.com/",
+    "evidence": "Website CSS :root --paze-blue, --secondary-navy",
+    "logo": "paze-logo.png",
+    "icon": "paze-icon.png"
+  },
+  "customer": {
+    "primary": "#24334D",
+    "accent": "#D6001C",
+    "surface": "#F4F8FA",
+    "foreground": "#FFFFFF",
+    "source": "https://www.earlywarning.com/",
+    "evidence": "Website stylesheet colors; website-extracted values, not an official published palette specification",
+    "logo": "early-warning-logo.png",
+    "icon": "early-warning-icon.jpg"
+  },
+  "assetSource": "https://www.earlywarning.com/early-warning-trademarks",
+  "assets": [
+    {
+      "file": "early-warning-logo.png",
+      "sha256": "95042336a0ef84d4b94f176537c3dd3ec78ef5f3e2b0cb3818f64ea48d7fb9b0"
+    },
+    {
+      "file": "paze-icon.png",
+      "sha256": "1f1166a4f7ad860a744cc7f134ed1325e197d8281367171cab58f3453f55799d"
+    },
+    {
+      "file": "early-warning-icon.jpg",
+      "sha256": "e494060e0e92390651844679f5301531c3993e00ee0c76cffae15bd011735e3d"
+    },
+    {
+      "file": "paze-logo.png",
+      "sha256": "0484b354a876fe1f3163d9772230a2119e22542f8c010f4eac679b8f7eb898c4"
+    }
+  ]
+}

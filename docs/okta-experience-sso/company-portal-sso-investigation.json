@@ -1,0 +1,37 @@
+{
+  "page": "https://my.earlywarning.com/customer/signin",
+  "checked": "2026-10-11",
+  "inspection": "Public HTML and publicly referenced login JavaScript only; no authentication, Apex invocation, or credential submission",
+  "framework": "Salesforce Experience Cloud LWR",
+  "customComponent": "c/oktaCustomerLoginPage",
+  "configurationProvider": "OktaSetupController.getOktaSetupMetadataRecord",
+  "widgetVersion": "6.4.2",
+  "widgetScript": "https://global.oktacdn.com/okta-signin-widget/6.4.2/js/okta-sign-in.min.js",
+  "method": "showSignInAndRedirect",
+  "configurationFieldNames": [
+    "Base_Url__c",
+    "Client_Id__c",
+    "Use_Classic_Engine__c",
+    "Idp_Discovery__c",
+    "Customer_Redirect_Uri__c",
+    "Customer_Request_Context__c",
+    "Issuer__c",
+    "Response_Type__c",
+    "Pkce__c"
+  ],
+  "portalVariants": ["Customer", "Reseller", "Partner Zelle", "Partner Paze"],
+  "observedColors": {
+    "panel": "#24334D",
+    "widgetBrand": "#4C6E9E"
+  },
+  "confirmed": "Embedded Okta widget with runtime configuration supplied by Apex and portal-specific redirect settings",
+  "unverified": [
+    "Runtime configuration values",
+    "Salesforce callback implementation",
+    "Final SAML vs OIDC federation configuration",
+    "User mapping and provisioning",
+    "Successful post-authentication session behavior"
+  ],
+  "bundleUrl": "https://my.earlywarning.com/customer/webruntime/view/d0b8b4ce04e581b11de20380529c6e6c/prod/en-US/signin_view",
+  "bundleSha256": "80de9fba667bb48ee3e9cf5ff5917d5ca98c5ed2945738da97918b1147b09044"
+}

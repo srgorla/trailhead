@@ -1,0 +1,13 @@
+<template lwc:render-mode="light">
+  <div class="okta-preview-status" role="status" aria-live="polite">
+    <template lwc:if={isLoading}>Loading sign-in preview…</template>
+    <template lwc:elseif={hasError}
+      >The sign-in preview could not be loaded. Please reload the
+      page.</template
+    >
+    <template lwc:else
+      >Sign-in screen loaded. Authentication is disabled.</template
+    >
+  </div>
+  <div class="okta-preview-mount"></div>
+</template>

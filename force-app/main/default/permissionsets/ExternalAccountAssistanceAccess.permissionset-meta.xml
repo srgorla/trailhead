@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description
+  >Lets Burlington customer and distributor partner users create and update account assistance records while record sharing controls which accounts they can access.</description>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account_Assistance__c.Request_Details__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account_Assistance__c.Resolution_Notes__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>Account_Assistance__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <label>External Account Assistance Access</label>
+    <tabSettings>
+        <tab>Account_Assistance__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+</PermissionSet>

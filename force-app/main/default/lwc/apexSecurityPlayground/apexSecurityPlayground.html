@@ -1,0 +1,70 @@
+<template>
+  <lightning-card
+    title="Apex Sharing & Query Security Playground"
+    icon-name="standard:shield"
+  >
+    <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+      <p class="slds-text-body_regular slds-m-bottom_medium">
+        Run each query as the current user and compare visible Accounts or
+        access errors. These examples are read-only.
+      </p>
+      <lightning-button
+        label="Run All Examples"
+        variant="brand"
+        onclick={handleRunAll}
+        class="slds-m-bottom_medium"
+      ></lightning-button>
+
+      <template for:each={examples} for:item="example">
+        <section key={example.key} class="slds-box slds-m-top_medium">
+          <div class="slds-grid slds-wrap slds-grid_vertical-align-center">
+            <div class="slds-col slds-grow">
+              <h2 class="slds-text-heading_small">{example.label}</h2>
+              <p class="slds-text-body_small slds-m-top_xx-small">
+                {example.description}
+              </p>
+            </div>
+            <div class="slds-col slds-no-flex slds-m-left_small">
+              <lightning-button
+                label="Run"
+                data-key={example.key}
+                onclick={handleRun}
+                disabled={example.loading}
+              ></lightning-button>
+            </div>
+          </div>
+
+          <template if:true={example.loading}>
+            <div
+              class="slds-is-relative slds-m-top_medium slds-p-vertical_medium"
+            >
+              <lightning-spinner
+                alternative-text="Running query"
+                size="small"
+              ></lightning-spinner>
+            </div>
+          </template>
+          <template if:true={example.error}>
+            <div class="slds-text-color_error slds-m-top_small" role="alert">
+              {example.error}
+            </div>
+          </template>
+          <template if:true={example.hasRun}>
+            <template if:false={example.error}>
+              <p class="slds-m-top_small">
+                Returned {example.rows.length} Account(s).
+              </p>
+              <lightning-datatable
+                key-field="Id"
+                data={example.rows}
+                columns={columns}
+                hide-checkbox-column
+              >
+              </lightning-datatable>
+            </template>
+          </template>
+        </section>
+      </template>
+    </div>
+  </lightning-card>
+</template>

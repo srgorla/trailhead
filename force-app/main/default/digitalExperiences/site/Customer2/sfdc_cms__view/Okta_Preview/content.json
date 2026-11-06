@@ -1,0 +1,81 @@
+{
+  "type": "sfdc_cms__view",
+  "title": "Okta Preview",
+  "contentBody": {
+    "component": {
+      "children": [
+        {
+          "children": [
+            {
+              "attributes": {
+                "backgroundImageConfig": "",
+                "backgroundImageOverlay": "rgba(0,0,0,0)",
+                "componentSpacerSize": "",
+                "layoutDirectionDesktop": "row",
+                "layoutDirectionMobile": "column",
+                "layoutDirectionTablet": "column",
+                "maxContentWidth": "1200px",
+                "sectionColumnGutterWidth": "",
+                "sectionConfig": "{\"UUID\":\"0b56358e-2701-41d0-b5a8-0d66d289ee25\",\"columns\":[{\"UUID\":\"22c5fb50-d535-4153-a65b-7e3eec4924e3\",\"columnName\":\"Column 1\",\"columnKey\":\"col1\",\"columnWidth\":\"12\",\"seedComponents\":[]}]}",
+                "sectionMinHeight": "",
+                "sectionVerticalAlign": "flex-start"
+              },
+              "children": [
+                {
+                  "children": [
+                    {
+                      "attributes": {
+                        "heading": "Welcome to your customer portal",
+                        "brandColor": "#4c6e9e"
+                      },
+                      "definition": "c:oktaSignInPanel",
+                      "id": "e1e7b098-1907-4356-80ff-a90f32fd5cc2",
+                      "type": "component"
+                    }
+                  ],
+                  "id": "40c8f1b9-eff6-40cd-a061-5ce827aca242",
+                  "name": "col1",
+                  "title": "Column 1",
+                  "type": "region"
+                }
+              ],
+              "definition": "community_layout:section",
+              "id": "545537e0-4a7c-4ab3-bdfb-8f1043854e52",
+              "type": "component"
+            }
+          ],
+          "id": "e16d6af2-a01b-472a-a489-d442b7a00c98",
+          "name": "content",
+          "title": "Content",
+          "type": "region"
+        },
+        {
+          "children": [
+            {
+              "attributes": {
+                "customHeadTags": "",
+                "description": "Customer portal sign-in preview. Authentication is disabled.",
+                "pageTitle": "Customer portal | Sign-in preview",
+                "recordId": "{!recordId}"
+              },
+              "definition": "community_builder:seoAssistant",
+              "id": "3d44af47-ab0e-41f9-b5b6-492db9d13f22",
+              "type": "component"
+            }
+          ],
+          "id": "75293c17-a237-4291-90d0-fb455d985e68",
+          "name": "sfdcHiddenRegion",
+          "title": "sfdcHiddenRegion",
+          "type": "region"
+        }
+      ],
+      "definition": "community_layout:sldsFlexibleLayout",
+      "id": "901ee08f-6bf6-4915-b9ab-d08099239eaf",
+      "type": "component"
+    },
+    "dataProviders": [],
+    "themeLayoutType": "Inner",
+    "viewType": "custom-okta-preview"
+  },
+  "urlName": "okta-preview"
+}

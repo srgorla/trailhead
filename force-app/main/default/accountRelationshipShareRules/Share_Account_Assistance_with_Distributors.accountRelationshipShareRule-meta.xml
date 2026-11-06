@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<AccountRelationshipShareRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <accessLevel>Edit</accessLevel>
+    <accountToCriteriaField
+  >Account_Assistance__c.Account__c</accountToCriteriaField>
+    <description
+  >Allows distributor accounts with an active Distributor relationship to update assistance records tied to the account sharing the records.</description>
+    <entityType>Account_Assistance__c</entityType>
+    <masterLabel>Share Account Assistance with Distributors</masterLabel>
+    <type>Distributor</type>
+</AccountRelationshipShareRule>

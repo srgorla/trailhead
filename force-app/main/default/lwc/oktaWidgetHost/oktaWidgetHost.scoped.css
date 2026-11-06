@@ -1,0 +1,17 @@
+:host {
+  display: block;
+}
+
+.okta-preview-status {
+  text-align: center;
+  font-family: var(--slds-g-font-family, Arial, sans-serif);
+  font-size: 12px;
+  line-height: 1.5;
+  margin-bottom: 12px;
+  color: var(--portal-ink, #24334d);
+}
+
+.okta-preview-mount {
+  width: 100%;
+  min-height: 400px;
+}

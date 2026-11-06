@@ -1,0 +1,5 @@
+{
+  "title": "Hotel Search Result",
+  "description": "Agentforce action output from the HotelSearchAction Apex action.",
+  "lightning:type": "@apexClassType/c__HotelSearchResult"
+}

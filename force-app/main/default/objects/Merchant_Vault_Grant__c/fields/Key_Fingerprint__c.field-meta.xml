@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata"><fullName
+  >Key_Fingerprint__c</fullName><description
+  >Key Fingerprint for the merchant browser encryption POC.</description><inlineHelpText
+  >Managed by the merchant vault service. Provision membership through an administrator.</inlineHelpText><label
+  >Key Fingerprint</label><length>64</length><type>Text</type></CustomField>

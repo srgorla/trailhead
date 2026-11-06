@@ -1,0 +1,18 @@
+{
+  "inputs": [
+    {
+      "type": "promptString",
+      "id": "sf-hotel-mcp-client-id",
+      "description": "Salesforce Hotel MCP External Client App Consumer Key"
+    }
+  ],
+  "servers": {
+    "salesforceHotels": {
+      "type": "http",
+      "url": "https://api.salesforce.com/platform/mcp/v1/custom/HotelDetailsMCPServer",
+      "oauth": {
+        "clientId": "${input:sf-hotel-mcp-client-id}"
+      }
+    }
+  }
+}

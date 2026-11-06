@@ -1,0 +1,14 @@
+{
+  "title": "Hotel Info Output Values",
+  "description": "Payload fields from the HotelSearchResult response.",
+  "type": "object",
+  "lightning:type": "lightning__objectType",
+  "unevaluatedProperties": false,
+  "lightning:tags": ["mcp"],
+  "properties": {
+    "hotelInfo": {
+      "title": "Hotel Info",
+      "lightning:type": "@apexClassType/c__HotelSearchResult$Hotel"
+    }
+  }
+}

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata"><fullName
+  >Encrypted_Payload__c</fullName>
+<description
+  >Persists only the versioned encryption envelope so the browser can decrypt without sending its key to Salesforce.</description>
+<inlineHelpText
+  >Store AES-GCM ciphertext, nonce, algorithm and version as JSON. Never enter plaintext or decryption keys.</inlineHelpText>
+<label>Encrypted Payload</label><length>32768</length><type
+  >LongTextArea</type><visibleLines>5</visibleLines></CustomField>

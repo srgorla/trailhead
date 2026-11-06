@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<SharingSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <accessMappings>
+        <accessLevel>Read</accessLevel>
+        <object>Case</object>
+        <objectField>Account</objectField>
+        <userField>Account</userField>
+    </accessMappings>
+    <accessMappings>
+        <accessLevel>Edit</accessLevel>
+        <object>Account_Assistance__c</object>
+        <objectField>Account__c</objectField>
+        <userField>Account</userField>
+    </accessMappings>
+    <description
+  >Share customer cases and account assistance records.</description>
+    <name>Share Customer Cases</name>
+    <profiles>customer community plus user</profiles>
+    <profiles>customer community user</profiles>
+</SharingSet>

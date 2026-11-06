@@ -1,0 +1,1 @@
+:root{--paze-blue:#0f42f8;--paze-teal:#6de5ff;--paze-aqua:#84e2f7;--secondary-navy:#0506bd;--dark-gray:#3f496d;--light-gray:#bdc3dc;--midnight-black:#151b33;--white:white}
